@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Adding the same root's ID for view binding as other layout configurations -->
+
+
+<androidx.core.widget.NestedScrollView
+    android:id="@+id/item_detail_container"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/detail_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_collapseMode="pin"
+            app:layout_constraintTop_toTopOf="parent"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+
+        <TextView
+            android:id="@+id/property_description_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="DESCRIPTION"
+            android:textSize="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/property_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="16dp"
+            android:text="DESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXT"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/property_description_title" />
+
+        <TextView
+            android:id="@+id/property_photo_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="PHOTOS"
+            android:textSize="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/property_description" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_detailed_view"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/property_photo_title"
+            tools:listitem="@layout/row_item_detail_view_property_picture" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/first_divider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recycler_view_detailed_view" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/info_constraint_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/first_divider">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.50" />
+
+            <TextView
+                android:id="@+id/surface_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="8dp"
+                android:text="@string/surface"
+                android:textSize="18dp"
+                app:drawableStartCompat="@drawable/ic_surface" />
+
+            <TextView
+                android:id="@+id/property_surface"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/surface_title"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"
+                android:textSize="16dp"
+                android:text="250 sqm" />
+
+            <TextView
+                android:id="@+id/room_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/property_surface"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="8dp"
+                android:textSize="18dp"
+                android:text="Rooms"
+                app:drawableStartCompat="@drawable/ic_room" />
+
+            <TextView
+                android:id="@+id/property_room"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/room_title"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"
+                android:textSize="16dp"
+                android:text="5" />
+
+            <TextView
+                android:id="@+id/bedroom_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/property_room"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="8dp"
+                android:textSize="18dp"
+                android:text="Bedroom"
+                app:drawableStartCompat="@drawable/ic_bedroom" />
+
+            <TextView
+                android:id="@+id/property_bedrooms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/bedroom_title"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"
+                android:textSize="16dp"
+                android:text="5" />
+
+            <TextView
+                android:id="@+id/bathroom_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/property_bedrooms"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="8dp"
+                android:textSize="18dp"
+                android:text="Bathroom"
+                app:drawableStartCompat="@drawable/ic_baseline_bathroom_24" />
+
+            <TextView
+                android:id="@+id/property_bathrooms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/bathroom_title"
+                android:layout_marginStart="16dp"
+                android:textSize="16dp"
+                android:text="5" />
+
+            <TextView
+                android:id="@+id/POI_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/property_bathrooms"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="8dp"
+                android:textSize="18dp"
+                android:text="Points of interests"
+                app:drawableStartCompat="@drawable/ic_interest" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group_poi"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/POI_title"
+                app:layout_constraintEnd_toStartOf="@id/guideline">
+
+                <com.google.android.material.chip.Chip
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    tools:text="School" />
+
+                <com.google.android.material.chip.Chip
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    tools:text="Theatre" />
+
+                <com.google.android.material.chip.Chip
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    tools:text="Park" />
+
+                <com.google.android.material.chip.Chip
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    tools:text="Train station" />
+
+                <com.google.android.material.chip.Chip
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    tools:text="Highschools" />
+
+
+            </com.google.android.material.chip.ChipGroup>
+
+            <TextView
+                android:id="@+id/created_at_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/chip_group_poi"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="8dp"
+                android:textSize="18dp"
+                android:text="Created at"
+                />
+
+            <TextView
+                android:id="@+id/created_at_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/created_at_title"
+                android:layout_marginStart="8dp"
+                android:textSize="16dp"
+                android:textStyle="italic"
+                android:text="27/11/1995"
+                />
+
+            <TextView
+                android:id="@+id/sold_at_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/created_at_date"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="8dp"
+                android:text="Sold at"
+                android:textSize="18dp"
+                />
+
+            <TextView
+                android:id="@+id/sold_at_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/sold_at_title"
+                android:layout_marginStart="8dp"
+                android:textStyle="italic"
+                android:text="NOT SOLD YET"
+                android:textSize="16dp"
+                />
+
+            <TextView
+                android:id="@+id/location_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/guideline"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="16dp"
+                android:textSize="18dp"
+                android:text="Location"
+                app:drawableStartCompat="@drawable/ic_location" />
+
+            <TextView
+                android:id="@+id/property_address"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/guideline"
+                app:layout_constraintTop_toBottomOf="@id/location_title"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="8dp"
+                android:textSize="16dp"
+                android:text="740 Park Avenue Apt 6/7A"
+                />
+
+            <TextView
+                android:id="@+id/property_city"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/guideline"
+                app:layout_constraintTop_toBottomOf="@id/property_address"
+                android:layout_marginStart="8dp"
+                android:textSize="16dp"
+                android:text="New York"
+                />
+
+            <TextView
+                android:id="@+id/property_postal_code"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/guideline"
+                app:layout_constraintTop_toBottomOf="@id/property_city"
+                android:layout_marginStart="8dp"
+                android:textSize="16dp"
+                android:text="NY 10021"
+                />
+
+            <TextView
+                android:id="@+id/property_country"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/guideline"
+                app:layout_constraintTop_toBottomOf="@id/property_postal_code"
+                android:layout_marginStart="8dp"
+                android:textSize="16dp"
+                android:text="United States"
+                />
+
+            <ImageView
+                android:id="@+id/map"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_margin="16dp"
+                android:visibility="visible"
+                tools:visibility="visible"
+                app:layout_constraintStart_toEndOf="@id/guideline"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/property_country"
+
+                android:src="@drawable/park_ave_dummy"
+                />
+
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.core.widget.NestedScrollView>
+
+
