@@ -14,14 +14,14 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/spinner_text_input_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
+            android:layout_width="550dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="@string/property_type"
@@ -100,6 +100,7 @@
             android:hint="Surface"
             android:inputType="numberDecimal"
             android:padding="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/bedroom_edit_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/property_description_edit_text" />
 
@@ -130,8 +131,8 @@
             android:inputType="numberDecimal"
             android:padding="16dp"
             android:layout_marginEnd="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rooms_edit_text" />
+            app:layout_constraintStart_toEndOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/property_description_edit_text" />
 
         <EditText
             android:id="@+id/bathroom_edit_text"
@@ -146,7 +147,7 @@
             android:inputType="numberDecimal"
             android:padding="16dp"
             app:layout_constraintTop_toBottomOf="@id/bedroom_edit_text"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="@id/guideline2"/>
 
         <EditText
             android:id="@+id/POI_edit_text"
@@ -161,7 +162,14 @@
             android:inputType="textNoSuggestions"
             android:padding="16dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/bathroom_edit_text"/>
+            app:layout_constraintTop_toBottomOf="@id/rooms_edit_text"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.14" />
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/chipGroup2"
@@ -171,8 +179,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:duplicateParentState="false"
-            app:layout_constraintTop_toBottomOf="@id/POI_edit_text"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toEndOf="@id/POI_edit_text"
+            app:layout_constraintTop_toBottomOf="@id/rooms_edit_text">
 
             <com.google.android.material.chip.Chip
                 android:layout_width="wrap_content"
