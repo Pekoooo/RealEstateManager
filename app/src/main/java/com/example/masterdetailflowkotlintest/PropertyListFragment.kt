@@ -1,5 +1,6 @@
 package com.example.masterdetailflowkotlintest
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -52,6 +53,18 @@ class PropertyListFragment : Fragment() {
 
 
         setupRecyclerView(recyclerView, itemDetailFragmentContainer)
+
+        binding.addPropertyTabletFab?.setOnClickListener {
+            val intent = Intent(context, AddPropertyActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.addPropertyPhoneFab?.setOnClickListener {
+            val intent = Intent(context, AddPropertyActivity::class.java)
+            startActivity(intent)
+        }
+
+
     }
 
     private fun setupRecyclerView(

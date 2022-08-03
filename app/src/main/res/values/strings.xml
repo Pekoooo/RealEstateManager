@@ -4,6 +4,16 @@
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</string>
     <string name="surface">Surface</string>
     <string name="facade">facade</string>
+    <string name="text_desc">DESCRIPTION TEXTDESCRIPTION DESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXT</string>
+    <string name="take_picture">Take picture</string>
+    <string name="import_button">Import</string>
+    <string name="enter_property_surface">Enter property surface</string>
+    <string name="enter_number_of_rooms">Enter number of rooms</string>
+    <string name="enter_desc">Enter property description here</string>
+    <string name="enter_number_of_bathrooms">Enter number of bathrooms</string>
+    <string name="enter_poi">Enter POI</string>
+    <string name="enter_number_of_bedrooms">Enter number of bedrooms</string>
+    <string name="property_type">Property type</string>
 
 
 </resources>

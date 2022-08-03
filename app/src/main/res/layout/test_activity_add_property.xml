@@ -1,6 +1,3 @@
-<!-- Adding the same root's ID for view binding as other layout configurations -->
-
-
 <androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -32,12 +29,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <EditText
             android:id="@+id/property_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="DESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXT"
+            android:hint="Enter description here"
             android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -63,6 +60,26 @@
             app:layout_constraintTop_toBottomOf="@id/property_photo_title"
             tools:listitem="@layout/row_item_detail_view_property_picture" />
 
+        <Button
+            android:id="@+id/take_picture_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/take_picture"
+            app:layout_constraintEnd_toStartOf="@id/import_picture_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recycler_view_detailed_view" />
+
+        <Button
+            android:id="@+id/import_picture_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/import_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/take_picture_button"
+            app:layout_constraintTop_toBottomOf="@id/recycler_view_detailed_view" />
+
         <com.google.android.material.divider.MaterialDivider
             android:id="@+id/first_divider"
             android:layout_width="wrap_content"
@@ -71,7 +88,7 @@
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/recycler_view_detailed_view" />
+            app:layout_constraintTop_toBottomOf="@id/take_picture_button" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/info_constraint_layout"
@@ -98,12 +115,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
+            <EditText
                 android:id="@+id/property_surface"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="250sqm"
+                android:hint="Property surface"
                 android:textSize="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/surface_title" />
@@ -120,12 +137,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/property_surface" />
 
-            <TextView
+            <EditText
                 android:id="@+id/property_room"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="5"
+                android:hint="Number of rooms"
                 android:textSize="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/room_title" />
@@ -142,12 +159,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/property_room" />
 
-            <TextView
+            <EditText
                 android:id="@+id/property_bedrooms"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="5"
+                android:hint="Number of bedrooms"
                 android:textSize="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/bedroom_title" />
@@ -164,12 +181,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/property_bedrooms" />
 
-            <TextView
+            <EditText
                 android:id="@+id/property_bathrooms"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="5"
+                android:hint="Number of bathrooms"
                 android:textSize="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/bathroom_title" />
@@ -356,5 +373,3 @@
 
 
 </androidx.core.widget.NestedScrollView>
-
-

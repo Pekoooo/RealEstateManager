@@ -26,6 +26,7 @@ class PropertyDetailHostActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
