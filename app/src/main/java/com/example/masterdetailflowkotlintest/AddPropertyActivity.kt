@@ -13,7 +13,7 @@ class AddPropertyActivity : AppCompatActivity() {
         binding = ActivityAddPropertyBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        println("update from desktop")
+
     }
 
 }
