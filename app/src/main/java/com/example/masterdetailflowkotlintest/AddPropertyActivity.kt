@@ -12,6 +12,8 @@ class AddPropertyActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAddPropertyBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        println("update from desktop")
     }
 
 }
