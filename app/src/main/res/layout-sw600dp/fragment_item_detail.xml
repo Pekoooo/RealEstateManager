@@ -160,7 +160,7 @@
                 android:layout_marginTop="16dp"
                 android:text="Bathroom"
                 android:textSize="18dp"
-                app:drawableStartCompat="@drawable/ic_baseline_bathroom_24"
+                app:drawableStartCompat="@drawable/ic_bathroom"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/property_bedrooms" />
 
@@ -182,7 +182,7 @@
                 android:layout_marginTop="16dp"
                 android:text="Points of interests"
                 android:textSize="18dp"
-                app:drawableStartCompat="@drawable/ic_interest"
+                app:drawableStartCompat="@drawable/ic_poi"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/property_bathrooms" />
 

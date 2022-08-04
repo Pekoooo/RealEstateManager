@@ -163,7 +163,7 @@
                 android:layout_marginStart="8dp"
                 android:textSize="18dp"
                 android:text="Bathroom"
-                app:drawableStartCompat="@drawable/ic_baseline_bathroom_24" />
+                app:drawableStartCompat="@drawable/ic_bathroom" />
 
             <TextView
                 android:id="@+id/property_bathrooms"
@@ -185,7 +185,7 @@
                 android:layout_marginStart="8dp"
                 android:textSize="18dp"
                 android:text="Points of interests"
-                app:drawableStartCompat="@drawable/ic_interest" />
+                app:drawableStartCompat="@drawable/ic_poi" />
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chip_group_poi"
