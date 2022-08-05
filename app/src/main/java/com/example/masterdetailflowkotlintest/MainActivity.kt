@@ -33,9 +33,6 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         supportActionBar?.title = R.string.app_name.toString()
-
-
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -47,14 +44,14 @@ class MainActivity : AppCompatActivity() {
 
         val intent = Intent(applicationContext, MapActivity::class.java)
 
-        return when (item.itemId){
+        return when (item.itemId) {
 
             R.id.map -> {
                 startActivity(intent)
-             true
-             }
+                true
+            }
 
-            R.id.currency ->{
+            R.id.currency -> {
                 Toast.makeText(applicationContext, "Changing currency", Toast.LENGTH_LONG).show()
                 return true
             }

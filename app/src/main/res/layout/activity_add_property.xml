@@ -35,6 +35,8 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:hint="Property type"
+                android:drawableStart="@drawable/ic_city"
+                android:drawablePadding="16dp"
                 android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
                 android:focusable="false"
                 android:inputType="text" />
