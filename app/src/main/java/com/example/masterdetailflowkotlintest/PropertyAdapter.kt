@@ -13,7 +13,7 @@ import com.example.masterdetailflowkotlintest.databinding.ItemListContentBinding
 import com.example.masterdetailflowkotlintest.model.Property
 
 class PropertyAdapter(
-    private val values: List<Property>,
+    private val propertyList: List<Property>,
     private val itemDetailFragmentContainer: View?
 ) :
     RecyclerView.Adapter<PropertyAdapter.ViewHolder>() {
@@ -26,16 +26,16 @@ class PropertyAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = values[position]
-        holder.propertyLocation.text = item.neighborhood
-        holder.propertyPrice.text = item.price
-        holder.propertyType.text = item.type
+        val property = propertyList[position]
+        holder.propertyLocation.text = property.neighborhood
+        holder.propertyPrice.text = property.price
+        holder.propertyType.text = property.type
         Glide.with(holder.propertyImage.context)
-            .load(item.mainPhoto)
+            .load(property.mainPhoto)
             .into(holder.propertyImage)
 
         with(holder.itemView) {
-            tag = item
+            tag = property
             setOnClickListener { itemView ->
                 val item = itemView.tag as Property
                 val bundle = Bundle()
@@ -53,7 +53,7 @@ class PropertyAdapter(
         }
     }
 
-    override fun getItemCount() = values.size
+    override fun getItemCount() = propertyList.size
 
     inner class ViewHolder(binding: ItemListContentBinding) :
         RecyclerView.ViewHolder(binding.root) {

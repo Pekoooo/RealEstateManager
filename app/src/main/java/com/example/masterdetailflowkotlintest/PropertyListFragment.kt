@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -16,22 +17,12 @@ import com.example.masterdetailflowkotlintest.databinding.FragmentItemListBindin
 import com.example.masterdetailflowkotlintest.databinding.ItemListContentBinding
 import com.example.masterdetailflowkotlintest.model.Property
 
-/**
- * A Fragment representing a list of Pings. This fragment
- * has different presentations for handset and larger screen devices. On
- * handsets, the fragment presents a list of items, which when touched,
- * lead to a {@link ItemDetailFragment} representing
- * item details. On larger screens, the Navigation controller presents the list of items and
- * item details side-by-side using two vertical panes.
- */
+
 
 class PropertyListFragment : Fragment() {
 
 
     private var _binding: FragmentItemListBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -46,6 +37,8 @@ class PropertyListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        (context as AppCompatActivity).supportActionBar!!.title = "Properties"
 
         val recyclerView: RecyclerView = binding.itemList
         val itemDetailFragmentContainer: View? = view.findViewById(R.id.item_detail_nav_container)

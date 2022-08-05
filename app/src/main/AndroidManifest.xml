@@ -13,10 +13,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MasterDetailFlowKotlinTest">
         <activity
-            android:name=".AddPropertyActivity"
+            android:name=".MapActivity"
             android:exported="false" />
         <activity
-            android:name=".PropertyDetailHostActivity"
+            android:name=".AddPropertyActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:resizeableActivity="true"

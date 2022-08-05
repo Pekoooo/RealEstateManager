@@ -17,16 +17,18 @@
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/ic_bathroom_focused.xml" value="0.249" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/ic_bedroom.xml" value="0.249" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/ic_bedroom_focused.xml" value="0.249" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/ic_currency.xml" value="0.3595" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/ic_dollar.xml" value="0.249" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/ic_dollar_focused.xml" value="0.249" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/ic_location_city.xml" value="0.249" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/ic_location_city_focused.xml" value="0.249" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/ic_location_focused.xml" value="0.249" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/ic_map.xml" value="0.3595" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/ic_poi_focused.xml" value="0.249" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/ic_room_focused.xml" value="0.249" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/ic_surface.xml" value="0.3155" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/ic_surface_focused.xml" value="0.3155" />
-        <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/layout-sw600dp/activity_add_property.xml" value="0.4738247863247863" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/layout-sw600dp/activity_add_property.xml" value="0.15" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/layout-sw600dp/fragment_item_detail.xml" value="0.18" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/layout-sw600dp/fragment_item_list.xml" value="0.14933993399339934" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/layout/activity_add_property.xml" value="0.3009833262077811" />
@@ -36,6 +38,7 @@
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/layout/item_list_content.xml" value="0.1" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/layout/row_item_detail_view_property_picture.xml" value="0.25" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/layout/test_activity_add_property.xml" value="0.14343928280358598" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/menu/menu.xml" value="0.3009833262077811" />
       </map>
     </option>
   </component>

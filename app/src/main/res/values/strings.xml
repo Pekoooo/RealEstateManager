@@ -14,6 +14,8 @@
     <string name="enter_poi">Enter POI</string>
     <string name="enter_number_of_bedrooms">Enter number of bedrooms</string>
     <string name="property_type">Property type</string>
+    <string name="map_item">map_item</string>
+    <string name="currency_item">currency_item</string>
 
 
 </resources>

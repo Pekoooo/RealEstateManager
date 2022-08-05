@@ -24,7 +24,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:hint="@string/property_type"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -35,9 +34,10 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
+                android:hint="Property type"
                 android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
                 android:focusable="false"
-                android:inputType="textNoSuggestions" />
+                android:inputType="text" />
 
             <Spinner
                 android:id="@+id/spinner"

@@ -1,17 +1,17 @@
 package com.example.masterdetailflowkotlintest
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.ui.AppBarConfiguration
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.masterdetailflowkotlintest.placeholder.PlaceholderContent
 import com.example.masterdetailflowkotlintest.databinding.FragmentItemDetailBinding
 import com.example.masterdetailflowkotlintest.model.Property
 import com.example.masterdetailflowkotlintest.model.PropertyDetailedPicture
+import com.example.masterdetailflowkotlintest.placeholder.PlaceholderContent
 
 
 class PropertyDetailFragment : Fragment() {
@@ -27,10 +27,11 @@ class PropertyDetailFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        arguments?.let {
-            if (it.containsKey(ARG_ITEM_ID)) {
-                property = PlaceholderContent.ITEM_MAP[it.getString(ARG_ITEM_ID)]
-            }
+        (context as AppCompatActivity).supportActionBar!!.title = "Detail"
+
+        if (arguments?.containsKey(ARG_ITEM_ID) == true) {
+            val id = arguments?.getString(ARG_ITEM_ID)
+            property = PlaceholderContent.ITEM_MAP[id]
         }
     }
 
@@ -55,10 +56,6 @@ class PropertyDetailFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
         val testList: MutableList<PropertyDetailedPicture> = ArrayList()
-
-
-
-
     }
 
     private fun updateContent() {
