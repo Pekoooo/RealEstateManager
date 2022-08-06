@@ -1,4 +1,4 @@
-package com.example.masterdetailflowkotlintest
+package com.example.masterdetailflowkotlintest.ui.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater

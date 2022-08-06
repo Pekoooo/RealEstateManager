@@ -1,4 +1,4 @@
-package com.example.masterdetailflowkotlintest
+package com.example.masterdetailflowkotlintest.ui.main
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,6 +11,8 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.example.masterdetailflowkotlintest.ui.map.MapActivity
+import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.databinding.ActivityItemDetailBinding
 
 class MainActivity : AppCompatActivity() {

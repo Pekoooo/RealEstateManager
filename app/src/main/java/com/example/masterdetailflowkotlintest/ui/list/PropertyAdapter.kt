@@ -1,4 +1,4 @@
-package com.example.masterdetailflowkotlintest
+package com.example.masterdetailflowkotlintest.ui.list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,8 +9,10 @@ import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.databinding.ItemListContentBinding
 import com.example.masterdetailflowkotlintest.model.Property
+import com.example.masterdetailflowkotlintest.ui.detail.PropertyDetailFragment
 
 class PropertyAdapter(
     private val propertyList: List<Property>,

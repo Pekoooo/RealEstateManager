@@ -14,7 +14,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
-        tools:context="com.example.masterdetailflowkotlintest.MainActivity"
+        tools:context=".ui.main.MainActivity"
         tools:listitem="@layout/item_list_content" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

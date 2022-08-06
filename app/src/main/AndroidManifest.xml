@@ -17,15 +17,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MasterDetailFlowKotlinTest">
         <activity
-            android:name=".MapActivity"
+            android:name=".ui.map.MapActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName="com.example.masterdetailflowkotlintest.ui.main.MainActivity"/>
         <activity
-            android:name=".AddPropertyActivity"
+            android:name=".ui.addProperty.AddPropertyActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName="com.example.masterdetailflowkotlintest.ui.main.MainActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.masterdetailflowkotlintest.ui.main.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:resizeableActivity="true"

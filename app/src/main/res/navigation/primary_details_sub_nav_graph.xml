@@ -6,7 +6,7 @@
     app:startDestination="@id/fragment_item_detail">
     <fragment
         android:id="@+id/fragment_item_detail"
-        android:name="com.example.masterdetailflowkotlintest.PropertyDetailFragment"
+        android:name="com.example.masterdetailflowkotlintest.ui.detail.PropertyDetailFragment"
         android:label="@string/title_item_detail"
         tools:layout="@layout/fragment_item_detail">
         <argument

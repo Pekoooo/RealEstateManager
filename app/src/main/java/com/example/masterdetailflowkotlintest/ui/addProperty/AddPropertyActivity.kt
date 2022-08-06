@@ -1,4 +1,4 @@
-package com.example.masterdetailflowkotlintest
+package com.example.masterdetailflowkotlintest.ui.addProperty
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

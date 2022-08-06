@@ -1,4 +1,4 @@
-package com.example.masterdetailflowkotlintest
+package com.example.masterdetailflowkotlintest.ui.detail
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.model.PropertyDetailedPicture
 
 class PropertyDetailPictureAdapter : RecyclerView.Adapter<PropertyDetailPictureAdapter.ViewHolder>(){
