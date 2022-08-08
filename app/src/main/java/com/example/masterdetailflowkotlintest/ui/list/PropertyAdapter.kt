@@ -16,7 +16,8 @@ import com.example.masterdetailflowkotlintest.ui.detail.PropertyDetailFragment
 
 class PropertyAdapter(
     private val propertyList: List<Property>,
-    private val itemDetailFragmentContainer: View?
+    private val itemDetailFragmentContainer: View?,
+    private val onSelect: (Property?) -> Unit
 ) :
     RecyclerView.Adapter<PropertyAdapter.ViewHolder>() {
 
@@ -36,33 +37,37 @@ class PropertyAdapter(
             .load(property.mainPhoto)
             .into(holder.propertyImage)
 
-        with(holder.itemView) {
-            tag = property
-            setOnClickListener { itemView ->
-                val item = itemView.tag as Property
-                val bundle = Bundle()
-                bundle.putString(
-                    PropertyDetailFragment.ARG_ITEM_ID,
-                    item.id.toString()
-                )
-                if (itemDetailFragmentContainer != null) {
-                    itemDetailFragmentContainer.findNavController()
-                        .navigate(R.id.fragment_item_detail, bundle)
-                } else {
-                    itemView.findNavController().navigate(R.id.show_item_detail, bundle)
-                }
-            }
-        }
+        holder.bind(propertyList[position], onSelect)
+
+
     }
 
     override fun getItemCount() = propertyList.size
 
-    inner class ViewHolder(binding: ItemListContentBinding) :
+     class ViewHolder(private val binding: ItemListContentBinding) :
         RecyclerView.ViewHolder(binding.root) {
+            fun bind(property: Property?, onSelect: (Property?) -> Unit){
+
+
+
+                binding.root.setOnClickListener{
+                    onSelect(property)
+                }
+
+
+
+
+
+
+        }
         val propertyLocation: TextView = binding.propertyLocation
         val propertyPrice: TextView = binding.propertyPrice
         val propertyType: TextView = binding.propertyType
         val propertyImage: ImageView = binding.propertyImageView
+
+
     }
+
+
 
 }
