@@ -18,6 +18,8 @@
     <string name="currency_item">currency_item</string>
     <string name="rationale">Permission for location is required for application to function fully</string>
     <string name="my_position">My Position</string>
+    <string name="agent_name">Agent name</string>
+    <string name="property_description">Property description</string>
 
 
 </resources>

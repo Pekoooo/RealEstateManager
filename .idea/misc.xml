@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/custom_POI_focused_icon.xml" value="0.249" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/custom_address_focused_icon.xml" value="0.249" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/custom_agent_focused_icon.xml" value="0.2315" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/custom_bathroom_focused_icon.xml" value="0.249" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/custom_bedroom_focused_icon.xml" value="0.249" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/custom_focused_icon.xml" value="0.3155" />
@@ -26,6 +27,8 @@
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/ic_location_focused.xml" value="0.249" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/ic_map.xml" value="0.3595" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/ic_poi_focused.xml" value="0.249" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/ic_real_estate_agent.xml" value="0.1935" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/ic_real_estate_agent_focused.xml" value="0.2315" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/ic_room_focused.xml" value="0.249" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/ic_surface.xml" value="0.3155" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/ic_surface_focused.xml" value="0.3155" />
