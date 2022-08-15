@@ -20,6 +20,17 @@
     <string name="my_position">My Position</string>
     <string name="agent_name">Agent name</string>
     <string name="property_description">Property description</string>
+    <string name="school">School</string>
+    <string name="playground">Playground</string>
+    <string name="shop">Shopping center</string>
+    <string name="public_transports">Public transportation</string>
+    <string name="parking">Parking</string>
+    <string name="Daycare">Daycare</string>
+    <string name="daycare">Daycare</string>
+    <string name="shops">Shops</string>
+    <string name="train">Train</string>
+    <string name="poi">POI</string>
+    <string name="point_of_interests">Point Of Interests</string>
 
 
 </resources>

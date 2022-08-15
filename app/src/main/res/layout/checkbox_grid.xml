@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout android:id="@+id/add_property_view_nearby_gridlayout_nearby"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:columnCount="3"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/checkbox_nearby_school"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:text="@string/school"/>
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/checkbox_nearby_playground"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:text="@string/playground"/>
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/checkbox_nearby_shop"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:text="@string/shops"/>
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/checkbox_nearby_buses"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:text="@string/train" />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/checkbox_nearby_subway"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:text="@string/daycare"/>
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/checkbox_nearby_park"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:text="@string/parking"/>
+</GridLayout>

@@ -81,8 +81,6 @@ class PropertyListFragment : Fragment() {
             } else {
                 findNavController().navigate(R.id.show_item_detail, args)
             }
-
-
         }
     }
 

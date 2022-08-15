@@ -20,7 +20,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/spinner_text_input_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -36,7 +35,7 @@
                 android:id="@+id/spinner_editText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:drawableStart="@drawable/ic_surface"
+                android:drawableStart="@drawable/ic_city"
                 android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
                 android:drawablePadding="16dp"
                 android:focusable="false"
@@ -47,11 +46,9 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:spinnerMode="dialog"
-                android:visibility="visible"
-                app:layout_constraintTop_toBottomOf="@id/toolbar"
-                app:layout_constraintEnd_toEndOf="parent"/>
-
-
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -62,6 +59,8 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_marginTop="32dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/spinner_text_input_layout"
             tools:listitem="@layout/row_item_detail_view_property_picture" />
@@ -158,20 +157,26 @@
             app:layout_constraintStart_toStartOf="@id/guideline2"
             app:layout_constraintTop_toBottomOf="@id/bedroom_edit_text" />
 
-        <EditText
-            android:id="@+id/POI_edit_text"
+        <TextView
+            android:id="@+id/POI_Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
-            android:background="@drawable/custom_input"
-            android:drawableStart="@drawable/custom_poi_focused_icon"
-            android:drawablePadding="16dp"
-            android:hint="@string/enter_poi"
-            android:inputType="textNoSuggestions"
-            android:padding="16dp"
+            android:text="@string/point_of_interests"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/rooms_edit_text" />
+
+
+        <include
+            layout="@layout/checkbox_grid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/POI_Title" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline2"
@@ -179,54 +184,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.14" />
-
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chipGroup2"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="16dp"
-            android:duplicateParentState="false"
-            app:layout_constraintStart_toEndOf="@id/guideline2"
-            app:layout_constraintTop_toBottomOf="@id/rooms_edit_text">
-
-            <com.google.android.material.chip.Chip
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                tools:text="School"
-                tools:visibility="visible" />
-
-            <com.google.android.material.chip.Chip
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                tools:text="Theatre"
-                tools:visibility="visible" />
-
-            <com.google.android.material.chip.Chip
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                tools:text="Park"
-                tools:visibility="visible" />
-
-            <com.google.android.material.chip.Chip
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                tools:text="Train station"
-                tools:visibility="visible" />
-
-            <com.google.android.material.chip.Chip
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                tools:text="High school"
-                tools:visibility="visible" />
-
-        </com.google.android.material.chip.ChipGroup>
 
 
         <androidx.constraintlayout.widget.Guideline
