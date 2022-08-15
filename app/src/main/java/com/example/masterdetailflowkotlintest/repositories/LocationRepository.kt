@@ -12,9 +12,7 @@ import javax.inject.Inject
 import kotlin.math.log
 
 
-class LocationRepository @Inject constructor(
-    @ApplicationContext context: Context
-){
+class LocationRepository @Inject constructor(@ApplicationContext context: Context){
     companion object{
         private const val TAG = "MyLocationRepository"
     }

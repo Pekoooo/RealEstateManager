@@ -44,22 +44,18 @@ class PropertyAdapter(
 
     override fun getItemCount() = propertyList.size
 
-     class ViewHolder(private val binding: ItemListContentBinding) :
+    class ViewHolder(private val binding: ItemListContentBinding) :
         RecyclerView.ViewHolder(binding.root) {
-            fun bind(property: Property?, onSelect: (Property?) -> Unit){
+        fun bind(property: Property?, onSelect: (Property?) -> Unit) {
 
 
-
-                binding.root.setOnClickListener{
-                    onSelect(property)
-                }
-
-
-
-
+            binding.root.setOnClickListener {
+                onSelect(property)
+            }
 
 
         }
+
         val propertyLocation: TextView = binding.propertyLocation
         val propertyPrice: TextView = binding.propertyPrice
         val propertyType: TextView = binding.propertyType
@@ -67,7 +63,6 @@ class PropertyAdapter(
 
 
     }
-
 
 
 }
