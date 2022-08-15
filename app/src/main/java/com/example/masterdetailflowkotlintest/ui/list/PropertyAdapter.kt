@@ -46,22 +46,17 @@ class PropertyAdapter(
 
     class ViewHolder(private val binding: ItemListContentBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         fun bind(property: Property?, onSelect: (Property?) -> Unit) {
-
-
             binding.root.setOnClickListener {
                 onSelect(property)
             }
-
-
         }
 
         val propertyLocation: TextView = binding.propertyLocation
         val propertyPrice: TextView = binding.propertyPrice
         val propertyType: TextView = binding.propertyType
         val propertyImage: ImageView = binding.propertyImageView
-
-
     }
 
 
