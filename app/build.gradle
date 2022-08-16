@@ -29,6 +29,11 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    packagingOptions {
+        exclude 'META-INF/atomicfu.kotlin_module'
+    }
+
     kotlinOptions {
         jvmTarget = '1.8'
     }
@@ -70,6 +75,11 @@ dependencies {
     kapt "com.google.dagger:hilt-android-compiler:2.42"
     implementation 'androidx.hilt:hilt-common:1.0.0'
     implementation 'androidx.hilt:hilt-work:1.0.0'
+
+    //Room
+    implementation "androidx.room:room-ktx:2.4.3"
+    kapt "androidx.room:room-compiler:2.4.3"
+    androidTestImplementation "androidx.room:room-testing:2.4.3"
 }
 
 kapt {
