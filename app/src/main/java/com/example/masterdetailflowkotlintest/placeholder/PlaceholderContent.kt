@@ -17,7 +17,7 @@ object PlaceholderContent {
     private val PROPERTY_NEIGHBORHOOD_LIST: MutableList<String> = ArrayList()
     private val PROPERTY_DESCRIPTION: MutableList<String> = ArrayList()
     val ITEMS: MutableList<Property> = ArrayList()
-    val ITEM_MAP: MutableMap<String, Property> = HashMap()
+    val ITEM_MAP: MutableMap<Int, Property> = HashMap()
 
     init {
         createPOI()
@@ -42,7 +42,7 @@ object PlaceholderContent {
 
     private fun addProperty(item: Property) {
         ITEMS.add(item)
-        ITEM_MAP[item.id.toString()] = item
+        ITEM_MAP[item.id] = item
     }
 
     private fun addDescriptions() {
@@ -108,7 +108,7 @@ object PlaceholderContent {
 
     private fun generateProperty(): Property {
         return Property(
-            (0..20).random().toLong(),
+            (0..20).random(),
             (0..200).random().toString() + " sqm",
             PROPERTY_TYPE_LIST.random(),
             PROPERTY_ADDRESS_LIST.random(),

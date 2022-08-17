@@ -30,7 +30,7 @@ class PropertyDetailFragment : Fragment() {
         (context as AppCompatActivity).supportActionBar!!.title = "Detail"
 
         if (arguments?.containsKey(ARG_ITEM_ID) == true) {
-            val id: String? = arguments?.getString(ARG_ITEM_ID)
+            val id: Int? = arguments?.getInt(ARG_ITEM_ID)
             property = PlaceholderContent.ITEM_MAP[id]
         }
     }

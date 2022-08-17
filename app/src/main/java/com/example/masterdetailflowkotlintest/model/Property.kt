@@ -9,7 +9,7 @@ import java.io.Serializable
 data class Property(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "property_id")
-    val id: Long,
+    val id: Int,
     @ColumnInfo(name = "property_surface")
     val surface: String,
     @ColumnInfo(name = "property_type")

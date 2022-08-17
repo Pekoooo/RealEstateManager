@@ -71,8 +71,8 @@ class PropertyListFragment : Fragment() {
         ) {
 
             val args = Bundle()
-            args.putString(
-                ARG_ITEM_ID, it!!.id.toString()
+            args.putInt(
+                ARG_ITEM_ID, it!!.id
             )
 
             if (itemDetailFragmentContainer != null) {

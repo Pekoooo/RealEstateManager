@@ -1,9 +1,6 @@
 package com.example.masterdetailflowkotlintest.room.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.masterdetailflowkotlintest.model.Property
 import kotlinx.coroutines.flow.Flow
 
@@ -15,4 +12,11 @@ interface PropertyDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(property: Property)
+
+
+    /**
+     * For testing purposes
+     */
+    @Query("DELETE FROM property_table")
+    fun deleteAll()
 }
