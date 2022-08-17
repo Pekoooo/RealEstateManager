@@ -6,7 +6,9 @@ import com.example.masterdetailflowkotlintest.room.dao.PropertyDao
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class PropertyRepository @Inject constructor(private val propertyDao: PropertyDao){
+class PropertyRepository @Inject constructor(
+    private val propertyDao: PropertyDao
+    ){
 
     val allProperties: Flow<List<Property>> = propertyDao.getAllProperties()
 

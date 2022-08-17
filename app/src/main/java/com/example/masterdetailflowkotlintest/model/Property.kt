@@ -34,12 +34,8 @@ data class Property(
     val listedAt: String,
     @ColumnInfo(name = "property_rooms")
     val rooms: String,
-    @ColumnInfo(name = "property_poi")
-    val poi: MutableList<String>,
     @ColumnInfo(name = "property_mainPhoto")
     val mainPhoto: String,
-    @ColumnInfo(name = "property_interiorPhotos")
-    val interiorPhotos: MutableList<String>,
     @ColumnInfo(name = "property_description")
     val description: String
     ) : Serializable {

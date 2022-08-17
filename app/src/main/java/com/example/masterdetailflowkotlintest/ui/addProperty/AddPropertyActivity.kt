@@ -12,15 +12,21 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.databinding.ActivityAddPropertyBinding
+import com.example.masterdetailflowkotlintest.model.Property
+import com.example.masterdetailflowkotlintest.placeholder.PlaceholderContent
 import com.example.masterdetailflowkotlintest.ui.map.MapActivity
-import java.util.ArrayList
+import com.example.masterdetailflowkotlintest.ui.map.MapViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
-
+@AndroidEntryPoint
 class AddPropertyActivity : AppCompatActivity() {
 
     private val housingType: MutableList<String> = ArrayList()
+    private val viewModel: AddPropertyViewModel by viewModels()
 
     private lateinit var binding: ActivityAddPropertyBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,10 +48,12 @@ class AddPropertyActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
 
-
         return when (item.itemId) {
             R.id.save -> {
-                //TODO: CREATE NEW PROPERTY HERE WITH ROOM
+
+                viewModel.createProperty(PlaceholderContent.ITEMS[(0..10).random()])
+
+
                 true
             }
 

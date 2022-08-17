@@ -33,8 +33,9 @@ class DatabaseModule {
      * providePropertyDao as a provider of PropertyDao.
      */
 
+    @Singleton
     @Provides
-        fun providePropertyDao(localDatabase: LocalDatabase): PropertyDao {
+    fun providePropertyDao(localDatabase: LocalDatabase): PropertyDao {
             return localDatabase.propertyDao()
         }
 

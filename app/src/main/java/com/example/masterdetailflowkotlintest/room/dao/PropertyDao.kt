@@ -1,11 +1,13 @@
 package com.example.masterdetailflowkotlintest.room.dao
 
+import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.masterdetailflowkotlintest.model.Property
 import kotlinx.coroutines.flow.Flow
 
+@Dao
 interface PropertyDao {
 
     @Query("SELECT * FROM property_table")
