@@ -70,8 +70,4 @@ class PropertyDaoTest {
 
         assert(allProperties.first().isEmpty())
     }
-
-
-
-
 }

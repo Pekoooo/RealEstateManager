@@ -13,6 +13,8 @@ interface PropertyDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(property: Property)
 
+    //Todo get property with id
+
 
     /**
      * For testing purposes
