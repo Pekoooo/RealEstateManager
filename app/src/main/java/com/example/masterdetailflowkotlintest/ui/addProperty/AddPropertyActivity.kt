@@ -1,9 +1,7 @@
 package com.example.masterdetailflowkotlintest.ui.addProperty
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -11,19 +9,21 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.viewModels
 import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.databinding.ActivityAddPropertyBinding
 import com.example.masterdetailflowkotlintest.model.Property
-import com.example.masterdetailflowkotlintest.placeholder.PlaceholderContent
-import com.example.masterdetailflowkotlintest.ui.map.MapActivity
-import com.example.masterdetailflowkotlintest.ui.map.MapViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDateTime
 import java.util.*
+import kotlin.math.log
 
 @AndroidEntryPoint
 class AddPropertyActivity : AppCompatActivity() {
+
+    companion object{
+        const val TAG = "MyAddPropertyActivity"
+    }
 
     private val housingType: MutableList<String> = ArrayList()
     private val viewModel: AddPropertyViewModel by viewModels()
@@ -50,10 +50,11 @@ class AddPropertyActivity : AppCompatActivity() {
 
         return when (item.itemId) {
             R.id.save -> {
-
-                viewModel.createProperty(PlaceholderContent.ITEMS[(0..10).random()])
-
-
+                viewModel.createProperty(getPropertyInfo())
+                //viewModel.createProperty(PlaceholderContent.ITEMS[(0..10).random()])
+                viewModel.allProperties.observe(this){
+                    Log.d(TAG, "onOptionsItemSelected: " + it[0].description)
+                }
                 true
             }
 
@@ -61,6 +62,26 @@ class AddPropertyActivity : AppCompatActivity() {
                 super.onOptionsItemSelected(item)
             }
         }
+    }
+
+    private fun getPropertyInfo(): Property{
+
+        return Property(
+            1,
+            binding.surfaceEditText.text.toString(),
+            binding.spinner.selectedItem.toString(),
+            binding.addressEditText.text.toString(),
+            binding.cityEditText.text.toString(),
+            binding.neighborhoodEditText?.text.toString(),
+            binding.postalCodeEditText.text.toString(),
+            binding.countryEditText.text.toString(),
+            binding.priceEditText.text.toString(),
+            binding.bathroomEditText.text.toString(),
+            binding.bedroomEditText.text.toString(),
+            Calendar.getInstance().time.toString(),
+            binding.roomsEditText.text.toString(),
+            binding.propertyDescriptionEditText.text.toString()
+        )
     }
 
     private fun populateHousingTypeList() {

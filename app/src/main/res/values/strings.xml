@@ -31,6 +31,8 @@
     <string name="train">Train</string>
     <string name="poi">POI</string>
     <string name="point_of_interests">Point Of Interests</string>
+    <string name="neighborhood">Neighborhood</string>
+    <string name="price">Price</string>
 
 
 </resources>

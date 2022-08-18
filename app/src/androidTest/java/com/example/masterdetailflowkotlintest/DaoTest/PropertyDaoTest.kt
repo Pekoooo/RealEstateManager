@@ -1,8 +1,6 @@
-package com.example.masterdetailflowkotlintest
+package com.example.masterdetailflowkotlintest.DaoTest
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.asLiveData
-import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.filters.SmallTest
 import com.example.masterdetailflowkotlintest.placeholder.PlaceholderContent
 import com.example.masterdetailflowkotlintest.room.LocalDatabase
@@ -11,7 +9,6 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
-import com.google.common.truth.*
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule

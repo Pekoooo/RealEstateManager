@@ -1,5 +1,6 @@
 package com.example.masterdetailflowkotlintest.model
 
+import android.text.Editable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -34,8 +35,6 @@ data class Property(
     val listedAt: String,
     @ColumnInfo(name = "property_rooms")
     val rooms: String,
-    @ColumnInfo(name = "property_mainPhoto")
-    val mainPhoto: String,
     @ColumnInfo(name = "property_description")
     val description: String
     ) : Serializable {

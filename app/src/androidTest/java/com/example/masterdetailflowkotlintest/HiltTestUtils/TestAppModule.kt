@@ -1,4 +1,4 @@
-package com.example.masterdetailflowkotlintest
+package com.example.masterdetailflowkotlintest.HiltTestUtils
 
 import android.content.Context
 import androidx.room.Room

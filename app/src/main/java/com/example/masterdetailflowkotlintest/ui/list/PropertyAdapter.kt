@@ -33,9 +33,7 @@ class PropertyAdapter(
         holder.propertyLocation.text = property.neighborhood
         holder.propertyPrice.text = property.price
         holder.propertyType.text = property.type
-        Glide.with(holder.propertyImage.context)
-            .load(property.mainPhoto)
-            .into(holder.propertyImage)
+
 
         holder.bind(propertyList[position], onSelect)
 

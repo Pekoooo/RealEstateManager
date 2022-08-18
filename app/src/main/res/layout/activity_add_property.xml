@@ -280,11 +280,28 @@
             android:drawableStart="@drawable/custom_address_focused_icon"
             android:drawablePadding="16dp"
             android:hint="Country"
-            android:inputType="numberDecimal"
+            android:inputType="textNoSuggestions"
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/guideline"
             app:layout_constraintTop_toBottomOf="@id/postal_code_edit_text" />
+
+        <EditText
+            android:id="@+id/neighborhood_edit_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/custom_input"
+            android:drawableStart="@drawable/custom_address_focused_icon"
+            android:drawablePadding="16dp"
+            android:hint="@string/neighborhood"
+            android:inputType="textNoSuggestions"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/guideline"
+            app:layout_constraintTop_toBottomOf="@id/country_edit_text" />
 
         <EditText
             android:id="@+id/price_edit_text"
@@ -296,12 +313,12 @@
             android:background="@drawable/custom_input"
             android:drawableStart="@drawable/custom_price_focused_icon"
             android:drawablePadding="16dp"
-            android:hint="Price"
+            android:hint="@string/price"
             android:inputType="numberDecimal"
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/guideline"
-            app:layout_constraintTop_toBottomOf="@id/country_edit_text" />
+            app:layout_constraintTop_toBottomOf="@id/neighborhood_edit_text" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

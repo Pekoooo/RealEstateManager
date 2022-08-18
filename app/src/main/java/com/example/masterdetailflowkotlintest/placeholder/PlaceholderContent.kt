@@ -122,7 +122,6 @@ object PlaceholderContent {
             PROPERTY_LISTED_DATES.random(),
             (1..5).random().toString(),
             PROPERTY_MAIN_PICTURE_LIST.random(),
-            PROPERTY_DESCRIPTION.random()
         )
     }
 
