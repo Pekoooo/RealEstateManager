@@ -1,5 +1,6 @@
 package com.example.masterdetailflowkotlintest.ui.addProperty
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,9 +11,11 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.navigation.findNavController
 import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.databinding.ActivityAddPropertyBinding
 import com.example.masterdetailflowkotlintest.model.Property
+import com.example.masterdetailflowkotlintest.ui.list.PropertyListFragment
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDateTime
 import java.util.*
@@ -51,10 +54,10 @@ class AddPropertyActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.save -> {
                 viewModel.createProperty(getPropertyInfo())
-                //viewModel.createProperty(PlaceholderContent.ITEMS[(0..10).random()])
-                viewModel.allProperties.observe(this){
-                    Log.d(TAG, "onOptionsItemSelected: " + it[0].description)
-                }
+
+                val intent = Intent(applicationContext, PropertyListFragment::class.java)
+                startActivity(intent)
+
                 true
             }
 
@@ -67,7 +70,7 @@ class AddPropertyActivity : AppCompatActivity() {
     private fun getPropertyInfo(): Property{
 
         return Property(
-            1,
+            0,
             binding.surfaceEditText.text.toString(),
             binding.spinner.selectedItem.toString(),
             binding.addressEditText.text.toString(),

@@ -14,7 +14,9 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.masterdetailflowkotlintest.ui.map.MapActivity
 import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.databinding.ActivityItemDetailBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration

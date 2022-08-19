@@ -8,21 +8,26 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.placeholder.PlaceholderContent;
 import com.example.masterdetailflowkotlintest.databinding.FragmentItemListBinding
+import com.example.masterdetailflowkotlintest.model.Property
 import com.example.masterdetailflowkotlintest.ui.addProperty.AddPropertyActivity
 import com.example.masterdetailflowkotlintest.ui.detail.PropertyDetailFragment
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class PropertyListFragment : Fragment() {
 
-
+    private val viewModel: PropertyListViewModel by viewModels()
     private var _binding: FragmentItemListBinding? = null
+    private var allProperties: List<Property> = listOf()
     private val binding get() = _binding!!
+
 
     companion object {
         private const val TAG = "MyPropertyListFragment"
@@ -40,14 +45,8 @@ class PropertyListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (context as AppCompatActivity).supportActionBar!!.title = "Properties"
-
         val recyclerView: RecyclerView = binding.itemList
         val itemDetailFragmentContainer: View? = view.findViewById(R.id.item_detail_nav_container)
-
-
-
-        setupRecyclerView(recyclerView, itemDetailFragmentContainer)
 
         binding.addPropertyTabletFab?.setOnClickListener {
             val intent = Intent(context, AddPropertyActivity::class.java)
@@ -59,7 +58,10 @@ class PropertyListFragment : Fragment() {
             startActivity(intent)
         }
 
-
+        viewModel.allProperties.observe(viewLifecycleOwner){
+            allProperties = it
+            setupRecyclerView(recyclerView, itemDetailFragmentContainer)
+        }
     }
 
     private fun setupRecyclerView(
@@ -67,7 +69,8 @@ class PropertyListFragment : Fragment() {
         itemDetailFragmentContainer: View?
     ) {
         recyclerView.adapter = PropertyAdapter(
-            PlaceholderContent.ITEMS, itemDetailFragmentContainer
+            allProperties,
+            itemDetailFragmentContainer
         ) {
 
             val args = Bundle()

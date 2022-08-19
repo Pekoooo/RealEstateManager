@@ -10,7 +10,7 @@ import java.io.Serializable
 data class Property(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "property_id")
-    val id: Int,
+    val id: Int = 0,
     @ColumnInfo(name = "property_surface")
     val surface: String,
     @ColumnInfo(name = "property_type")
@@ -38,6 +38,8 @@ data class Property(
     @ColumnInfo(name = "property_description")
     val description: String
     ) : Serializable {
+
+    //todo Parcelable
 
     override fun toString(): String = "$type in $neighborhood for $price"
 }
