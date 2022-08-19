@@ -1,76 +1,51 @@
 package com.example.masterdetailflowkotlintest.ui.main
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.AttributeSet
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.*
 import com.example.masterdetailflowkotlintest.ui.map.MapActivity
 import com.example.masterdetailflowkotlintest.R
-import com.example.masterdetailflowkotlintest.databinding.ActivityItemDetailBinding
+import com.example.masterdetailflowkotlintest.databinding.MainActivityBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
-    private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
 
         super.onCreate(savedInstanceState)
 
-        val binding = ActivityItemDetailBinding.inflate(layoutInflater)
+        val binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment_item_detail) as NavHostFragment
-        val navController = navHostFragment.navController
-        appBarConfiguration = AppBarConfiguration(navController.graph)
+        setSupportActionBar(binding.mainActivityToolbar)
 
-        setupActionBarWithNavController(navController, appBarConfiguration)
 
-        supportActionBar?.title = R.string.app_name.toString()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main_activity, menu)
         return true
     }
 
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        val intent = Intent(applicationContext, MapActivity::class.java)
-
-        return when (item.itemId) {
-
-            R.id.map -> {
-                startActivity(intent)
-                true
-            }
-
-            R.id.currency -> {
-                Toast.makeText(applicationContext, "Changing currency", Toast.LENGTH_LONG).show()
-                return true
-            }
-
-            else -> {
-                super.onOptionsItemSelected(item)
-            }
-        }
+        val navController = findNavController(R.id.fragment_nav_host)
+        return item.onNavDestinationSelected(navController)
+                || super.onOptionsItemSelected(item)
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_item_detail)
-        return navController.navigateUp(appBarConfiguration)
-                || super.onSupportNavigateUp()
-    }
+
 }
 
 

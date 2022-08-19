@@ -12,6 +12,12 @@
         <action
             android:id="@+id/show_item_detail"
             app:destination="@id/item_detail_fragment" />
+        <action
+            android:id="@+id/action_item_list_fragment_to_addPropertyFragment"
+            app:destination="@id/addPropertyFragment" />
+        <action
+            android:id="@+id/action_item_list_fragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
     </fragment>
     <fragment
         android:id="@+id/item_detail_fragment"
@@ -22,4 +28,14 @@
             android:name="item_id"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/addPropertyFragment"
+        android:name="com.example.masterdetailflowkotlintest.ui.addProperty.AddPropertyFragment"
+        android:label="fragment_add_property"
+        tools:layout="@layout/fragment_add_property" />
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.example.masterdetailflowkotlintest.ui.map.MapFragment"
+        android:label="Map Fragment"
+        tools:layout="@layout/fragment_map" />
 </navigation>

@@ -30,8 +30,8 @@ class AddPropertyActivity : AppCompatActivity() {
 
     private val housingType: MutableList<String> = ArrayList()
     private val viewModel: AddPropertyViewModel by viewModels()
-
     private lateinit var binding: ActivityAddPropertyBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddPropertyBinding.inflate(layoutInflater)

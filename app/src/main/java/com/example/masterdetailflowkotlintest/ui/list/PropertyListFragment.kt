@@ -18,6 +18,7 @@ import com.example.masterdetailflowkotlintest.databinding.FragmentItemListBindin
 import com.example.masterdetailflowkotlintest.model.Property
 import com.example.masterdetailflowkotlintest.ui.addProperty.AddPropertyActivity
 import com.example.masterdetailflowkotlintest.ui.detail.PropertyDetailFragment
+import com.example.masterdetailflowkotlintest.ui.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -38,6 +39,8 @@ class PropertyListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        (activity as MainActivity).supportActionBar?.title = "List"
+
         _binding = FragmentItemListBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -54,8 +57,7 @@ class PropertyListFragment : Fragment() {
         }
 
         binding.addPropertyPhoneFab?.setOnClickListener {
-            val intent = Intent(context, AddPropertyActivity::class.java)
-            startActivity(intent)
+            findNavController().navigate(R.id.addPropertyFragment)
         }
 
         viewModel.allProperties.observe(viewLifecycleOwner){
@@ -69,7 +71,7 @@ class PropertyListFragment : Fragment() {
         itemDetailFragmentContainer: View?
     ) {
         recyclerView.adapter = PropertyAdapter(
-            allProperties,
+            PlaceholderContent.ITEMS,
             itemDetailFragmentContainer
         ) {
 
