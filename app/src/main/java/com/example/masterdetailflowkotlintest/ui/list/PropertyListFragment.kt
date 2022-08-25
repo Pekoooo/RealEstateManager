@@ -1,16 +1,23 @@
 package com.example.masterdetailflowkotlintest.ui.list
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
 import android.widget.Toast
+import androidx.annotation.MenuRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.menu.MenuBuilder
+import androidx.appcompat.widget.Toolbar
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.placeholder.PlaceholderContent;
@@ -22,13 +29,12 @@ import com.example.masterdetailflowkotlintest.ui.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PropertyListFragment : Fragment() {
+class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
 
     private val viewModel: PropertyListViewModel by viewModels()
     private var _binding: FragmentItemListBinding? = null
     private var allProperties: List<Property> = listOf()
     private val binding get() = _binding!!
-
 
     companion object {
         private const val TAG = "MyPropertyListFragment"
@@ -42,6 +48,8 @@ class PropertyListFragment : Fragment() {
         (activity as MainActivity).supportActionBar?.title = "List"
 
         _binding = FragmentItemListBinding.inflate(inflater, container, false)
+
+
         return binding.root
     }
 
@@ -52,6 +60,7 @@ class PropertyListFragment : Fragment() {
         val itemDetailFragmentContainer: View? = view.findViewById(R.id.item_detail_nav_container)
 
         binding.addPropertyTabletFab?.setOnClickListener {
+            //TODO : change to nav controller
             val intent = Intent(context, AddPropertyActivity::class.java)
             startActivity(intent)
         }
@@ -64,6 +73,24 @@ class PropertyListFragment : Fragment() {
             allProperties = it
             setupRecyclerView(recyclerView, itemDetailFragmentContainer)
         }
+
+        requireActivity().addMenuProvider(object: MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                Log.d(TAG, "onCreateMenu: is called")
+                menuInflater.inflate(R.menu.menu_main_activity, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean
+            = when (menuItem.itemId){
+
+                R.id.map -> {
+                    findNavController().navigate(R.id.mapFragment)
+                    true
+                }
+
+                else -> false
+            }
+        })
     }
 
     private fun setupRecyclerView(
@@ -88,6 +115,7 @@ class PropertyListFragment : Fragment() {
             }
         }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

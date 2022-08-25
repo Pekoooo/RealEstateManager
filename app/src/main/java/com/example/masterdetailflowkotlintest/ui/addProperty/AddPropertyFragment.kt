@@ -14,6 +14,7 @@ import com.example.masterdetailflowkotlintest.databinding.FragmentAddPropertyBin
 import com.example.masterdetailflowkotlintest.databinding.FragmentItemListBinding
 import com.example.masterdetailflowkotlintest.model.Property
 import com.example.masterdetailflowkotlintest.ui.list.PropertyListViewModel
+import com.example.masterdetailflowkotlintest.ui.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.ArrayList
 
@@ -38,6 +39,7 @@ class AddPropertyFragment : Fragment() {
 
         populateHousingTypeList()
         setUpSpinner()
+
     }
 
     private fun populateHousingTypeList() {
