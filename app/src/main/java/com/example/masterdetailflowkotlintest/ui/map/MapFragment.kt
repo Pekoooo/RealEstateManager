@@ -1,9 +1,11 @@
 package com.example.masterdetailflowkotlintest.ui.map
+
 import android.os.Bundle
-import android.view.*
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
 
 
@@ -11,10 +13,6 @@ class MapFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
-
-
     }
 
     override fun onCreateView(
@@ -24,12 +22,7 @@ class MapFragment : Fragment() {
 
         (activity as MainActivity).supportActionBar?.title = "Map"
 
-        return null
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+        return inflater.inflate(R.layout.fragment_map, container, false)
     }
 
 }

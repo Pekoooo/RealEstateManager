@@ -1,11 +1,14 @@
 package com.example.masterdetailflowkotlintest.ui.addProperty
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.masterdetailflowkotlintest.R
@@ -13,6 +16,7 @@ import com.example.masterdetailflowkotlintest.databinding.ActivityAddPropertyBin
 import com.example.masterdetailflowkotlintest.databinding.FragmentAddPropertyBinding
 import com.example.masterdetailflowkotlintest.databinding.FragmentItemListBinding
 import com.example.masterdetailflowkotlintest.model.Property
+import com.example.masterdetailflowkotlintest.ui.list.PropertyListFragment
 import com.example.masterdetailflowkotlintest.ui.list.PropertyListViewModel
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,6 +34,7 @@ class AddPropertyFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        (activity as MainActivity).supportActionBar?.title = "New Property"
         binding = FragmentAddPropertyBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -39,6 +44,25 @@ class AddPropertyFragment : Fragment() {
 
         populateHousingTypeList()
         setUpSpinner()
+
+        requireActivity().addMenuProvider(object: MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menu.clear()
+                menuInflater.inflate(R.menu.menu_add_activity, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean
+                    = when (menuItem.itemId){
+
+                R.id.save -> {
+                    Toast.makeText(context, "saved", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                
+
+                else -> false
+            }
+        })
 
     }
 

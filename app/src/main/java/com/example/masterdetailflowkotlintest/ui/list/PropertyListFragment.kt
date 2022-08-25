@@ -76,7 +76,7 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
 
         requireActivity().addMenuProvider(object: MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                Log.d(TAG, "onCreateMenu: is called")
+                menu.clear()
                 menuInflater.inflate(R.menu.menu_main_activity, menu)
             }
 
@@ -85,6 +85,11 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
 
                 R.id.map -> {
                     findNavController().navigate(R.id.mapFragment)
+                    true
+                }
+
+                R.id.currency -> {
+                    Toast.makeText(context, "currency changed", Toast.LENGTH_SHORT).show()
                     true
                 }
 

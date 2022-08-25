@@ -23,15 +23,19 @@ class MainActivity : AppCompatActivity() {
         val binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setSupportActionBar(binding.mainActivityToolbar)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_main_activity, menu)
+
         return true
     }
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+
 
         val navController = findNavController(R.id.fragment_nav_host)
         return item.onNavDestinationSelected(navController)
