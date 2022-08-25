@@ -12,7 +12,6 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.masterdetailflowkotlintest.R
-import com.example.masterdetailflowkotlintest.databinding.ActivityAddPropertyBinding
 import com.example.masterdetailflowkotlintest.databinding.FragmentAddPropertyBinding
 import com.example.masterdetailflowkotlintest.databinding.FragmentItemListBinding
 import com.example.masterdetailflowkotlintest.model.Property

@@ -16,26 +16,18 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
-
         super.onCreate(savedInstanceState)
 
         val binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         setSupportActionBar(binding.mainActivityToolbar)
-
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-
-        return true
     }
 
 
+    /**
+     * Needed for navigation (from list to map)
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-
 
         val navController = findNavController(R.id.fragment_nav_host)
         return item.onNavDestinationSelected(navController)

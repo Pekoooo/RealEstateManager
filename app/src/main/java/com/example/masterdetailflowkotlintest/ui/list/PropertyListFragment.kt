@@ -1,30 +1,19 @@
 package com.example.masterdetailflowkotlintest.ui.list
 
-import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Toast
-import androidx.annotation.MenuRes
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.view.menu.MenuBuilder
-import androidx.appcompat.widget.Toolbar
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.placeholder.PlaceholderContent;
 import com.example.masterdetailflowkotlintest.databinding.FragmentItemListBinding
 import com.example.masterdetailflowkotlintest.model.Property
-import com.example.masterdetailflowkotlintest.ui.addProperty.AddPropertyActivity
-import com.example.masterdetailflowkotlintest.ui.detail.PropertyDetailFragment
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -60,9 +49,8 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
         val itemDetailFragmentContainer: View? = view.findViewById(R.id.item_detail_nav_container)
 
         binding.addPropertyTabletFab?.setOnClickListener {
-            //TODO : change to nav controller
-            val intent = Intent(context, AddPropertyActivity::class.java)
-            startActivity(intent)
+            //Todo make it work
+            findNavController().navigate(R.id.addPropertyFragment)
         }
 
         binding.addPropertyPhoneFab?.setOnClickListener {

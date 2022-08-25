@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Adding the same root's ID for view binding as other layout configurations -->
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/add_property_nested_scroll_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.addProperty.AddPropertyActivity">
+    tools:context=".ui.addProperty.AddPropertyFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,7 +14,6 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/spinner_text_input_layout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -42,30 +40,26 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="16dp"
-                android:spinnerMode="dialog"
-                app:layout_constraintTop_toBottomOf="@id/toolbar" />
+                android:spinnerMode="dialog" />
 
 
         </com.google.android.material.textfield.TextInputLayout>
 
 
-
-            <EditText
-                android:id="@+id/agent_name_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/agent_name"
-                android:background="@drawable/custom_input"
-                android:drawableStart="@drawable/custom_agent_focused_icon"
-                android:drawablePadding="16dp"
-                android:padding="16dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:inputType="text"
-                android:maxLines="1"
-                app:layout_constraintTop_toBottomOf="@id/spinner_text_input_layout" />
-
-
+        <EditText
+            android:id="@+id/agent_name_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/custom_input"
+            android:drawableStart="@drawable/custom_agent_focused_icon"
+            android:drawablePadding="16dp"
+            android:hint="@string/agent_name"
+            android:inputType="text"
+            android:maxLines="1"
+            android:padding="16dp"
+            app:layout_constraintTop_toBottomOf="@id/spinner_text_input_layout" />
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -101,22 +95,20 @@
             android:id="@+id/property_description_edit_text_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/take_picture_button"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp">
+            app:layout_constraintTop_toBottomOf="@id/take_picture_button">
 
             <EditText
                 android:id="@+id/property_description_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="32dp"
-                android:hint="@string/property_description"/>
+                android:hint="@string/property_description" />
 
 
         </com.google.android.material.textfield.TextInputLayout>
-
 
 
         <EditText
@@ -191,23 +183,22 @@
             android:id="@+id/POI_Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:text="@string/point_of_interests"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_marginStart="8dp"
-            app:layout_constraintTop_toBottomOf="@id/price_edit_text"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bathroom_edit_text" />
 
 
         <include
+            layout="@layout/checkbox_grid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            layout="@layout/checkbox_grid"
             android:layout_margin="16dp"
-            app:layout_constraintTop_toBottomOf="@id/POI_Title"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/POI_Title" />
 
 
         <androidx.constraintlayout.widget.Guideline
@@ -326,3 +317,5 @@
 
 
 </androidx.core.widget.NestedScrollView>
+
+

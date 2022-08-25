@@ -5,7 +5,7 @@
     android:id="@+id/add_property_nested_scroll_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.addProperty.AddPropertyActivity">
+    tools:context=".ui.addProperty.AddPropertyFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -40,8 +40,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="16dp"
-                android:spinnerMode="dialog"
-                app:layout_constraintTop_toBottomOf="@id/toolbar" />
+                android:spinnerMode="dialog"/>
 
 
         </com.google.android.material.textfield.TextInputLayout>
