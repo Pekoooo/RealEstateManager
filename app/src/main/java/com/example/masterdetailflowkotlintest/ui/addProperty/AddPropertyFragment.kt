@@ -78,6 +78,7 @@ class AddPropertyFragment : Fragment() {
     }
 
     private fun createToolbar() {
+
         requireActivity().addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menu.clear()
@@ -90,16 +91,13 @@ class AddPropertyFragment : Fragment() {
                     Log.d(TAG, "onMenuItemSelected: ${binding.propertyDescriptionEditText.text}")
                     Toast.makeText(context, "New property saved", Toast.LENGTH_LONG).show()
                     viewModel.createProperty(getPropertyInfo())
-
-                    findNavController().navigate(R.id.item_list_fragment)
-
-
+                    findNavController().navigateUp()
                     true
                 }
 
                 else -> false
             }
-        })
+        }, viewLifecycleOwner)
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
