@@ -2,6 +2,7 @@ package com.example.masterdetailflowkotlintest.ui.list
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.core.view.MenuProvider
@@ -34,9 +35,11 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+        Log.d(MainActivity.TAG, "onCreateView: ")
         (activity as MainActivity).supportActionBar?.title = "List"
 
-        _binding = FragmentItemListBinding.inflate(inflater, container, false)
+        _binding = FragmentItemListBinding.inflate(layoutInflater, container, false)
 
 
         return binding.root
@@ -45,11 +48,12 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Log.d(MainActivity.TAG, "onViewCreated: ")
+
         val recyclerView: RecyclerView = binding.itemList
         val itemDetailFragmentContainer: View? = view.findViewById(R.id.item_detail_nav_container)
 
         binding.addPropertyTabletFab?.setOnClickListener {
-            //Todo make it work
             findNavController().navigate(R.id.addPropertyFragment)
         }
 
@@ -91,7 +95,7 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
         itemDetailFragmentContainer: View?
     ) {
         recyclerView.adapter = PropertyAdapter(
-            PlaceholderContent.ITEMS,
+            allProperties,
             itemDetailFragmentContainer
         ) {
 
@@ -109,9 +113,17 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
         }
     }
 
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+
+        Log.d(MainActivity.TAG, "onViewStateRestored: ")
+
+    }
 
     override fun onDestroyView() {
+
         super.onDestroyView()
+        Log.d(MainActivity.TAG, "onDestroyView: ")
         _binding = null
     }
 }

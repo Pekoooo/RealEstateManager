@@ -27,12 +27,22 @@
         <argument
             android:name="item_id"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_item_detail_fragment_to_addPropertyFragment"
+            app:destination="@id/addPropertyFragment" />
     </fragment>
     <fragment
         android:id="@+id/addPropertyFragment"
         android:name="com.example.masterdetailflowkotlintest.ui.addProperty.AddPropertyFragment"
         android:label="fragment_add_property"
-        tools:layout="@layout/fragment_add_property" />
+        tools:layout="@layout/fragment_add_property" >
+        <action
+            android:id="@+id/action_addPropertyFragment_to_item_list_fragment"
+            app:destination="@id/item_list_fragment" />
+        <argument
+            android:name="item_id"
+            app:argType="integer" />
+    </fragment>
     <fragment
         android:id="@+id/mapFragment"
         android:name="com.example.masterdetailflowkotlintest.ui.map.MapFragment"

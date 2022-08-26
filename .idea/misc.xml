@@ -45,7 +45,7 @@
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/layout/activity_map.xml" value="0.18" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/layout/checkbox_grid.xml" value="0.33" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/layout/fragment_add_property.xml" value="0.2865792129162462" />
-        <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/layout/fragment_item_detail.xml" value="0.14343928280358598" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/layout/fragment_item_detail.xml" value="0.33" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/layout/fragment_item_list.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/layout/fragment_map.xml" value="0.3009833262077811" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/layout/item_list_content.xml" value="0.1" />
@@ -54,6 +54,7 @@
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/layout/test_activity_add_property.xml" value="0.14343928280358598" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/menu/menu.xml" value="0.3009833262077811" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/menu/menu_add_activity.xml" value="0.19410004275331338" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/menu/menu_detail_activity.xml" value="0.25" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/menu/menu_main_activity.xml" value="0.16246259085079093" />
       </map>
     </option>

@@ -13,7 +13,12 @@ interface PropertyDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(property: Property)
 
-    //Todo get property with id
+    @Query("SELECT * FROM property_table WHERE property_id = :id LIMIT 1")
+    fun getPropertyById(id: Int): Flow<Property>
+
+    //Todo @Update query for updating property
+
+
 
 
     /**

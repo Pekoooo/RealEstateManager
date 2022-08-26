@@ -178,58 +178,24 @@
                 android:text="Points of interests"
                 app:drawableStartCompat="@drawable/ic_poi" />
 
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/chip_group_poi"
+            <TextView
+                android:id="@+id/property_poi_textview"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
+                android:text="School"
                 app:layout_constraintTop_toBottomOf="@id/POI_title"
-                app:layout_constraintEnd_toStartOf="@id/guideline">
-
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    tools:visibility="visible"
-                    tools:text="School" />
-
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    tools:visibility="visible"
-                    tools:text="Theatre" />
-
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    tools:visibility="visible"
-                    tools:text="Park" />
-
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    tools:visibility="visible"
-                    tools:text="Train station" />
-
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    tools:visibility="visible"
-                    tools:text="Highschools" />
+                app:layout_constraintStart_toStartOf="parent"/>
 
 
-            </com.google.android.material.chip.ChipGroup>
+
+
 
             <TextView
                 android:id="@+id/created_at_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/chip_group_poi"
+                app:layout_constraintTop_toBottomOf="@id/property_poi_textview"
                 android:layout_marginTop="16dp"
                 android:layout_marginStart="8dp"
                 android:textSize="18dp"

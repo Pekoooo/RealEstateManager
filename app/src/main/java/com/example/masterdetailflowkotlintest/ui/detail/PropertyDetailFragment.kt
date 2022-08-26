@@ -1,13 +1,15 @@
 package com.example.masterdetailflowkotlintest.ui.detail
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.databinding.FragmentItemDetailBinding
 import com.example.masterdetailflowkotlintest.model.Property
 import com.example.masterdetailflowkotlintest.model.PropertyDetailedPicture
@@ -47,6 +49,29 @@ class PropertyDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         updateContent()
         setRecyclerView()
+
+        requireActivity().addMenuProvider(object: MenuProvider{
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menu.clear()
+                menuInflater.inflate(R.menu.menu_detail_activity, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean
+            = when (menuItem.itemId){
+
+                R.id.edit -> {
+                    val id = arguments!!.getInt(ARG_ITEM_ID)
+                    val args = Bundle()
+                    args.putInt(ARG_ITEM_ID, id)
+                    findNavController().navigate(R.id.addPropertyFragment, args)
+
+                    true
+                }
+
+                else -> true
+            }
+
+        })
     }
 
     private fun setRecyclerView(){
