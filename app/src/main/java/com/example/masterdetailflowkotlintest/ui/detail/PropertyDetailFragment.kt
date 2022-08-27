@@ -5,6 +5,10 @@ import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,14 +18,20 @@ import com.example.masterdetailflowkotlintest.databinding.FragmentItemDetailBind
 import com.example.masterdetailflowkotlintest.model.Property
 import com.example.masterdetailflowkotlintest.model.PropertyDetailedPicture
 import com.example.masterdetailflowkotlintest.placeholder.PlaceholderContent
+import com.example.masterdetailflowkotlintest.ui.list.PropertyListViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 
+@AndroidEntryPoint
 class PropertyDetailFragment : Fragment() {
 
     companion object {
         const val ARG_ITEM_ID = "item_id"
     }
 
+    private val viewModel: PropertyDetailViewModel by viewModels()
     private var property: Property? = null
     private var _binding: FragmentItemDetailBinding? = null
     private val binding get() = _binding!!
@@ -29,12 +39,10 @@ class PropertyDetailFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        (context as AppCompatActivity).supportActionBar!!.title = "Detail"
 
-        if (arguments?.containsKey(ARG_ITEM_ID) == true) {
-            val id: Int? = arguments?.getInt(ARG_ITEM_ID)
-            property = PlaceholderContent.ITEM_MAP[id]
-        }
+
+
+
     }
 
     override fun onCreateView(
@@ -47,8 +55,16 @@ class PropertyDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        updateContent()
         setRecyclerView()
+
+        if (arguments?.containsKey(ARG_ITEM_ID) == true) {
+            val id: Int? = arguments?.getInt(ARG_ITEM_ID)
+            lifecycle.coroutineScope.launch{
+                viewModel.getPropertyById(id!!).collect(){
+                    updateContent(it)
+                }
+            }
+        }
 
         requireActivity().addMenuProvider(object: MenuProvider{
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -71,20 +87,22 @@ class PropertyDetailFragment : Fragment() {
                 else -> true
             }
 
-        })
+        },viewLifecycleOwner)
     }
 
     private fun setRecyclerView(){
         val adapter = PropertyDetailPictureAdapter()
         val recyclerView: RecyclerView = binding.recyclerViewDetailedView
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-
-        val testList: MutableList<PropertyDetailedPicture> = ArrayList()
+        recyclerView.layoutManager = LinearLayoutManager(
+            context,
+            LinearLayoutManager.HORIZONTAL,
+            false
+        )
     }
 
-    private fun updateContent() {
-        property?.let {
+    private fun updateContent(property: Property) {
+        property.let {
             binding.propertySurface.text = property!!.surface
             binding.propertyAddress.text = property!!.address
             binding.propertyCity.text = property!!.city

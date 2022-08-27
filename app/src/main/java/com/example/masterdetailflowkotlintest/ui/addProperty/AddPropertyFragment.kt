@@ -62,11 +62,7 @@ class AddPropertyFragment : Fragment() {
 
     private fun retrieveData(id: Int) {
         //getPropertyInfo
-        viewModel.getPropertyById(id)
 
-        viewModel.property.observe(viewLifecycleOwner){
-            setViewInfo(it)
-        }
 
         //fill up edit text fields in view
 

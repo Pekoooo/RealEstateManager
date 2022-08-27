@@ -31,11 +31,7 @@ class AddPropertyViewModel @Inject constructor(
     }
 
      fun getPropertyById(id: Int) {
-         viewModelScope.launch {
-             propertyRepository.getPropertyById(id).collect { response ->
-                 property.value = response
-             }
-         }
+
     }
 
 }

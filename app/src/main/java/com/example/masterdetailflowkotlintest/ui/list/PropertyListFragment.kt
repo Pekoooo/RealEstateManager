@@ -87,7 +87,7 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
 
                 else -> false
             }
-        })
+        },viewLifecycleOwner)
     }
 
     private fun setupRecyclerView(

@@ -17,6 +17,6 @@ class PropertyRepository @Inject constructor(
         propertyDao.insert(property)
     }
 
-    suspend fun getPropertyById(id: Int) = propertyDao.getPropertyById(id)
+     fun getPropertyById(id: Int): Flow<Property> = propertyDao.getPropertyById(id)
 
 }
