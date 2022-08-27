@@ -4,13 +4,11 @@ import android.os.Bundle
 import android.text.Editable
 import android.util.Log
 import android.view.*
+import android.widget.*
 import androidx.fragment.app.Fragment
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.TextView
-import android.widget.Toast
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.masterdetailflowkotlintest.R
@@ -22,6 +20,9 @@ import com.example.masterdetailflowkotlintest.ui.list.PropertyListFragment
 import com.example.masterdetailflowkotlintest.ui.list.PropertyListViewModel
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import org.w3c.dom.Text
 import java.util.*
 
 
@@ -32,6 +33,7 @@ class AddPropertyFragment : Fragment() {
     private val housingType: MutableList<String> = ArrayList()
     private var _binding: FragmentAddPropertyBinding? = null
     private val binding: FragmentAddPropertyBinding get() = _binding!!
+    private var currentId: Int? = null
 
     companion object {
         const val TAG = "MyAddPropertyFragment"
@@ -42,39 +44,53 @@ class AddPropertyFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        (activity as MainActivity).supportActionBar?.title = "New Property"
         _binding = FragmentAddPropertyBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         populateHousingTypeList()
         setUpSpinner()
         createToolbar()
 
-        if(arguments?.containsKey(ARG_ITEM_ID) == true){
-            val id: Int = requireArguments().getInt(ARG_ITEM_ID)
-            retrieveData(id)
+        if(argsHaveKey()){
+            (activity as MainActivity).supportActionBar?.title = "Update Property"
+            currentId = requireArguments().getInt(ARG_ITEM_ID)
+            retrieveData(currentId!!)
+        } else {
+            (activity as MainActivity).supportActionBar?.title = "New Property"
         }
-
     }
+
+    private fun argsHaveKey(): Boolean = arguments?.containsKey(ARG_ITEM_ID) == true
 
     private fun retrieveData(id: Int) {
-        //getPropertyInfo
-
-
-        //fill up edit text fields in view
-
+        lifecycle.coroutineScope.launch{
+            viewModel.getPropertyById(id).collect{ displayData(it) }
+        }
     }
 
-    private fun setViewInfo(it: Property) {
-        (binding.spinnerEditText as TextView).text = it.type
-        (binding.propertyDescriptionEditText as TextView).text = it.description
+    private fun displayData(property: Property){
+        (binding.spinnerEditText as TextView).text = property.type // does not work
+        (binding.agentNameEditText as TextView).text = property.agent
+        (binding.propertyDescriptionEditText as TextView).text = property.description
+        (binding.surfaceEditText as TextView).text = property.surface
+        (binding.addressEditText as TextView).text = property.address
+        (binding.roomsEditText as TextView).text = property.rooms
+        (binding.cityEditText as TextView).text = property.city
+        (binding.bedroomEditText as TextView).text = property.bedrooms
+        (binding.postalCodeEditText as TextView).text = property.postalCode
+        (binding.bathroomEditText as TextView).text = property.bathrooms
+        (binding.countryEditText as TextView).text = property.country
+        (binding.neighborhoodEditText as TextView).text = property.neighborhood
+        (binding.priceEditText as TextView).text = property.price
+
+        //Todo : Add POIs
     }
 
     private fun createToolbar() {
-
         requireActivity().addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menu.clear()
@@ -84,28 +100,31 @@ class AddPropertyFragment : Fragment() {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean = when (menuItem.itemId) {
 
                 R.id.save -> {
-                    Log.d(TAG, "onMenuItemSelected: ${binding.propertyDescriptionEditText.text}")
-
-
                     if(allFieldsAreFilled()){
-                        Toast.makeText(context, "New property saved", Toast.LENGTH_LONG).show()
-                        viewModel.createProperty(getPropertyInfo())
-                        findNavController().navigateUp()
+                        if(argsHaveKey()) {
+                            Toast.makeText(context, "Property Updated", Toast.LENGTH_LONG).show()
+                            Log.d(MainActivity.TAG, "onMenuItemSelected: ${getPropertyInfo().description}")
+                            val property = getPropertyInfo()
+                            property.id = currentId!!
+                            viewModel.updateProperty(property)
+                            findNavController().navigateUp()
+                        } else {
+                            Toast.makeText(context, "New property saved", Toast.LENGTH_LONG).show()
+                            viewModel.createProperty(getPropertyInfo())
+                            findNavController().navigateUp()
+                        }
                     } else {
                         Toast.makeText(context, "Make sure all fields are filled", Toast.LENGTH_SHORT).show()
                     }
-
                     true
                 }
-
                 else -> false
             }
         }, viewLifecycleOwner)
     }
 
-    private fun allFieldsAreFilled(): Boolean {
-
-        return binding.agentNameEditText.text.toString() != "" &&
+    private fun allFieldsAreFilled(): Boolean =
+                binding.agentNameEditText.text.toString() != "" &&
                 binding.propertyDescriptionEditText.text.toString() != "" &&
                 binding.surfaceEditText.text.toString() != "" &&
                 binding.addressEditText.text.toString() != "" &&
@@ -117,11 +136,10 @@ class AddPropertyFragment : Fragment() {
                 binding.countryEditText.text.toString() != "" &&
                 binding.neighborhoodEditText.text.toString() != "" &&
                 binding.priceEditText.text.toString() != ""
-    }
 
-    private fun getPropertyInfo(): Property {
 
-        return Property(
+    private fun getPropertyInfo() =
+         Property(
             0,
             binding.surfaceEditText.text.toString(),
             binding.spinner.selectedItem.toString(),
@@ -138,14 +156,6 @@ class AddPropertyFragment : Fragment() {
             binding.propertyDescriptionEditText.text.toString(),
             binding.agentNameEditText.text.toString()
         )
-    }
-
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-
-        Log.d(MainActivity.TAG, "onViewStateRestored: ")
-
-    }
 
     private fun populateHousingTypeList() {
         housingType.add("House")
@@ -153,8 +163,6 @@ class AddPropertyFragment : Fragment() {
         housingType.add("Flat")
         housingType.add("Mansion")
     }
-
-
 
     private fun setUpSpinner() {
         val spinner = binding.spinner
@@ -182,7 +190,6 @@ class AddPropertyFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.d(MainActivity.TAG, "onDestroyView: ")
         _binding = null
     }
 

@@ -36,7 +36,6 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
         savedInstanceState: Bundle?
     ): View {
 
-        Log.d(MainActivity.TAG, "onCreateView: ")
         (activity as MainActivity).supportActionBar?.title = "List"
 
         _binding = FragmentItemListBinding.inflate(layoutInflater, container, false)
@@ -47,8 +46,6 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        Log.d(MainActivity.TAG, "onViewCreated: ")
 
         val recyclerView: RecyclerView = binding.itemList
         val itemDetailFragmentContainer: View? = view.findViewById(R.id.item_detail_nav_container)
@@ -113,17 +110,9 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
         }
     }
 
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-
-        Log.d(MainActivity.TAG, "onViewStateRestored: ")
-
-    }
 
     override fun onDestroyView() {
-
         super.onDestroyView()
-        Log.d(MainActivity.TAG, "onDestroyView: ")
         _binding = null
     }
 }

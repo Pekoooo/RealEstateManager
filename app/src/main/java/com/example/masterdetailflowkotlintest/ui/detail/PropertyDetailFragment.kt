@@ -82,7 +82,7 @@ class PropertyDetailFragment : Fragment() {
 
     private fun updateContent(property: Property) {
         property.let {
-            binding.titleTextView?.text = property.toString()
+            binding.titleTextView.text = property.toString()
             binding.propertySurface.text = property.surface
             binding.propertyAddress.text = property.address
             binding.propertyCity.text = property.city

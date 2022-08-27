@@ -33,10 +33,7 @@ class PropertyAdapter(
         holder.propertyLocation.text = property.neighborhood
         holder.propertyPrice.text = property.price
         holder.propertyType.text = property.type
-
-
         holder.bind(propertyList[position], onSelect)
-
 
     }
 

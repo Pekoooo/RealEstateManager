@@ -16,7 +16,9 @@ interface PropertyDao {
     @Query("SELECT * FROM property_table WHERE property_id = :id")
     fun getPropertyById(id: Int): Flow<Property>
 
-    //Todo @Update query for updating property
+
+    @Update
+    suspend fun updateProperty(property: Property)
 
 
     /**
