@@ -14,14 +14,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/detail_toolbar"
+        <TextView
+            android:id="@+id/title_text_view"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:layout_collapseMode="pin"
-            app:layout_constraintTop_toTopOf="parent"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            android:layout_height="wrap_content"
+            android:text="@string/template_detail_title"
+            android:textSize="32sp"
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/top_divider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:dividerColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/title_text_view"/>
 
         <TextView
             android:id="@+id/property_description_title"
@@ -29,8 +36,9 @@
             android:layout_height="wrap_content"
             android:text="DESCRIPTION"
             android:textSize="36dp"
+            android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/top_divider" />
 
         <TextView
             android:id="@+id/property_description"

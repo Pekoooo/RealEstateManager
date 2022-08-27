@@ -85,9 +85,16 @@ class AddPropertyFragment : Fragment() {
 
                 R.id.save -> {
                     Log.d(TAG, "onMenuItemSelected: ${binding.propertyDescriptionEditText.text}")
-                    Toast.makeText(context, "New property saved", Toast.LENGTH_LONG).show()
-                    viewModel.createProperty(getPropertyInfo())
-                    findNavController().navigateUp()
+
+
+                    if(allFieldsAreFilled()){
+                        Toast.makeText(context, "New property saved", Toast.LENGTH_LONG).show()
+                        viewModel.createProperty(getPropertyInfo())
+                        findNavController().navigateUp()
+                    } else {
+                        Toast.makeText(context, "Make sure all fields are filled", Toast.LENGTH_SHORT).show()
+                    }
+
                     true
                 }
 
@@ -96,18 +103,20 @@ class AddPropertyFragment : Fragment() {
         }, viewLifecycleOwner)
     }
 
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
+    private fun allFieldsAreFilled(): Boolean {
 
-        Log.d(MainActivity.TAG, "onViewStateRestored: ")
-
-    }
-
-    private fun populateHousingTypeList() {
-        housingType.add("House")
-        housingType.add("Penthouse")
-        housingType.add("Flat")
-        housingType.add("Mansion")
+        return binding.agentNameEditText.text.toString() != "" &&
+                binding.propertyDescriptionEditText.text.toString() != "" &&
+                binding.surfaceEditText.text.toString() != "" &&
+                binding.addressEditText.text.toString() != "" &&
+                binding.roomsEditText.text.toString() != "" &&
+                binding.cityEditText.text.toString() != "" &&
+                binding.bedroomEditText.text.toString() != "" &&
+                binding.postalCodeEditText.text.toString() != "" &&
+                binding.bathroomEditText.text.toString() != "" &&
+                binding.countryEditText.text.toString() != "" &&
+                binding.neighborhoodEditText.text.toString() != "" &&
+                binding.priceEditText.text.toString() != ""
     }
 
     private fun getPropertyInfo(): Property {
@@ -126,9 +135,26 @@ class AddPropertyFragment : Fragment() {
             binding.bedroomEditText.text.toString(),
             Calendar.getInstance().time.toString(),
             binding.roomsEditText.text.toString(),
-            binding.propertyDescriptionEditText.text.toString()
+            binding.propertyDescriptionEditText.text.toString(),
+            binding.agentNameEditText.text.toString()
         )
     }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+
+        Log.d(MainActivity.TAG, "onViewStateRestored: ")
+
+    }
+
+    private fun populateHousingTypeList() {
+        housingType.add("House")
+        housingType.add("Penthouse")
+        housingType.add("Flat")
+        housingType.add("Mansion")
+    }
+
+
 
     private fun setUpSpinner() {
         val spinner = binding.spinner

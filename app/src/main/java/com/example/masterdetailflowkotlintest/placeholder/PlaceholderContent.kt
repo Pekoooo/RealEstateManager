@@ -106,7 +106,7 @@ object PlaceholderContent {
         PROPERTY_INTERIOR_PHOTOS.add("https://image.shutterstock.com/image-illustration/interior-bedroom-wall-mockup-3d-600w-1920245540.jpg")
     }
 
-     fun generateProperty(): Property {
+     private fun generateProperty(): Property {
         return Property(
             (0..20).random(),
             (0..200).random().toString() + " sqm",
@@ -122,6 +122,7 @@ object PlaceholderContent {
             PROPERTY_LISTED_DATES.random(),
             (1..5).random().toString(),
             PROPERTY_MAIN_PICTURE_LIST.random(),
+            "Agent Smith"
         )
     }
 

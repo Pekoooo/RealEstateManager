@@ -36,6 +36,14 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_picture">Add Picture</string>
+    <string name="template_detail_title">Type in Neighborhood for price</string>
+    <string name="rooms">Rooms</string>
+    <string name="bedrooms">Bedrooms</string>
+    <string name="bathrooms">Bathrooms</string>
+    <string name="address">Address</string>
+    <string name="city">City</string>
+    <string name="postal_code">Postal code</string>
+    <string name="country">Country</string>
 
 
 </resources>

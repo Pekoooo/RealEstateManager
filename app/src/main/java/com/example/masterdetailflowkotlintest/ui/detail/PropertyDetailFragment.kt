@@ -2,25 +2,17 @@ package com.example.masterdetailflowkotlintest.ui.detail
 
 import android.os.Bundle
 import android.view.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.coroutineScope
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.databinding.FragmentItemDetailBinding
 import com.example.masterdetailflowkotlintest.model.Property
-import com.example.masterdetailflowkotlintest.model.PropertyDetailedPicture
-import com.example.masterdetailflowkotlintest.placeholder.PlaceholderContent
-import com.example.masterdetailflowkotlintest.ui.list.PropertyListViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 
@@ -32,18 +24,8 @@ class PropertyDetailFragment : Fragment() {
     }
 
     private val viewModel: PropertyDetailViewModel by viewModels()
-    private var property: Property? = null
     private var _binding: FragmentItemDetailBinding? = null
     private val binding get() = _binding!!
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-
-
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,9 +42,7 @@ class PropertyDetailFragment : Fragment() {
         if (arguments?.containsKey(ARG_ITEM_ID) == true) {
             val id: Int? = arguments?.getInt(ARG_ITEM_ID)
             lifecycle.coroutineScope.launch{
-                viewModel.getPropertyById(id!!).collect(){
-                    updateContent(it)
-                }
+                viewModel.getPropertyById(id!!).collect { updateContent(it) }
             }
         }
 
@@ -83,7 +63,6 @@ class PropertyDetailFragment : Fragment() {
 
                     true
                 }
-
                 else -> true
             }
 
@@ -103,17 +82,18 @@ class PropertyDetailFragment : Fragment() {
 
     private fun updateContent(property: Property) {
         property.let {
-            binding.propertySurface.text = property!!.surface
-            binding.propertyAddress.text = property!!.address
-            binding.propertyCity.text = property!!.city
-            binding.propertyPostalCode.text = property!!.postalCode
-            binding.propertyCountry.text = property!!.city
-            binding.propertyBathrooms.text = property!!.bathrooms
-            binding.propertyBedrooms.text = property!!.bedrooms
-            binding.createdAtDate.text = property!!.listedAt
-            binding.propertyRoom.text = property!!.rooms
-            binding.propertyCountry.text = property!!.country
-            binding.propertyDescription.text = property!!.description
+            binding.titleTextView?.text = property.toString()
+            binding.propertySurface.text = property.surface
+            binding.propertyAddress.text = property.address
+            binding.propertyCity.text = property.city
+            binding.propertyPostalCode.text = property.postalCode
+            binding.propertyCountry.text = property.city
+            binding.propertyBathrooms.text = property.bathrooms
+            binding.propertyBedrooms.text = property.bedrooms
+            binding.createdAtDate.text = property.listedAt
+            binding.propertyRoom.text = property.rooms
+            binding.propertyCountry.text = property.country
+            binding.propertyDescription.text = property.description
         }
     }
 

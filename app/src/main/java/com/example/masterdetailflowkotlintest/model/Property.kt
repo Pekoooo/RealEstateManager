@@ -36,7 +36,9 @@ data class Property(
     @ColumnInfo(name = "property_rooms")
     val rooms: String,
     @ColumnInfo(name = "property_description")
-    val description: String
+    val description: String,
+    @ColumnInfo(name = "property_agent")
+    val agent: String
     ) : Serializable {
 
     //todo Parcelable

@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="HOUSE"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:layout_marginStart="32dp"
         android:padding="4dp"
 
@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Vancouver"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="italic"
         android:layout_marginStart="32dp"
         android:padding="4dp"
@@ -43,12 +43,24 @@
         android:id="@+id/property_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1,500,000$"
-        android:textSize="20dp"
+        android:text="1,500,000"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:layout_marginStart="32dp"
         android:padding="4dp"
         app:layout_constraintStart_toEndOf="@id/property_image_view"
         app:layout_constraintTop_toBottomOf="@id/property_location"
         />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="$"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/property_price"
+        app:layout_constraintTop_toTopOf="@id/property_price"
+        app:layout_constraintBottom_toBottomOf="@id/property_price"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
