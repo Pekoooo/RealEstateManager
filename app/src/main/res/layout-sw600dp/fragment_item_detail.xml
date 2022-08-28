@@ -1,8 +1,7 @@
 <!-- Adding the same root's ID for view binding as other layout configurations -->
 
 
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_detail_container"
@@ -16,10 +15,20 @@
 
         <TextView
             android:id="@+id/title_text_view"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/template_detail_title"
             android:textSize="32sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="$"
+            android:textSize="32sp"
+            app:layout_constraintStart_toEndOf="@id/title_text_view"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.divider.MaterialDivider
@@ -28,15 +37,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             app:dividerColor="@color/black"
-            app:layout_constraintTop_toBottomOf="@id/title_text_view"/>
+            app:layout_constraintTop_toBottomOf="@id/title_text_view" />
 
         <TextView
             android:id="@+id/property_description_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:text="DESCRIPTION"
             android:textSize="36dp"
-            android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/top_divider" />
 
@@ -198,11 +207,10 @@
                 android:id="@+id/text_view_poi"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
+                android:text="School"
                 app:layout_constraintEnd_toEndOf="@id/guideline"
-                app:layout_constraintTop_toBottomOf="@id/POI_title"
-                android:text="School"/>
-
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/POI_title" />
 
 
             <TextView

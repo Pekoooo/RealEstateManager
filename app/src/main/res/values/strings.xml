@@ -16,7 +16,8 @@
     <string name="property_type">Property type</string>
     <string name="map_item">map_item</string>
     <string name="currency_item">currency_item</string>
-    <string name="rationale">Permission for location is required for application to function fully</string>
+    <string name="rationale_location">Permission for location is required for the application to function fully</string>
+    <string name="rationale_camera_and_storage">Multiple permissions for are required for the application to function fully</string>
     <string name="my_position">My Position</string>
     <string name="agent_name">Agent name</string>
     <string name="property_description">Property description</string>
@@ -44,6 +45,8 @@
     <string name="city">City</string>
     <string name="postal_code">Postal code</string>
     <string name="country">Country</string>
+    <string name="browse_files">Browse files</string>
+    <string name="open_camera">Open Camera</string>
 
 
 </resources>

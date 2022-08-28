@@ -33,7 +33,7 @@
                 android:drawablePadding="16dp"
                 android:focusable="false"
                 android:hint="@string/property_type"
-                android:inputType="text" />
+                android:inputType="text"/>
 
             <Spinner
                 android:id="@+id/spinner"
@@ -69,7 +69,7 @@
             android:layout_marginTop="32dp"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/agent_name_edit_text"
-            tools:listitem="@layout/row_item_detail_view_property_picture" />
+            tools:listitem="@layout/row_item_detail_view_property_picture"/>
 
         <Button
             android:id="@+id/add_picture_button"
@@ -77,6 +77,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="@string/add_picture"
+            android:backgroundTint="@color/base_purple"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/recycler_view"/>
@@ -102,6 +104,24 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <EditText
+            android:id="@+id/price_edit_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/custom_input"
+            android:drawableStart="@drawable/custom_price_focused_icon"
+            android:drawablePadding="16dp"
+            android:hint="@string/price"
+            android:inputType="number"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="@id/guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/property_description_edit_text_layout"
+             />
+
 
         <EditText
             android:id="@+id/surface_edit_text"
@@ -118,7 +138,7 @@
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="@id/guideline"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/property_description_edit_text_layout" />
+            app:layout_constraintTop_toBottomOf="@id/price_edit_text" />
 
         <EditText
             android:id="@+id/rooms_edit_text"
@@ -179,8 +199,9 @@
             android:text="@string/point_of_interests"
             android:textSize="20sp"
             android:textStyle="bold"
+            android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/price_edit_text" />
+            app:layout_constraintTop_toBottomOf="@id/bathroom_edit_text" />
 
 
         <include
@@ -190,7 +211,8 @@
             android:layout_margin="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/POI_Title" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/POI_Title"/>
 
 
         <androidx.constraintlayout.widget.Guideline
@@ -287,22 +309,7 @@
             app:layout_constraintStart_toEndOf="@id/guideline"
             app:layout_constraintTop_toBottomOf="@id/country_edit_text" />
 
-        <EditText
-            android:id="@+id/price_edit_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/custom_input"
-            android:drawableStart="@drawable/custom_price_focused_icon"
-            android:drawablePadding="16dp"
-            android:hint="@string/price"
-            android:inputType="number"
-            android:padding="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/guideline"
-            app:layout_constraintTop_toBottomOf="@id/neighborhood_edit_text" />
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

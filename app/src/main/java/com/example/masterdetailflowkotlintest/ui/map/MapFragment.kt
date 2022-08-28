@@ -83,7 +83,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
     private fun requestLocationPermissions() {
         EasyPermissions.requestPermissions(
             this,
-            getString(R.string.rationale),
+            getString(R.string.rationale_location),
             LOCATION_PERMISSION_REQ_CODE,
             *perms
         )

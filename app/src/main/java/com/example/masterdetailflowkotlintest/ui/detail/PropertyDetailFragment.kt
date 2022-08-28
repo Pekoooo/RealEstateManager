@@ -67,6 +67,7 @@ class PropertyDetailFragment : Fragment() {
             }
 
         },viewLifecycleOwner)
+
     }
 
     private fun setRecyclerView(){

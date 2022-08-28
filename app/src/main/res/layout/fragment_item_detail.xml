@@ -15,11 +15,22 @@
 
         <TextView
             android:id="@+id/title_text_view"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/template_detail_title"
-            android:textSize="32sp"
+            android:textSize="25sp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="$"
+            android:textSize="25sp"
+            app:layout_constraintStart_toEndOf="@id/title_text_view"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <com.google.android.material.divider.MaterialDivider
             android:id="@+id/top_divider"

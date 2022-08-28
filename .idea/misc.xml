@@ -32,6 +32,7 @@
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/ic_room_focused.xml" value="0.249" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/ic_surface.xml" value="0.3155" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/ic_surface_focused.xml" value="0.3155" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/rounded_corner.xml" value="0.3605" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/layout-sw600dp/activity_add_property.xml" value="0.18" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/layout-sw600dp/amenities_checkboxes.xml" value="0.11822916666666666" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/layout-sw600dp/fragment_add_property.xml" value="0.22" />
@@ -43,6 +44,7 @@
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/layout/activity_add_property.xml" value="0.3009833262077811" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/layout/activity_item_detail.xml" value="0.21205643437366395" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/layout/activity_map.xml" value="0.18" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/layout/add_picture_dialog.xml" value="0.30012825994014536" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/layout/checkbox_grid.xml" value="0.33" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/layout/fragment_add_property.xml" value="0.2865792129162462" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/layout/fragment_item_detail.xml" value="0.33" />

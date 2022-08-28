@@ -6,6 +6,10 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-feature android:name="android.hardware.camera.any" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
 
 
@@ -17,14 +21,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MasterDetailFlowKotlinTest"
         android:name=".MainApplication">
-        <activity
-            android:name=".ui.map.MapActivity"
-            android:exported="false"
-            android:parentActivityName="com.example.masterdetailflowkotlintest.ui.main.MainActivity"/>
-        <activity
-            android:name=".ui.addProperty.AddPropertyActivity"
-            android:exported="false"
-            android:parentActivityName="com.example.masterdetailflowkotlintest.ui.main.MainActivity" />
+
         <activity
             android:name="com.example.masterdetailflowkotlintest.ui.main.MainActivity"
             android:exported="true"
