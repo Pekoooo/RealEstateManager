@@ -56,19 +56,6 @@ class PropertyDaoTest {
         assert(allProperties.first().contains(property))
     }
 
-    @Test
-    fun updateProperty() = runBlocking {
-        val property = PlaceholderContent.ITEMS[(1..10).random()]
-        propertyDao.insert(property)
-
-        val allProperties = propertyDao.getAllProperties()
-
-        property.description = "updated desc"
-
-        propertyDao.updateProperty(property)
-
-        assert(allProperties.first()[0].description == "updated desc")
-    }
 
     @Test
     fun deleteAllProperties() = runBlocking {

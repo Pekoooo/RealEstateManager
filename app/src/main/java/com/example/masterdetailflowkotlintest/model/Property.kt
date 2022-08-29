@@ -10,7 +10,7 @@ import java.io.Serializable
 data class Property(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "property_id")
-    var id: Int = 0,
+    val id: Int = 0,
     @ColumnInfo(name = "property_surface")
     val surface: String,
     @ColumnInfo(name = "property_type")
@@ -36,7 +36,7 @@ data class Property(
     @ColumnInfo(name = "property_rooms")
     val rooms: String,
     @ColumnInfo(name = "property_description")
-    var description: String,
+    val description: String,
     @ColumnInfo(name = "property_agent")
     val agent: String
     ) : Serializable {

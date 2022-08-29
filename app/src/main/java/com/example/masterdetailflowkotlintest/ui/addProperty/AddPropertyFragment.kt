@@ -3,6 +3,7 @@ package com.example.masterdetailflowkotlintest.ui.addProperty
 import android.Manifest
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
@@ -18,6 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
+import pub.devrel.easypermissions.EasyPermissions.hasPermissions
 import java.util.*
 
 
@@ -33,20 +35,9 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     companion object {
         const val TAG = "MyAddPropertyFragment"
         const val ARG_ITEM_ID = "item_id"
-
-        private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
-        private const val REQUEST_CODE_PERMISSIONS = 10
-        private val REQUIRED_PERMISSIONS_CAMERA =
-            arrayOf (
-                Manifest.permission.CAMERA,
-            )
-
-        private val REQUIRED_PERMISSIONS_STORAGE =
-            arrayOf (
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            )
+        private const val REQUEST_CODE_PERMISSIONS_CAMERA = 10
+        private const val REQUEST_CODE_PERMISSIONS_STORAGE = 20
     }
-
 
 
     override fun onCreateView(
@@ -60,21 +51,19 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        (activity as MainActivity).supportActionBar?.show()
+
         populateHousingTypeList()
         setUpSpinner()
         createToolbar()
 
-        if(argsHaveKey()){
+        if (argsHaveKey()) {
             (activity as MainActivity).supportActionBar?.title = "Update Property"
             currentId = requireArguments().getInt(ARG_ITEM_ID)
             retrieveData(currentId!!)
         } else {
             (activity as MainActivity).supportActionBar?.title = "New Property"
         }
-
-
-
-
 
         binding.addPictureButton.setOnClickListener {
 
@@ -89,86 +78,59 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
             builder.show()
 
-            cameraButton.setOnClickListener{
-                /*TODO Implement camera opening & permissions*/
-                if(cameraPermissionsGranted()){
+            cameraButton.setOnClickListener {
 
-                    TODO("Open camera")
-
-
+                if (hasPermissions(requireContext(), Manifest.permission.CAMERA)) {
+                    Log.d(TAG, "onViewCreated: navigating to surface provider fragment")
+                    findNavController().navigate(R.id.cameraSurfaceProviderFragment)
                 } else {
                     requestCameraPermission()
                 }
-
                 builder.dismiss()
-
-
-
             }
-            storageButton.setOnClickListener{ /*TODO Implement storage opening & permissions*/
+            storageButton.setOnClickListener {
 
-                if(storagePermissionsGranted()){
-
-                    TODO("Open camera")
-
-
+                if (hasPermissions(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    TODO("Open camera fragment")
                 } else {
                     requestStoragePermission()
                 }
-
                 builder.dismiss()
             }
-
         }
-
-    }
-
-    private fun startCamera() {
-        TODO("Implement navigation to camera preview fragment")
     }
 
     private fun requestCameraPermission() {
+        Log.d(TAG, "requestCameraPermission: is called")
         EasyPermissions.requestPermissions(
             this,
             getString(R.string.rationale_camera_and_storage),
-            REQUEST_CODE_PERMISSIONS,
-            *REQUIRED_PERMISSIONS_CAMERA
-
+            REQUEST_CODE_PERMISSIONS_CAMERA,
+            Manifest.permission.CAMERA
         )
     }
 
     private fun requestStoragePermission() {
+        Log.d(TAG, "requestStoragePermission: is called")
         EasyPermissions.requestPermissions(
             this,
             getString(R.string.rationale_camera_and_storage),
-            REQUEST_CODE_PERMISSIONS,
-            *REQUIRED_PERMISSIONS_STORAGE
+            REQUEST_CODE_PERMISSIONS_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
 
         )
     }
 
-    private fun cameraPermissionsGranted() =
-        EasyPermissions.hasPermissions(
-            requireContext(),
-            *REQUIRED_PERMISSIONS_CAMERA
-        )
-
-    private fun storagePermissionsGranted() =
-        EasyPermissions.hasPermissions(
-            requireContext(),
-            *REQUIRED_PERMISSIONS_STORAGE
-        )
-
-
-    private fun argsHaveKey(): Boolean = arguments?.containsKey(ARG_ITEM_ID) == true
+    private fun argsHaveKey(): Boolean =
+        arguments?.containsKey(ARG_ITEM_ID) == true
 
     private fun retrieveData(id: Int) {
-        lifecycle.coroutineScope.launch{
+        lifecycle.coroutineScope.launch {
             viewModel.getPropertyById(id).collect { displayData(it) }
         }
     }
 
-    private fun displayData(property: Property){
+    private fun displayData(property: Property) {
         (binding.spinnerEditText as TextView).text = property.type // does not work
         (binding.agentNameEditText as TextView).text = property.agent
         (binding.propertyDescriptionEditText as TextView).text = property.description
@@ -196,12 +158,12 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean = when (menuItem.itemId) {
 
                 R.id.save -> {
-                    if(allFieldsAreFilled()){
-                        if(argsHaveKey()) {
+                    if (allFieldsAreFilled()) {
+                        if (argsHaveKey()) {
                             Toast.makeText(context, "Property Updated", Toast.LENGTH_LONG).show()
-                            val property = getPropertyInfo()
-                            property.id = currentId!!
-                            viewModel.updateProperty(property)
+
+                            viewModel.updateProperty(getPropertyInfo().copy(id = currentId!!))
+
                             findNavController().navigateUp()
                         } else {
                             Toast.makeText(context, "New property saved", Toast.LENGTH_LONG).show()
@@ -209,7 +171,11 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                             findNavController().navigateUp()
                         }
                     } else {
-                        Toast.makeText(context, "Make sure all fields are filled", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            context,
+                            "Make sure all fields are filled",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                     true
                 }
@@ -219,7 +185,7 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     }
 
     private fun allFieldsAreFilled(): Boolean =
-                binding.agentNameEditText.text.toString() != "" &&
+        binding.agentNameEditText.text.toString() != "" &&
                 binding.propertyDescriptionEditText.text.toString() != "" &&
                 binding.surfaceEditText.text.toString() != "" &&
                 binding.addressEditText.text.toString() != "" &&
@@ -234,22 +200,22 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
 
     private fun getPropertyInfo() = Property(
-            0,
-            binding.surfaceEditText.text.toString(),
-            binding.spinner.selectedItem.toString(),
-            binding.addressEditText.text.toString(),
-            binding.cityEditText.text.toString(),
-            binding.neighborhoodEditText.text.toString(),
-            binding.postalCodeEditText.text.toString(),
-            binding.countryEditText.text.toString(),
-            binding.priceEditText.text.toString(),
-            binding.bathroomEditText.text.toString(),
-            binding.bedroomEditText.text.toString(),
-            Calendar.getInstance().time.toString(),
-            binding.roomsEditText.text.toString(),
-            binding.propertyDescriptionEditText.text.toString(),
-            binding.agentNameEditText.text.toString()
-        )
+        0,
+        binding.surfaceEditText.text.toString(),
+        binding.spinner.selectedItem.toString(),
+        binding.addressEditText.text.toString(),
+        binding.cityEditText.text.toString(),
+        binding.neighborhoodEditText.text.toString(),
+        binding.postalCodeEditText.text.toString(),
+        binding.countryEditText.text.toString(),
+        binding.priceEditText.text.toString(),
+        binding.bathroomEditText.text.toString(),
+        binding.bedroomEditText.text.toString(),
+        Calendar.getInstance().time.toString(),
+        binding.roomsEditText.text.toString(),
+        binding.propertyDescriptionEditText.text.toString(),
+        binding.agentNameEditText.text.toString()
+    )
 
     private fun populateHousingTypeList() {
         housingType.add("House")
@@ -283,16 +249,19 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     }
 
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
+        //TODO : Not working
+        if (requestCode == REQUEST_CODE_PERMISSIONS_CAMERA) {
 
-        if (perms[0] == Manifest.permission.CAMERA) {
-            TODO("Open camera")
+            findNavController().navigate(R.id.cameraSurfaceProviderFragment)
+
         } else {
             TODO("Open storage")
-        }
 
+        }
     }
 
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
+        Log.d(TAG, "onPermissionsDenied: is called")
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
             AppSettingsDialog.Builder(this).build().show()
         } else {
