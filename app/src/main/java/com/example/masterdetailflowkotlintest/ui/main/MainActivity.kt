@@ -28,10 +28,6 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.mainActivityToolbar)
     }
 
-
-    /**
-     * Needed for navigation (from list to map)
-     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         val navController = findNavController(R.id.fragment_nav_host)
