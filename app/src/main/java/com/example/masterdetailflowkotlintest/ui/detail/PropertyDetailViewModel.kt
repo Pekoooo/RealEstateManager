@@ -1,9 +1,6 @@
 package com.example.masterdetailflowkotlintest.ui.detail
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.masterdetailflowkotlintest.model.Property
 import com.example.masterdetailflowkotlintest.repositories.PropertyRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,7 +17,11 @@ class PropertyDetailViewModel @Inject constructor(
 ) : ViewModel() {
 
 
-     fun getPropertyById(id: Int): Flow<Property> = propertyRepository.getPropertyById(id)
+    fun getPropertyById(id: Int): Flow<Property> = propertyRepository.getPropertyById(id)
+
+    val allProperties: LiveData<List<Property>> = propertyRepository.allProperties.asLiveData()
+
+
 
 
 }

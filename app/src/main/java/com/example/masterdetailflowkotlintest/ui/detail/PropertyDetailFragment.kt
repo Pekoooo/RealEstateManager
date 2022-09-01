@@ -2,6 +2,7 @@ package com.example.masterdetailflowkotlintest.ui.detail
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.databinding.FragmentItemDetailBinding
 import com.example.masterdetailflowkotlintest.model.Property
+import com.example.masterdetailflowkotlintest.ui.addProperty.AddPropertyAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -37,12 +39,14 @@ class PropertyDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setRecyclerView()
+
 
         if (arguments?.containsKey(ARG_ITEM_ID) == true) {
             val id: Int? = arguments?.getInt(ARG_ITEM_ID)
             lifecycle.coroutineScope.launch{
-                viewModel.getPropertyById(id!!).collect { updateContent(it) }
+                viewModel.getPropertyById(id!!).collect {
+                    updateContent(it)
+                }
             }
         }
 
@@ -56,7 +60,7 @@ class PropertyDetailFragment : Fragment() {
             = when (menuItem.itemId){
 
                 R.id.edit -> {
-                    val id = arguments!!.getInt(ARG_ITEM_ID)
+                    val id = requireArguments().getInt(ARG_ITEM_ID)
                     val args = Bundle()
                     args.putInt(ARG_ITEM_ID, id)
                     findNavController().navigate(R.id.addPropertyFragment, args)
@@ -70,15 +74,21 @@ class PropertyDetailFragment : Fragment() {
 
     }
 
-    private fun setRecyclerView(){
-        val adapter = PropertyDetailPictureAdapter()
-        val recyclerView: RecyclerView = binding.recyclerViewDetailedView
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(
-            context,
-            LinearLayoutManager.HORIZONTAL,
-            false
-        )
+    private fun setRecyclerView(
+        recyclerView: RecyclerView,
+        propertyList: MutableList<String>
+
+        ) {
+
+        val layoutManager = LinearLayoutManager(context)
+        layoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        recyclerView.layoutManager = layoutManager
+        recyclerView.adapter = AddPropertyAdapter(propertyList) {
+            //TODO : Implement dialog zoom
+            Toast.makeText(context, "The picture you clicked is now zoomed", Toast.LENGTH_SHORT)
+                .show()
+        }
+
     }
 
     private fun updateContent(property: Property) {
@@ -95,6 +105,11 @@ class PropertyDetailFragment : Fragment() {
             binding.propertyRoom.text = property.rooms
             binding.propertyCountry.text = property.country
             binding.propertyDescription.text = property.description
+
+            setRecyclerView(
+                binding.recyclerViewDetailedView,
+                property.pictureList
+            )
         }
     }
 

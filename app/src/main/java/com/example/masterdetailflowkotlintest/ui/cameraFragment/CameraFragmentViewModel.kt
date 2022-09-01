@@ -1,4 +1,4 @@
-package com.example.masterdetailflowkotlintest.ui.addProperty
+package com.example.masterdetailflowkotlintest.ui.cameraFragment
 
 import android.util.Log
 import androidx.lifecycle.*
@@ -12,32 +12,22 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
 @HiltViewModel
-class AddPropertyViewModel @Inject constructor(
+class CameraFragmentViewModel @Inject constructor(
 
     private var propertyRepository: PropertyRepository
 
 ) : ViewModel() {
 
-    companion object {
-        const val TAG = "MyPropertyViewModel"
-    }
-
-    val allProperties: LiveData<List<Property>> = propertyRepository.allProperties.asLiveData()
-    var property: MutableLiveData<Property> = MutableLiveData()
-
-
-    fun createProperty(property: Property) = viewModelScope.launch {
-        Log.d(TAG, "createProperty: ${property.description}")
-        propertyRepository.createProperty(property)
-    }
+    fun getPropertyById(id: Int): Flow<Property> = propertyRepository.getPropertyById(id)
 
     fun updateProperty(property: Property) = viewModelScope.launch(Dispatchers.IO) {
         Log.d(MainActivity.TAG, "updateProperty: ${property.description} ")
         propertyRepository.updateProperty(property)
     }
 
-    fun getPropertyById(id: Int): Flow<Property> = propertyRepository.getPropertyById(id)
+
 
 
 }

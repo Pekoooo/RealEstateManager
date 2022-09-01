@@ -10,10 +10,11 @@ import com.bumptech.glide.Glide
 import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.model.PropertyDetailedPicture
 
-class PropertyDetailPictureAdapter : RecyclerView.Adapter<PropertyDetailPictureAdapter.ViewHolder>(){
+class PropertyDetailPictureAdapter (
+        ): RecyclerView.Adapter<PropertyDetailPictureAdapter.ViewHolder>(){
 
 
-    var detailPictures: MutableList<PropertyDetailedPicture> = mutableListOf()
+     var detailPictures: MutableList<PropertyDetailedPicture> = mutableListOf()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -43,8 +44,8 @@ class PropertyDetailPictureAdapter : RecyclerView.Adapter<PropertyDetailPictureA
 
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view){
-        val interiorImage: ImageView = view.findViewById(R.id.interior_picture)
-        val interiorPictureDescription: TextView = view.findViewById(R.id.picture_description)
+        val interiorImage: ImageView = view.findViewById(R.id.property_detail_picture)
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -57,8 +58,6 @@ class PropertyDetailPictureAdapter : RecyclerView.Adapter<PropertyDetailPictureA
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val currentPictureList: PropertyDetailedPicture = detailPictures[position]
-
-        holder.interiorPictureDescription.text = currentPictureList.desc
 
         Glide.with(holder.interiorImage)
             .load(currentPictureList.url)

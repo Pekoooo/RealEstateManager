@@ -11,6 +11,9 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.databinding.FragmentAddPropertyBinding
 import com.example.masterdetailflowkotlintest.model.Property
@@ -27,10 +30,22 @@ import java.util.*
 class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
     private val viewModel: AddPropertyViewModel by viewModels()
+    private val args: AddPropertyFragmentArgs by navArgs()
     private val housingType: MutableList<String> = ArrayList()
     private var _binding: FragmentAddPropertyBinding? = null
     private val binding: FragmentAddPropertyBinding get() = _binding!!
     private var currentId: Int? = null
+    private var allPropertyPictures: MutableList<String> = mutableListOf()
+
+    private val cameraPerms = arrayOf(
+            Manifest.permission.CAMERA,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    )
+
+    private val storagePerms = arrayOf(
+        android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        android.Manifest.permission.READ_EXTERNAL_STORAGE
+    )
 
     companion object {
         const val TAG = "MyAddPropertyFragment"
@@ -52,17 +67,21 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         super.onViewCreated(view, savedInstanceState)
 
         (activity as MainActivity).supportActionBar?.show()
+        
 
         populateHousingTypeList()
         setUpSpinner()
         createToolbar()
-
-        if (argsHaveKey()) {
+        
+        if (argsHaveId()) {
             (activity as MainActivity).supportActionBar?.title = "Update Property"
             currentId = requireArguments().getInt(ARG_ITEM_ID)
             retrieveData(currentId!!)
         } else {
             (activity as MainActivity).supportActionBar?.title = "New Property"
+
+            args.property?.let { displayData(it) }
+
         }
 
         binding.addPictureButton.setOnClickListener {
@@ -80,9 +99,20 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
             cameraButton.setOnClickListener {
 
-                if (hasPermissions(requireContext(), Manifest.permission.CAMERA)) {
-                    Log.d(TAG, "onViewCreated: navigating to surface provider fragment")
+                if (hasPermissions(requireContext(), *cameraPerms)) {
+
+                    val action =
+                        AddPropertyFragmentDirections.actionAddPropertyFragmentToCameraSurfaceProviderFragment(
+                            getPropertyInfo()
+                        )
+
+                    findNavController().navigate(action)
+
+                } else if (arguments == null) {
+
                     findNavController().navigate(R.id.cameraSurfaceProviderFragment)
+
+
                 } else {
                     requestCameraPermission()
                 }
@@ -90,8 +120,8 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             }
             storageButton.setOnClickListener {
 
-                if (hasPermissions(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                    TODO("Open camera fragment")
+                if (hasPermissions(requireContext(), *storagePerms)) {
+                    TODO("Open storage")
                 } else {
                     requestStoragePermission()
                 }
@@ -100,28 +130,26 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         }
     }
 
-    private fun requestCameraPermission() {
-        Log.d(TAG, "requestCameraPermission: is called")
-        EasyPermissions.requestPermissions(
-            this,
-            getString(R.string.rationale_camera_and_storage),
-            REQUEST_CODE_PERMISSIONS_CAMERA,
-            Manifest.permission.CAMERA
-        )
+
+    private fun setRecyclerView(
+        recyclerView: RecyclerView,
+
+        ) {
+
+        val layoutManager = LinearLayoutManager(context)
+        layoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        recyclerView.layoutManager = layoutManager
+        recyclerView.adapter = AddPropertyAdapter(
+            allPropertyPictures
+        ) {
+            //TODO : Implement dialog zoom
+            Toast.makeText(context, "The picture you clicked is now zoomed", Toast.LENGTH_SHORT)
+                .show()
+        }
+
     }
 
-    private fun requestStoragePermission() {
-        Log.d(TAG, "requestStoragePermission: is called")
-        EasyPermissions.requestPermissions(
-            this,
-            getString(R.string.rationale_camera_and_storage),
-            REQUEST_CODE_PERMISSIONS_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-
-        )
-    }
-
-    private fun argsHaveKey(): Boolean =
+    private fun argsHaveId(): Boolean =
         arguments?.containsKey(ARG_ITEM_ID) == true
 
     private fun retrieveData(id: Int) {
@@ -145,6 +173,10 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         (binding.neighborhoodEditText as TextView).text = property.neighborhood
         (binding.priceEditText as TextView).text = property.price
 
+        allPropertyPictures = property.pictureList
+
+        setRecyclerView(binding.recyclerView)
+
         //Todo : Add POIs
     }
 
@@ -159,7 +191,7 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
                 R.id.save -> {
                     if (allFieldsAreFilled()) {
-                        if (argsHaveKey()) {
+                        if (argsHaveId()) {
                             Toast.makeText(context, "Property Updated", Toast.LENGTH_LONG).show()
 
                             viewModel.updateProperty(getPropertyInfo().copy(id = currentId!!))
@@ -214,7 +246,11 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         Calendar.getInstance().time.toString(),
         binding.roomsEditText.text.toString(),
         binding.propertyDescriptionEditText.text.toString(),
-        binding.agentNameEditText.text.toString()
+        binding.agentNameEditText.text.toString(),
+        "main picture url",
+        allPropertyPictures
+
+
     )
 
     private fun populateHousingTypeList() {
@@ -258,6 +294,27 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             TODO("Open storage")
 
         }
+    }
+
+    private fun requestCameraPermission() {
+        Log.d(TAG, "requestCameraPermission: is called")
+        EasyPermissions.requestPermissions(
+            this,
+            getString(R.string.rationale_camera_and_storage),
+            REQUEST_CODE_PERMISSIONS_CAMERA,
+            *cameraPerms
+        )
+    }
+
+    private fun requestStoragePermission() {
+        Log.d(TAG, "requestStoragePermission: is called")
+        EasyPermissions.requestPermissions(
+            this,
+            getString(R.string.rationale_camera_and_storage),
+            REQUEST_CODE_PERMISSIONS_STORAGE,
+            *storagePerms
+
+        )
     }
 
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {

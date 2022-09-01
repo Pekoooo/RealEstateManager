@@ -122,7 +122,11 @@ object PlaceholderContent {
             PROPERTY_LISTED_DATES.random(),
             (1..5).random().toString(),
             PROPERTY_MAIN_PICTURE_LIST.random(),
-            "Agent Smith"
+            "Agent Smith",
+            "main picture",
+            arrayListOf(
+                "pic1"
+            )
         )
     }
 

@@ -18,12 +18,10 @@ class PropertyAdapter(
     private val propertyList: List<Property>,
     private val itemDetailFragmentContainer: View?,
     private val onSelect: (Property?) -> Unit
-) :
-    RecyclerView.Adapter<PropertyAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<PropertyAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding =
-            ItemListContentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemListContentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
 
     }
