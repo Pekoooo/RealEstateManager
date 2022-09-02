@@ -54,6 +54,7 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         const val ARG_ITEM_ID = "item_id"
         private const val REQUEST_CODE_PERMISSIONS_CAMERA = 10
         private const val REQUEST_CODE_PERMISSIONS_STORAGE = 20
+        private const val REQUEST_CODE_PERMISSIONS_GITHUB = 999
     }
 
 
