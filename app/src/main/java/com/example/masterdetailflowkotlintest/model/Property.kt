@@ -10,7 +10,7 @@ import kotlinx.android.parcel.Parcelize
 import java.io.Serializable
 
 
-
+@Parcelize
 @Entity(tableName = "property_table")
 data class Property(
     @PrimaryKey(autoGenerate = true)
@@ -48,7 +48,7 @@ data class Property(
     val mainPicture: String,
     @ColumnInfo(name = "property_picture_list")
     val pictureList: MutableList<String>
-    ) : Serializable {
+    ) : Parcelable {
 
     override fun toString(): String = "$type in $neighborhood for $price"
 

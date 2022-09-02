@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,15 +37,16 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     private val binding: FragmentAddPropertyBinding get() = _binding!!
     private var currentId: Int? = null
     private var allPropertyPictures: MutableList<String> = mutableListOf()
+    private var currentProperty: Property? = null
 
     private val cameraPerms = arrayOf(
-            Manifest.permission.CAMERA,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        Manifest.permission.CAMERA,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE
     )
 
     private val storagePerms = arrayOf(
-        android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        android.Manifest.permission.READ_EXTERNAL_STORAGE
+        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        Manifest.permission.READ_EXTERNAL_STORAGE
     )
 
     companion object {
@@ -67,22 +69,28 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         super.onViewCreated(view, savedInstanceState)
 
         (activity as MainActivity).supportActionBar?.show()
-        
+
 
         populateHousingTypeList()
         setUpSpinner()
         createToolbar()
-        
+
+
         if (argsHaveId()) {
             (activity as MainActivity).supportActionBar?.title = "Update Property"
             currentId = requireArguments().getInt(ARG_ITEM_ID)
             retrieveData(currentId!!)
+
         } else {
             (activity as MainActivity).supportActionBar?.title = "New Property"
 
-            args.property?.let { displayData(it) }
-
         }
+
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Property>("property")
+            ?.observe(viewLifecycleOwner) {
+                Log.d(TAG, "livedata : ${it.pictureList.size}")
+                displayData(it)
+            }
 
         binding.addPictureButton.setOnClickListener {
 
@@ -101,10 +109,15 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
                 if (hasPermissions(requireContext(), *cameraPerms)) {
 
-                    val action =
+                    val action = if (currentProperty == null) {
                         AddPropertyFragmentDirections.actionAddPropertyFragmentToCameraSurfaceProviderFragment(
                             getPropertyInfo()
                         )
+                    } else {
+                        AddPropertyFragmentDirections.actionAddPropertyFragmentToCameraSurfaceProviderFragment(
+                            currentProperty
+                        )
+                    }
 
                     findNavController().navigate(action)
 
@@ -131,30 +144,39 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     }
 
 
-    private fun setRecyclerView(
-        recyclerView: RecyclerView,
-
-        ) {
+    private fun setRecyclerView(recyclerView: RecyclerView) {
 
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.HORIZONTAL
         recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = AddPropertyAdapter(
-            allPropertyPictures
-        ) {
-            //TODO : Implement dialog zoom
-            Toast.makeText(context, "The picture you clicked is now zoomed", Toast.LENGTH_SHORT)
-                .show()
+        Log.d(TAG, "setRecyclerView: ${allPropertyPictures.size} ")
+        recyclerView.adapter = AddPropertyAdapter(allPropertyPictures) {
+
+            Log.d(TAG, "setRecyclerView: clicked on $it")
+
+
         }
 
     }
 
     private fun argsHaveId(): Boolean =
-        arguments?.containsKey(ARG_ITEM_ID) == true
+        arguments?.containsKey(ARG_ITEM_ID) == true && findNavController().currentBackStackEntry?.savedStateHandle?.contains(
+            "property"
+        ) == false
+
+    private fun argsHaveIdAndKey(): Boolean =
+        arguments?.containsKey(ARG_ITEM_ID) == true && findNavController().currentBackStackEntry?.savedStateHandle?.contains(
+            "property"
+        ) == true
 
     private fun retrieveData(id: Int) {
+        Log.d(TAG, "retrieveData: is called")
         lifecycle.coroutineScope.launch {
-            viewModel.getPropertyById(id).collect { displayData(it) }
+            viewModel.getPropertyById(id).collect {
+                displayData(it)
+                currentProperty = it
+
+            }
         }
     }
 
@@ -173,7 +195,12 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         (binding.neighborhoodEditText as TextView).text = property.neighborhood
         (binding.priceEditText as TextView).text = property.price
 
+        Log.d(TAG, "displayData: ${property.pictureList.size}")
+        Log.d(TAG, "displayData: list size before being set is ${allPropertyPictures.size} ")
+
         allPropertyPictures = property.pictureList
+
+        Log.d(TAG, "displayData: list size after being set is  ${allPropertyPictures.size} ")
 
         setRecyclerView(binding.recyclerView)
 
@@ -191,7 +218,7 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
                 R.id.save -> {
                     if (allFieldsAreFilled()) {
-                        if (argsHaveId()) {
+                        if (argsHaveIdAndKey() || argsHaveId()) {
                             Toast.makeText(context, "Property Updated", Toast.LENGTH_LONG).show()
 
                             viewModel.updateProperty(getPropertyInfo().copy(id = currentId!!))

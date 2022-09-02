@@ -1,7 +1,6 @@
-package com.example.masterdetailflowkotlintest.ui.cameraFragment
+package com.example.masterdetailflowkotlintest.ui.camera
 
 import android.content.ContentValues
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -11,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
@@ -19,22 +17,14 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.coroutineScope
-import androidx.navigation.fragment.FragmentNavigatorDestinationBuilder
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.databinding.FragmentCameraSurfaceProviderBinding
-import com.example.masterdetailflowkotlintest.model.Property
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
-import java.io.File
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
-import android.util.Property as Property1
 
 @AndroidEntryPoint
 class CameraFragment : Fragment() {
@@ -121,10 +111,8 @@ class CameraFragment : Fragment() {
                     val updatedProperty = args.property
                     updatedProperty?.pictureList?.add(output.savedUri.toString())
 
-                    val action =
-                        CameraFragmentDirections.actionCameraSurfaceProviderFragmentToAddPropertyFragment(updatedProperty)
-
-                    findNavController().navigate(action)
+                    findNavController().previousBackStackEntry?.savedStateHandle?.set("property", updatedProperty)
+                    findNavController().popBackStack()
 
                     Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
                     Log.d(TAG, msg)

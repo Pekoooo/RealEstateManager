@@ -55,7 +55,7 @@
         tools:layout="@layout/fragment_map" />
     <fragment
         android:id="@+id/cameraSurfaceProviderFragment"
-        android:name="com.example.masterdetailflowkotlintest.ui.cameraFragment.CameraFragment"
+        android:name="com.example.masterdetailflowkotlintest.ui.camera.CameraFragment"
         android:label="fragment_camera_surface_provider"
         tools:layout="@layout/fragment_camera_surface_provider" >
         <action
@@ -64,6 +64,7 @@
         <argument
             android:name="property"
             app:argType="com.example.masterdetailflowkotlintest.model.Property"
-            app:nullable="true" />
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
 </navigation>
