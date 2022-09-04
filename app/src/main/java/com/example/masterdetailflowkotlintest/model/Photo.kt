@@ -3,9 +3,9 @@ package com.example.masterdetailflowkotlintest.model
 data class Photo(
     val id: Int,
     val path: String,
-    val isMain: Boolean
+    var isMain: Boolean
 ){
 
-    val description: String? = null
+    var description: String? = null
 
 }

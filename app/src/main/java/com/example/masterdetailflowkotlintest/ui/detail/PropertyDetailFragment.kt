@@ -1,6 +1,8 @@
 package com.example.masterdetailflowkotlintest.ui.detail
 
+import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.core.view.MenuProvider
@@ -10,11 +12,13 @@ import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.databinding.FragmentItemDetailBinding
 import com.example.masterdetailflowkotlintest.model.Photo
 import com.example.masterdetailflowkotlintest.model.Property
-import com.example.masterdetailflowkotlintest.ui.addProperty.AddPropertyAdapter
+import com.example.masterdetailflowkotlintest.ui.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -24,6 +28,7 @@ class PropertyDetailFragment : Fragment() {
 
     companion object {
         const val ARG_ITEM_ID = "item_id"
+        const val TAG = "MyPropertyDetail"
     }
 
     private val viewModel: PropertyDetailViewModel by viewModels()
@@ -81,18 +86,37 @@ class PropertyDetailFragment : Fragment() {
 
         ) {
 
+        Log.d(TAG, "setRecyclerView: ${propertyList.size}")
+
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.HORIZONTAL
         recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = AddPropertyAdapter(propertyList) {
-            //TODO : Implement dialog zoom
-            Toast.makeText(context, "The picture you clicked is now zoomed", Toast.LENGTH_SHORT)
-                .show()
+        recyclerView.adapter = PropertyDetailPictureAdapter(propertyList) {
+
+
+            val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+            val inflater = layoutInflater
+            val dialogLayout: View = inflater.inflate(R.layout.property_picture_zoom_dialog, null)
+
+            Glide
+                .with(requireContext())
+                .load(it?.path)
+                .override(1200,1200)
+                .centerCrop()
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(dialogLayout.findViewById(R.id.image_view_custom_dialog))
+
+
+            builder.setTitle(it?.description)
+            builder.setView(dialogLayout)
+            builder.show()
+
         }
 
     }
 
     private fun updateContent(property: Property) {
+        Log.d(TAG, "updateContent: ${property.pictureList.size}")
         property.let {
             binding.titleTextView.text = property.toString()
             binding.propertySurface.text = property.surface

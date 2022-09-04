@@ -10,7 +10,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.masterdetailflowkotlintest.R
-import com.example.masterdetailflowkotlintest.databinding.ItemListContentBinding
+import com.example.masterdetailflowkotlintest.databinding.RowItemListBinding
 import com.example.masterdetailflowkotlintest.model.Property
 import com.example.masterdetailflowkotlintest.ui.detail.PropertyDetailFragment
 
@@ -21,7 +21,7 @@ class PropertyAdapter(
 ) : RecyclerView.Adapter<PropertyAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemListContentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = RowItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
 
     }
@@ -37,7 +37,7 @@ class PropertyAdapter(
 
     override fun getItemCount() = propertyList.size
 
-    class ViewHolder(private val binding: ItemListContentBinding) :
+    class ViewHolder(private val binding: RowItemListBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(property: Property?, onSelect: (Property?) -> Unit) {

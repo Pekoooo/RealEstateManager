@@ -64,11 +64,13 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="200dp"
             android:layout_marginTop="32dp"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/agent_name_edit_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             tools:listitem="@layout/row_item_detail_view_property_picture"/>
 
         <Button

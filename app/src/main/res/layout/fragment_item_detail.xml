@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="DESCRIPTION"
-            android:textSize="24dp"
+            android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/top_divider" />
 
@@ -55,8 +55,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="DESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXTDESCRIPTION TEXT"
-            android:textSize="16dp"
+            android:text="Test"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/property_description_title" />
@@ -67,14 +67,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="PHOTOS"
-            android:textSize="24dp"
+            android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/property_description" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_detailed_view"
             android:layout_width="0dp"
-            android:layout_height="120dp"
+            android:layout_height="200dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -111,7 +111,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/surface"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 app:drawableStartCompat="@drawable/ic_surface"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -122,7 +122,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="250 sqm"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/surface_title" />
 
@@ -133,7 +133,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:text="Rooms"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 app:drawableStartCompat="@drawable/ic_room"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/property_surface" />
@@ -144,7 +144,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="5"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/room_title" />
 
@@ -155,7 +155,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:text="Bedroom"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 app:drawableStartCompat="@drawable/ic_bedroom"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/property_room" />
@@ -166,7 +166,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="5"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/bedroom_title" />
 
@@ -177,7 +177,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:text="Bathroom"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 app:drawableStartCompat="@drawable/ic_bathroom"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/property_bedrooms" />
@@ -188,7 +188,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="5"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/bathroom_title" />
 
@@ -199,7 +199,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:text="Points of interests"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 app:drawableStartCompat="@drawable/ic_poi"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/property_bathrooms" />
@@ -220,7 +220,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:text="Created at"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/property_poi_textview" />
 
@@ -230,7 +230,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="27/11/1995"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 android:textStyle="italic"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/created_at_title" />
@@ -242,7 +242,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:text="Sold at"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/created_at_date" />
 
@@ -252,7 +252,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="NOT SOLD YET"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 android:textStyle="italic"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/sold_at_title" />
@@ -263,7 +263,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Location"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 app:drawableStartCompat="@drawable/ic_location"
                 app:layout_constraintStart_toEndOf="@id/guideline"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -275,7 +275,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:text="740 Park Avenue Apt 6/7A"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@id/guideline"
                 app:layout_constraintTop_toBottomOf="@id/location_title" />
 
@@ -285,7 +285,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="New York"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@id/guideline"
                 app:layout_constraintTop_toBottomOf="@id/property_address" />
 
@@ -295,7 +295,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="NY 10021"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@id/guideline"
                 app:layout_constraintTop_toBottomOf="@id/property_city" />
 
@@ -305,7 +305,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="United States"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@id/guideline"
                 app:layout_constraintTop_toBottomOf="@id/property_postal_code" />
 

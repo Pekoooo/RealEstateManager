@@ -6,15 +6,16 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.*
+import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
-import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.databinding.FragmentAddPropertyBinding
 import com.example.masterdetailflowkotlintest.model.Photo
@@ -83,7 +84,6 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
         } else {
             (activity as MainActivity).supportActionBar?.title = "New Property"
-
         }
 
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Property>("property")
@@ -91,6 +91,8 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                 Log.d(TAG, "livedata : ${it.pictureList.size}")
                 displayData(it)
             }
+
+
 
         binding.addPictureButton.setOnClickListener {
 
@@ -143,7 +145,6 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         }
     }
 
-
     private fun setRecyclerView(recyclerView: RecyclerView) {
 
         val layoutManager = LinearLayoutManager(context)
@@ -152,12 +153,81 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         Log.d(TAG, "setRecyclerView: ${allPropertyPictures.size} ")
         recyclerView.adapter = AddPropertyAdapter(allPropertyPictures) {
 
-            Log.d(TAG, "setRecyclerView: clicked on $it")
+            val currentPhoto = it
 
+            val builder = AlertDialog.Builder(context)
+                .create()
+            val inflater = layoutInflater
+            val dialogLayout: View = inflater.inflate(R.layout.info_picture_dialog, null)
+
+            Glide
+                .with(requireContext())
+                .load(it?.path)
+                .override(1200,1200)
+                .centerCrop()
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(dialogLayout.findViewById(R.id.image_view_custom_dialog_edit_picture))
+
+            val saveButton = dialogLayout.findViewById<Button>(R.id.save_button)
+            val deleteButton = dialogLayout.findViewById<Button>(R.id.delete_button)
+            val descriptionTextView = dialogLayout.findViewById<EditText>(R.id.description_picture_edit_text)
+            val switch = dialogLayout.findViewById<SwitchCompat>(R.id.make_main_picture_switch)
+
+            builder.setView(dialogLayout)
+            builder.show()
+
+            if(currentPhoto!!.isMain){
+                switch.toggle()
+            }
+
+            saveButton.setOnClickListener {
+
+                if(switch.isChecked) {
+                    currentPhoto.isMain = true
+                    changeMainPhoto(currentPhoto)
+                }
+
+                currentPhoto.description = descriptionTextView.toString()
+                updatePicture(currentPhoto)
+            }
+
+            deleteButton.setOnClickListener {
+
+                currentProperty?.pictureList?.remove(currentPhoto)
+
+            }
 
         }
 
     }
+
+    private fun changeMainPhoto(currentPhoto: Photo) {
+        Log.d(TAG, "changeMainPhoto: ${currentProperty?.pictureList?.size}")
+        for (photo in currentProperty?.pictureList!!) {
+            if(photo.isMain){
+                photo.isMain = false
+            }
+        }
+    }
+
+    private fun updatePicture(currentPhoto: Photo?) {
+
+        val list = currentProperty?.pictureList!!
+
+        for (photo in list) {
+
+            if (photo.path == currentPhoto?.path) {
+                list.remove(photo)
+                list.add(currentPhoto)
+                break
+            }
+
+        }
+
+    }
+
+
+
 
     private fun argsHaveId(): Boolean =
         arguments?.containsKey(ARG_ITEM_ID) == true && findNavController().currentBackStackEntry?.savedStateHandle?.contains(
@@ -181,6 +251,7 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     }
 
     private fun displayData(property: Property) {
+
         (binding.spinnerEditText as TextView).text = property.type // does not work
         (binding.agentNameEditText as TextView).text = property.agent
         (binding.propertyDescriptionEditText as TextView).text = property.description
@@ -194,13 +265,9 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         (binding.countryEditText as TextView).text = property.country
         (binding.neighborhoodEditText as TextView).text = property.neighborhood
         (binding.priceEditText as TextView).text = property.price
-
-        Log.d(TAG, "displayData: ${property.pictureList.size}")
-        Log.d(TAG, "displayData: list size before being set is ${allPropertyPictures.size} ")
-
         allPropertyPictures = property.pictureList
 
-        Log.d(TAG, "displayData: list size after being set is  ${allPropertyPictures.size} ")
+        currentProperty = property
 
         setRecyclerView(binding.recyclerView)
 

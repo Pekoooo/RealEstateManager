@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:context=".ui.main.MainActivity"
-        tools:listitem="@layout/item_list_content" />
+        tools:listitem="@layout/row_item_list" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
