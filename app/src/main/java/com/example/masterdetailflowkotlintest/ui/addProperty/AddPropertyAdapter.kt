@@ -6,9 +6,10 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.masterdetailflowkotlintest.databinding.RowItemDetailViewPropertyPictureBinding
+import com.example.masterdetailflowkotlintest.model.Photo
 
 class AddPropertyAdapter(
-    private val propertyPictureList: List<String>,
+    private val propertyPictureList: List<Photo>,
     private val onSelect: (String?) -> Unit
 ): RecyclerView.Adapter<AddPropertyAdapter.ViewHolder>(){
 
@@ -21,7 +22,7 @@ class AddPropertyAdapter(
         val propertyPicture = propertyPictureList[position]
 
         Glide.with(holder.propertyDetailPicture)
-            .load(propertyPicture)
+            .load(propertyPicture.path)
             .into(holder.propertyDetailPicture)
     }
 

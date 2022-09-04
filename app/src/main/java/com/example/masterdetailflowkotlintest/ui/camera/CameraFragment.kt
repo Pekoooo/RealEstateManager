@@ -1,6 +1,7 @@
 package com.example.masterdetailflowkotlintest.ui.camera
 
 import android.content.ContentValues
+import android.graphics.Picture
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -20,6 +21,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.masterdetailflowkotlintest.databinding.FragmentCameraSurfaceProviderBinding
+import com.example.masterdetailflowkotlintest.model.Photo
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
@@ -109,7 +111,11 @@ class CameraFragment : Fragment() {
                     val msg = "Photo capture succeeded: ${output.savedUri}"
 
                     val updatedProperty = args.property
-                    updatedProperty?.pictureList?.add(output.savedUri.toString())
+                    updatedProperty?.pictureList?.add(Photo(
+                        Math.random().toInt(),
+                        output.savedUri.toString(),
+                        false
+                    ))
 
                     findNavController().previousBackStackEntry?.savedStateHandle?.set("property", updatedProperty)
                     findNavController().popBackStack()

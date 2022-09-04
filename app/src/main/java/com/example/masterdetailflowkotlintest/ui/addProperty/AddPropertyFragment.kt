@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.databinding.FragmentAddPropertyBinding
+import com.example.masterdetailflowkotlintest.model.Photo
 import com.example.masterdetailflowkotlintest.model.Property
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,12 +32,11 @@ import java.util.*
 class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
     private val viewModel: AddPropertyViewModel by viewModels()
-    private val args: AddPropertyFragmentArgs by navArgs()
     private val housingType: MutableList<String> = ArrayList()
     private var _binding: FragmentAddPropertyBinding? = null
     private val binding: FragmentAddPropertyBinding get() = _binding!!
     private var currentId: Int? = null
-    private var allPropertyPictures: MutableList<String> = mutableListOf()
+    private var allPropertyPictures: MutableList<Photo> = mutableListOf()
     private var currentProperty: Property? = null
 
     private val cameraPerms = arrayOf(

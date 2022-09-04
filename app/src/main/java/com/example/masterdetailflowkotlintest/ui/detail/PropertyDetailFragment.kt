@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.databinding.FragmentItemDetailBinding
+import com.example.masterdetailflowkotlintest.model.Photo
 import com.example.masterdetailflowkotlintest.model.Property
 import com.example.masterdetailflowkotlintest.ui.addProperty.AddPropertyAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -76,7 +77,7 @@ class PropertyDetailFragment : Fragment() {
 
     private fun setRecyclerView(
         recyclerView: RecyclerView,
-        propertyList: MutableList<String>
+        propertyList: MutableList<Photo>
 
         ) {
 

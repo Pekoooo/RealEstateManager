@@ -1,5 +1,6 @@
 package com.example.masterdetailflowkotlintest.placeholder
 
+import com.example.masterdetailflowkotlintest.model.Photo
 import com.example.masterdetailflowkotlintest.model.Property
 import java.util.ArrayList
 import java.util.HashMap
@@ -29,7 +30,7 @@ object PlaceholderContent {
         addInteriorPhotos()
         addNeighborhoods()
         addDescriptions()
-        addProperties()
+        //addProperties()
     }
 
     private fun addProperties() {
@@ -125,7 +126,11 @@ object PlaceholderContent {
             "Agent Smith",
             "main picture",
             arrayListOf(
-                "pic1"
+                Photo(
+                    0,
+                    "path",
+                    false
+                )
             )
         )
     }
