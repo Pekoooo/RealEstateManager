@@ -124,10 +124,8 @@ object PlaceholderContent {
             (1..5).random().toString(),
             PROPERTY_MAIN_PICTURE_LIST.random(),
             "Agent Smith",
-            "main picture",
             arrayListOf(
                 Photo(
-                    0,
                     "path",
                     false
                 )

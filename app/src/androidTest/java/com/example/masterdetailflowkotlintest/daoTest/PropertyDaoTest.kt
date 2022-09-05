@@ -1,4 +1,4 @@
-package com.example.masterdetailflowkotlintest.DaoTest
+package com.example.masterdetailflowkotlintest.daoTest
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.filters.SmallTest

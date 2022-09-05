@@ -1,6 +1,7 @@
 package com.example.masterdetailflowkotlintest.ui.list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.databinding.RowItemListBinding
 import com.example.masterdetailflowkotlintest.model.Property
 import com.example.masterdetailflowkotlintest.ui.detail.PropertyDetailFragment
+import com.example.masterdetailflowkotlintest.ui.main.MainActivity
 
 class PropertyAdapter(
     private val propertyList: List<Property>,
@@ -32,6 +34,15 @@ class PropertyAdapter(
         holder.propertyPrice.text = property.price
         holder.propertyType.text = property.type
         holder.bind(propertyList[position], onSelect)
+
+        Log.d(MainActivity.TAG, "onBindViewHolder: ${property.mainPicture}")
+
+
+
+        Glide
+            .with(holder.propertyImage)
+            .load(property.mainPicture)
+            .into(holder.propertyImage)
 
     }
 

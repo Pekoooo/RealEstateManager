@@ -112,7 +112,6 @@ class CameraFragment : Fragment() {
 
                     val updatedProperty = args.property
                     updatedProperty?.pictureList?.add(Photo(
-                        Math.random().toInt(),
                         output.savedUri.toString(),
                         false
                     ))

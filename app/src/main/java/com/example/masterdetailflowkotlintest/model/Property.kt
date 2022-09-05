@@ -45,10 +45,11 @@ data class Property(
     @ColumnInfo(name = "property_agent")
     val agent: String,
     @ColumnInfo(name = "property_main_picture")
-    val mainPicture: String,
+    var mainPicture: String? = null,
     @ColumnInfo(name = "property_picture_list")
     val pictureList: MutableList<Photo>
     ) : Serializable {
+
 
     override fun toString(): String = "$type in $neighborhood for $price"
 

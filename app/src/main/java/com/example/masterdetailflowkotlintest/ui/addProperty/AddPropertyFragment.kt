@@ -57,7 +57,6 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         private const val REQUEST_CODE_PERMISSIONS_STORAGE = 20
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -71,11 +70,9 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
         (activity as MainActivity).supportActionBar?.show()
 
-
         populateHousingTypeList()
         setUpSpinner()
         createToolbar()
-
 
         if (argsHaveId()) {
             (activity as MainActivity).supportActionBar?.title = "Update Property"
@@ -88,11 +85,8 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Property>("property")
             ?.observe(viewLifecycleOwner) {
-                Log.d(TAG, "livedata : ${it.pictureList.size}")
                 displayData(it)
             }
-
-
 
         binding.addPictureButton.setOnClickListener {
 
@@ -176,24 +170,31 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             builder.setView(dialogLayout)
             builder.show()
 
-            if(currentPhoto!!.isMain){
+            if(currentProperty?.mainPicture != null){
                 switch.toggle()
+            }
+
+            if(currentPhoto?.description != null) {
+                (descriptionTextView as TextView).text = currentPhoto.description.toString()
             }
 
             saveButton.setOnClickListener {
 
                 if(switch.isChecked) {
-                    currentPhoto.isMain = true
+
                     changeMainPhoto(currentPhoto)
+
                 }
 
-                currentPhoto.description = descriptionTextView.toString()
-                updatePicture(currentPhoto)
+                currentPhoto?.description = descriptionTextView.text.toString()
+                updateDescription(currentPhoto)
+                builder.dismiss()
             }
 
             deleteButton.setOnClickListener {
 
                 currentProperty?.pictureList?.remove(currentPhoto)
+                builder.dismiss()
 
             }
 
@@ -201,28 +202,13 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
     }
 
-    private fun changeMainPhoto(currentPhoto: Photo) {
-        Log.d(TAG, "changeMainPhoto: ${currentProperty?.pictureList?.size}")
-        for (photo in currentProperty?.pictureList!!) {
-            if(photo.isMain){
-                photo.isMain = false
-            }
-        }
+    private fun changeMainPhoto(currentPhoto: Photo?) {
+        currentProperty?.mainPicture = currentPhoto?.path
     }
 
-    private fun updatePicture(currentPhoto: Photo?) {
+    private fun updateDescription(currentPhoto: Photo?) {
 
-        val list = currentProperty?.pictureList!!
-
-        for (photo in list) {
-
-            if (photo.path == currentPhoto?.path) {
-                list.remove(photo)
-                list.add(currentPhoto)
-                break
-            }
-
-        }
+        currentProperty?.pictureList!!.filter {it.path == currentPhoto?.path}.forEach { it.description = currentPhoto?.description }
 
     }
 
@@ -341,10 +327,8 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         binding.roomsEditText.text.toString(),
         binding.propertyDescriptionEditText.text.toString(),
         binding.agentNameEditText.text.toString(),
-        "main picture url",
+        "",
         allPropertyPictures
-
-
     )
 
     private fun populateHousingTypeList() {
