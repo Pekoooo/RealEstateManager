@@ -170,7 +170,7 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             builder.setView(dialogLayout)
             builder.show()
 
-            if(currentProperty?.mainPicture != null){
+            if(currentProperty?.mainPicture == it?.path){
                 switch.toggle()
             }
 
@@ -179,11 +179,8 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             }
 
             saveButton.setOnClickListener {
-
                 if(switch.isChecked) {
-
                     changeMainPhoto(currentPhoto)
-
                 }
 
                 currentPhoto?.description = descriptionTextView.text.toString()
@@ -203,17 +200,12 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     }
 
     private fun changeMainPhoto(currentPhoto: Photo?) {
-        currentProperty?.mainPicture = currentPhoto?.path
+        currentProperty?.mainPicture = currentPhoto?.path.toString()
     }
 
     private fun updateDescription(currentPhoto: Photo?) {
-
         currentProperty?.pictureList!!.filter {it.path == currentPhoto?.path}.forEach { it.description = currentPhoto?.description }
-
     }
-
-
-
 
     private fun argsHaveId(): Boolean =
         arguments?.containsKey(ARG_ITEM_ID) == true && findNavController().currentBackStackEntry?.savedStateHandle?.contains(
@@ -231,7 +223,6 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             viewModel.getPropertyById(id).collect {
                 displayData(it)
                 currentProperty = it
-
             }
         }
     }
@@ -253,8 +244,6 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         (binding.priceEditText as TextView).text = property.price
         allPropertyPictures = property.pictureList
 
-        currentProperty = property
-
         setRecyclerView(binding.recyclerView)
 
         //Todo : Add POIs
@@ -271,17 +260,21 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
                 R.id.save -> {
                     if (allFieldsAreFilled()) {
+
                         if (argsHaveIdAndKey() || argsHaveId()) {
+
                             Toast.makeText(context, "Property Updated", Toast.LENGTH_LONG).show()
-
                             viewModel.updateProperty(getPropertyInfo().copy(id = currentId!!))
-
                             findNavController().navigateUp()
+
                         } else {
+
                             Toast.makeText(context, "New property saved", Toast.LENGTH_LONG).show()
                             viewModel.createProperty(getPropertyInfo())
                             findNavController().navigateUp()
+
                         }
+
                     } else {
                         Toast.makeText(
                             context,
@@ -289,6 +282,8 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
+
+
                     true
                 }
                 else -> false
@@ -311,6 +306,8 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                 binding.priceEditText.text.toString() != ""
 
 
+
+
     private fun getPropertyInfo() = Property(
         0,
         binding.surfaceEditText.text.toString(),
@@ -327,7 +324,7 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         binding.roomsEditText.text.toString(),
         binding.propertyDescriptionEditText.text.toString(),
         binding.agentNameEditText.text.toString(),
-        "",
+        currentProperty?.mainPicture.toString(),
         allPropertyPictures
     )
 

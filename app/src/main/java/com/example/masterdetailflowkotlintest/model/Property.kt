@@ -45,7 +45,7 @@ data class Property(
     @ColumnInfo(name = "property_agent")
     val agent: String,
     @ColumnInfo(name = "property_main_picture")
-    var mainPicture: String? = null,
+    var mainPicture: String = "",
     @ColumnInfo(name = "property_picture_list")
     val pictureList: MutableList<Photo>
     ) : Serializable {

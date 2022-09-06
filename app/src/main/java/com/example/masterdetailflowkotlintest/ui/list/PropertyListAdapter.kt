@@ -1,26 +1,22 @@
 package com.example.masterdetailflowkotlintest.ui.list
 
-import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.databinding.RowItemListBinding
 import com.example.masterdetailflowkotlintest.model.Property
-import com.example.masterdetailflowkotlintest.ui.detail.PropertyDetailFragment
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
 
-class PropertyAdapter(
+class PropertyListAdapter(
     private val propertyList: List<Property>,
     private val itemDetailFragmentContainer: View?,
     private val onSelect: (Property?) -> Unit
-) : RecyclerView.Adapter<PropertyAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<PropertyListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = RowItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -35,13 +31,10 @@ class PropertyAdapter(
         holder.propertyType.text = property.type
         holder.bind(propertyList[position], onSelect)
 
-        Log.d(MainActivity.TAG, "onBindViewHolder: ${property.mainPicture}")
-
-
-
         Glide
             .with(holder.propertyImage)
             .load(property.mainPicture)
+            .circleCrop()
             .into(holder.propertyImage)
 
     }

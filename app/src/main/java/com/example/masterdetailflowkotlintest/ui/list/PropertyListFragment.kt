@@ -1,8 +1,6 @@
 package com.example.masterdetailflowkotlintest.ui.list
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.core.view.MenuProvider
@@ -12,7 +10,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.masterdetailflowkotlintest.R
-import com.example.masterdetailflowkotlintest.placeholder.PlaceholderContent;
 import com.example.masterdetailflowkotlintest.databinding.FragmentItemListBinding
 import com.example.masterdetailflowkotlintest.model.Property
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
@@ -91,7 +88,7 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
         recyclerView: RecyclerView,
         itemDetailFragmentContainer: View?
     ) {
-        recyclerView.adapter = PropertyAdapter(
+        recyclerView.adapter = PropertyListAdapter(
             allProperties,
             itemDetailFragmentContainer
         ) {
