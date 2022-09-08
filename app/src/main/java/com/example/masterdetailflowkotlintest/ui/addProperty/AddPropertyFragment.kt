@@ -86,6 +86,7 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Property>("property")
             ?.observe(viewLifecycleOwner) {
                 displayData(it)
+                currentProperty = it
             }
 
         binding.addPictureButton.setOnClickListener {
@@ -194,9 +195,7 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                 builder.dismiss()
 
             }
-
         }
-
     }
 
     private fun changeMainPhoto(currentPhoto: Photo?) {
@@ -204,7 +203,9 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     }
 
     private fun updateDescription(currentPhoto: Photo?) {
-        currentProperty?.pictureList!!.filter {it.path == currentPhoto?.path}.forEach { it.description = currentPhoto?.description }
+        currentProperty?.pictureList!!.filter {it.path == currentPhoto?.path}.forEach{
+            it.description = currentPhoto?.description
+        }
     }
 
     private fun argsHaveId(): Boolean =

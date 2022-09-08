@@ -6,8 +6,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
-import kotlinx.android.parcel.Parcelize
-import kotlinx.android.parcel.RawValue
 import java.io.Serializable
 
 
