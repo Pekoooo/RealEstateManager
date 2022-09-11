@@ -3,6 +3,7 @@ package com.example.masterdetailflowkotlintest.ui.detail
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.masterdetailflowkotlintest.databinding.RowItemDetailViewPropertyPictureBinding
@@ -38,9 +39,12 @@ class PropertyDetailPictureAdapter(
 
         holder.bind(detailPictures[position], onSelect)
 
+
         Glide.with(holder.propertyPhoto)
             .load(currentPictureList.path)
             .into(holder.propertyPhoto)
+
+        holder.propertyDescription.text = currentPictureList.description
 
     }
 
@@ -56,9 +60,11 @@ class PropertyDetailPictureAdapter(
         }
 
         val propertyPhoto: ImageView = binding.propertyDetailPicture
+        val propertyDescription: TextView = binding.propertyDetailDescription
 
 
     }
+
 
 
 }

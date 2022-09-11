@@ -145,7 +145,7 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.HORIZONTAL
         recyclerView.layoutManager = layoutManager
-        Log.d(TAG, "setRecyclerView: ${allPropertyPictures.size} ")
+
         recyclerView.adapter = AddPropertyAdapter(allPropertyPictures) {
 
             val currentPhoto = it
@@ -186,12 +186,14 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
                 currentPhoto?.description = descriptionTextView.text.toString()
                 updateDescription(currentPhoto)
+                setRecyclerView(binding.recyclerView)
                 builder.dismiss()
             }
 
             deleteButton.setOnClickListener {
 
                 currentProperty?.pictureList?.remove(currentPhoto)
+                setRecyclerView(binding.recyclerView)
                 builder.dismiss()
 
             }

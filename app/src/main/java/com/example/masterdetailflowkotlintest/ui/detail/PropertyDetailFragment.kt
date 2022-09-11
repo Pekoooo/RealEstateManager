@@ -86,7 +86,6 @@ class PropertyDetailFragment : Fragment() {
 
         ) {
 
-        Log.d(TAG, "setRecyclerView: ${propertyList.size}")
 
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.HORIZONTAL
@@ -116,7 +115,7 @@ class PropertyDetailFragment : Fragment() {
     }
 
     private fun updateContent(property: Property) {
-        Log.d(TAG, "updateContent: ${property.pictureList.size}")
+
         property.let {
             binding.titleTextView.text = property.toString()
             binding.propertySurface.text = property.surface
