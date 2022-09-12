@@ -62,9 +62,6 @@ class PropertyDetailPictureAdapter(
         val propertyPhoto: ImageView = binding.propertyDetailPicture
         val propertyDescription: TextView = binding.propertyDetailDescription
 
-
     }
-
-
 
 }

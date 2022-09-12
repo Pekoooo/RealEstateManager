@@ -2,13 +2,16 @@ package com.example.masterdetailflowkotlintest.ui.addProperty
 
 import android.Manifest
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.*
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
-import androidx.fragment.app.Fragment
 import androidx.core.view.MenuProvider
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
@@ -39,7 +42,6 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     private var currentId: Int? = null
     private var allPropertyPictures: MutableList<Photo> = mutableListOf()
     private var currentProperty: Property? = null
-
     private val cameraPerms = arrayOf(
         Manifest.permission.CAMERA,
         Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -55,6 +57,7 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         const val ARG_ITEM_ID = "item_id"
         private const val REQUEST_CODE_PERMISSIONS_CAMERA = 10
         private const val REQUEST_CODE_PERMISSIONS_STORAGE = 20
+        private const val RC_CHOOSE_PHOTO = 30
     }
 
     override fun onCreateView(
@@ -131,11 +134,42 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             storageButton.setOnClickListener {
 
                 if (hasPermissions(requireContext(), *storagePerms)) {
-                    TODO("Open storage")
+
+                    val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                    startActivityForResult(intent, RC_CHOOSE_PHOTO)
+
+
+
                 } else {
                     requestStoragePermission()
                 }
                 builder.dismiss()
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        handleResponse(requestCode, resultCode, data)
+    }
+
+    private fun handleResponse(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == RC_CHOOSE_PHOTO ) {
+            if (resultCode == AppCompatActivity.RESULT_OK) {
+
+                Log.d(MainActivity.TAG, "handleResponse: ${data?.data?.path} ")
+
+
+                allPropertyPictures.add(
+                    Photo(
+                        data?.data?.path.toString(),
+                        false
+                    )
+                )
+
+                setRecyclerView(binding.recyclerView)
+
+                
             }
         }
     }
@@ -150,10 +184,14 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
             val currentPhoto = it
 
+
             val builder = AlertDialog.Builder(context)
                 .create()
             val inflater = layoutInflater
             val dialogLayout: View = inflater.inflate(R.layout.info_picture_dialog, null)
+
+            Log.d(MainActivity.TAG, "setRecyclerView: ${it?.path}")
+
 
             Glide
                 .with(requireContext())
@@ -221,7 +259,6 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         ) == true
 
     private fun retrieveData(id: Int) {
-        Log.d(TAG, "retrieveData: is called")
         lifecycle.coroutineScope.launch {
             viewModel.getPropertyById(id).collect {
                 displayData(it)
@@ -308,9 +345,6 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                 binding.neighborhoodEditText.text.toString() != "" &&
                 binding.priceEditText.text.toString() != ""
 
-
-
-
     private fun getPropertyInfo() = Property(
         0,
         binding.surfaceEditText.text.toString(),
@@ -375,7 +409,6 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     }
 
     private fun requestCameraPermission() {
-        Log.d(TAG, "requestCameraPermission: is called")
         EasyPermissions.requestPermissions(
             this,
             getString(R.string.rationale_camera_and_storage),
@@ -385,7 +418,6 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     }
 
     private fun requestStoragePermission() {
-        Log.d(TAG, "requestStoragePermission: is called")
         EasyPermissions.requestPermissions(
             this,
             getString(R.string.rationale_camera_and_storage),
@@ -396,7 +428,6 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     }
 
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
-        Log.d(TAG, "onPermissionsDenied: is called")
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
             AppSettingsDialog.Builder(this).build().show()
         } else {
