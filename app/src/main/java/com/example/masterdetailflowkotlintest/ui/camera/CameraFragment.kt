@@ -120,7 +120,7 @@ class CameraFragment : Fragment() {
                     findNavController().popBackStack()
 
                     Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
-                    Log.d(TAG, msg)
+                    Log.d(MainActivity.TAG, msg)
                 }
             }
         )

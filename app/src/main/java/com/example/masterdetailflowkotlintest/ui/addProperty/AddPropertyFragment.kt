@@ -148,6 +148,7 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         handleResponse(requestCode, resultCode, data)
@@ -159,10 +160,11 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
                 Log.d(MainActivity.TAG, "handleResponse: ${data?.data?.path} ")
 
+                val path = data?.data?.path?.substring(6..45)
 
                 allPropertyPictures.add(
                     Photo(
-                        data?.data?.path.toString(),
+                        path.toString(),
                         false
                     )
                 )
