@@ -1,20 +1,25 @@
 package com.example.masterdetailflowkotlintest.ui.addProperty
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
+import androidx.core.content.FileProvider
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -24,11 +29,15 @@ import com.example.masterdetailflowkotlintest.databinding.FragmentAddPropertyBin
 import com.example.masterdetailflowkotlintest.model.Photo
 import com.example.masterdetailflowkotlintest.model.Property
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
+import com.example.masterdetailflowkotlintest.utils.Constants.ARG_NO_ITEM_ID
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import pub.devrel.easypermissions.EasyPermissions.hasPermissions
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -37,11 +46,13 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
     private val viewModel: AddPropertyViewModel by viewModels()
     private val housingType: MutableList<String> = ArrayList()
+    private lateinit var currentPhotoPath: String
     private var _binding: FragmentAddPropertyBinding? = null
     private val binding: FragmentAddPropertyBinding get() = _binding!!
-    private var currentId: Int? = null
     private var allPropertyPictures: MutableList<Photo> = mutableListOf()
     private var currentProperty: Property? = null
+    private var uriImageSelected: Uri? = null
+    private val args: AddPropertyFragmentArgs by navArgs()
     private val cameraPerms = arrayOf(
         Manifest.permission.CAMERA,
         Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -54,10 +65,10 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
     companion object {
         const val TAG = "MyAddPropertyFragment"
-        const val ARG_ITEM_ID = "item_id"
         private const val REQUEST_CODE_PERMISSIONS_CAMERA = 10
         private const val REQUEST_CODE_PERMISSIONS_STORAGE = 20
         private const val RC_CHOOSE_PHOTO = 30
+        private const val REQUEST_IMAGE_CAPTURE = 1
     }
 
     override fun onCreateView(
@@ -77,10 +88,11 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         setUpSpinner()
         createToolbar()
 
-        if (argsHaveId()) {
+
+        if (areArgsForUpdate()) {
             (activity as MainActivity).supportActionBar?.title = "Update Property"
-            currentId = requireArguments().getInt(ARG_ITEM_ID)
-            retrieveData(currentId!!)
+
+            retrieveData(args.navigationArgument)
 
         } else {
             (activity as MainActivity).supportActionBar?.title = "New Property"
@@ -107,30 +119,18 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
             cameraButton.setOnClickListener {
 
-                if (hasPermissions(requireContext(), *cameraPerms)) {
+                if(hasPermissions(requireContext(), *cameraPerms)){
 
-                    val action = if (currentProperty == null) {
-                        AddPropertyFragmentDirections.actionAddPropertyFragmentToCameraSurfaceProviderFragment(
-                            getPropertyInfo()
-                        )
-                    } else {
-                        AddPropertyFragmentDirections.actionAddPropertyFragmentToCameraSurfaceProviderFragment(
-                            currentProperty
-                        )
-                    }
+                    capturePhoto()
 
-                    findNavController().navigate(action)
+                } else{
 
-                } else if (arguments == null) {
-
-                    findNavController().navigate(R.id.cameraSurfaceProviderFragment)
-
-
-                } else {
                     requestCameraPermission()
+
                 }
-                builder.dismiss()
-            }
+
+             }
+
             storageButton.setOnClickListener {
 
                 if (hasPermissions(requireContext(), *storagePerms)) {
@@ -138,15 +138,48 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                     val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                     startActivityForResult(intent, RC_CHOOSE_PHOTO)
 
-
-
                 } else {
                     requestStoragePermission()
                 }
                 builder.dismiss()
             }
+
         }
     }
+
+
+    private fun capturePhoto() {
+        val cameraInt = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        val photoFile: File = createImageFile()
+        uriImageSelected = FileProvider.getUriForFile(
+            requireContext(),
+            "com.example.masterdetailflowkotlintest.fileprovider",
+            photoFile
+        )
+        cameraInt.putExtra(MediaStore.EXTRA_OUTPUT, uriImageSelected)
+        startActivityForResult(cameraInt, REQUEST_IMAGE_CAPTURE)
+
+    }
+
+    // When photo is created, we need to create an image file
+    @SuppressLint("SimpleDateFormat")
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        // Create an image file name
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val storageDir: File? = activity?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        ).apply {
+            // Save a file: path for use with CAMERA
+            currentPhotoPath = absolutePath
+        }
+    }
+
+
+
 
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -155,23 +188,22 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     }
 
     private fun handleResponse(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == RC_CHOOSE_PHOTO ) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE) {
             if (resultCode == AppCompatActivity.RESULT_OK) {
 
-                Log.d(MainActivity.TAG, "handleResponse: ${data?.data?.path} ")
 
-                val path = data?.data?.path?.substring(6..45)
 
-                allPropertyPictures.add(
-                    Photo(
-                        path.toString(),
-                        false
-                    )
+
+                val currentPhoto = Photo(
+                    currentPhotoPath,
+                    false
                 )
+                allPropertyPictures.add(currentPhoto)
 
                 setRecyclerView(binding.recyclerView)
 
-                
+                openDialog(currentPhoto)
+
             }
         }
     }
@@ -182,62 +214,67 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         layoutManager.orientation = LinearLayoutManager.HORIZONTAL
         recyclerView.layoutManager = layoutManager
 
-        recyclerView.adapter = AddPropertyAdapter(allPropertyPictures) {
+        recyclerView.adapter = AddPropertyAdapter(allPropertyPictures) { photo, _ ->
 
-            val currentPhoto = it
+            openDialog(photo)
 
-
-            val builder = AlertDialog.Builder(context)
-                .create()
-            val inflater = layoutInflater
-            val dialogLayout: View = inflater.inflate(R.layout.info_picture_dialog, null)
-
-            Log.d(MainActivity.TAG, "setRecyclerView: ${it?.path}")
-
-
-            Glide
-                .with(requireContext())
-                .load(it?.path)
-                .override(1200,1200)
-                .centerCrop()
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(dialogLayout.findViewById(R.id.image_view_custom_dialog_edit_picture))
-
-            val saveButton = dialogLayout.findViewById<Button>(R.id.save_button)
-            val deleteButton = dialogLayout.findViewById<Button>(R.id.delete_button)
-            val descriptionTextView = dialogLayout.findViewById<EditText>(R.id.description_picture_edit_text)
-            val switch = dialogLayout.findViewById<SwitchCompat>(R.id.make_main_picture_switch)
-
-            builder.setView(dialogLayout)
-            builder.show()
-
-            if(currentProperty?.mainPicture == it?.path){
-                switch.toggle()
-            }
-
-            if(currentPhoto?.description != null) {
-                (descriptionTextView as TextView).text = currentPhoto.description.toString()
-            }
-
-            saveButton.setOnClickListener {
-                if(switch.isChecked) {
-                    changeMainPhoto(currentPhoto)
-                }
-
-                currentPhoto?.description = descriptionTextView.text.toString()
-                updateDescription(currentPhoto)
-                setRecyclerView(binding.recyclerView)
-                builder.dismiss()
-            }
-
-            deleteButton.setOnClickListener {
-
-                currentProperty?.pictureList?.remove(currentPhoto)
-                setRecyclerView(binding.recyclerView)
-                builder.dismiss()
-
-            }
         }
+    }
+
+    private fun openDialog(photo: Photo?) {
+
+        val builder = AlertDialog.Builder(context)
+            .create()
+        val inflater = layoutInflater
+        val dialogLayout: View = inflater.inflate(R.layout.info_picture_dialog, null)
+
+        Log.d(MainActivity.TAG, "setRecyclerView: ${photo?.path}")
+
+
+        Glide
+            .with(requireContext())
+            .load(photo?.path)
+            .override(1200,1200)
+            .centerCrop()
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(dialogLayout.findViewById(R.id.image_view_custom_dialog_edit_picture))
+
+        val saveButton = dialogLayout.findViewById<Button>(R.id.save_button)
+        val deleteButton = dialogLayout.findViewById<Button>(R.id.delete_button)
+        val descriptionTextView = dialogLayout.findViewById<EditText>(R.id.description_picture_edit_text)
+        val switch = dialogLayout.findViewById<SwitchCompat>(R.id.make_main_picture_switch)
+
+        builder.setView(dialogLayout)
+        builder.show()
+
+        if(currentProperty?.mainPicture == photo?.path){
+            switch.toggle()
+        }
+
+        if(photo?.description != null) {
+            (descriptionTextView as TextView).text = photo.description.toString()
+        }
+
+        saveButton.setOnClickListener {
+            if(switch.isChecked) {
+                changeMainPhoto(photo)
+            }
+
+            photo?.description = descriptionTextView.text.toString()
+            updateDescription(photo)
+            setRecyclerView(binding.recyclerView)
+            builder.dismiss()
+        }
+
+        deleteButton.setOnClickListener {
+
+            currentProperty?.pictureList?.remove(photo)
+            setRecyclerView(binding.recyclerView)
+            builder.dismiss()
+
+        }
+
+
     }
 
     private fun changeMainPhoto(currentPhoto: Photo?) {
@@ -250,15 +287,11 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         }
     }
 
-    private fun argsHaveId(): Boolean =
-        arguments?.containsKey(ARG_ITEM_ID) == true && findNavController().currentBackStackEntry?.savedStateHandle?.contains(
-            "property"
-        ) == false
+    private fun areArgsForUpdate(): Boolean =
+        args.navigationArgument != ARG_NO_ITEM_ID
 
-    private fun argsHaveIdAndKey(): Boolean =
-        arguments?.containsKey(ARG_ITEM_ID) == true && findNavController().currentBackStackEntry?.savedStateHandle?.contains(
-            "property"
-        ) == true
+    private fun areArgsForCreation(): Boolean =
+        args.navigationArgument == ARG_NO_ITEM_ID
 
     private fun retrieveData(id: Int) {
         lifecycle.coroutineScope.launch {
@@ -268,6 +301,7 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             }
         }
     }
+
 
     private fun displayData(property: Property) {
 
@@ -303,18 +337,16 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                 R.id.save -> {
                     if (allFieldsAreFilled()) {
 
-                        if (argsHaveIdAndKey() || argsHaveId()) {
+                        if (areArgsForUpdate()) {
 
                             Toast.makeText(context, "Property Updated", Toast.LENGTH_LONG).show()
-                            viewModel.updateProperty(getPropertyInfo().copy(id = currentId!!))
+                            viewModel.updateProperty(getPropertyInfo().copy(id = args.navigationArgument))
                             findNavController().navigateUp()
 
                         } else {
-
                             Toast.makeText(context, "New property saved", Toast.LENGTH_LONG).show()
                             viewModel.createProperty(getPropertyInfo())
                             findNavController().navigateUp()
-
                         }
 
                     } else {
@@ -324,7 +356,6 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-
 
                     true
                 }
@@ -402,7 +433,7 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         //TODO : Not working
         if (requestCode == REQUEST_CODE_PERMISSIONS_CAMERA) {
 
-            findNavController().navigate(R.id.cameraSurfaceProviderFragment)
+            //findNavController().navigate(R.id.cameraSurfaceProviderFragment)
 
         } else {
             TODO("Open storage")
@@ -425,7 +456,6 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             getString(R.string.rationale_camera_and_storage),
             REQUEST_CODE_PERMISSIONS_STORAGE,
             *storagePerms
-
         )
     }
 

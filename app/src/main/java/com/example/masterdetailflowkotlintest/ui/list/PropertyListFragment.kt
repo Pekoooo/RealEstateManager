@@ -13,6 +13,8 @@ import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.databinding.FragmentItemListBinding
 import com.example.masterdetailflowkotlintest.model.Property
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
+import com.example.masterdetailflowkotlintest.utils.Constants
+import com.example.masterdetailflowkotlintest.utils.Constants.ARG_NO_ITEM_ID
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,10 +25,7 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
     private var allProperties: List<Property> = listOf()
     private val binding get() = _binding!!
 
-    companion object {
-        private const val TAG = "MyPropertyListFragment"
-        private const val ARG_ITEM_ID = "item_id"
-    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,11 +47,15 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
         val itemDetailFragmentContainer: View? = view.findViewById(R.id.item_detail_nav_container)
 
         binding.addPropertyTabletFab?.setOnClickListener {
-            findNavController().navigate(R.id.addPropertyFragment)
+            val action =
+                PropertyListFragmentDirections.actionItemListFragmentToAddPropertyFragment(ARG_NO_ITEM_ID)
+            findNavController().navigate(action)
         }
 
         binding.addPropertyPhoneFab?.setOnClickListener {
-            findNavController().navigate(R.id.addPropertyFragment)
+            val action =
+                PropertyListFragmentDirections.actionItemListFragmentToAddPropertyFragment(ARG_NO_ITEM_ID)
+            findNavController().navigate(action)
         }
 
         viewModel.allProperties.observe(viewLifecycleOwner){
@@ -93,17 +96,10 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
             itemDetailFragmentContainer
         ) {
 
-            val args = Bundle()
-            args.putInt(
-                ARG_ITEM_ID, it!!.id
-            )
+            val action =
+                PropertyListFragmentDirections.showItemDetail(it!!.id)
 
-            if (itemDetailFragmentContainer != null) {
-                itemDetailFragmentContainer.findNavController()
-                    .navigate(R.id.fragment_item_detail, args)
-            } else {
-                findNavController().navigate(R.id.show_item_detail, args)
-            }
+            findNavController().navigate(action)
         }
     }
 

@@ -12,7 +12,7 @@ import com.example.masterdetailflowkotlintest.model.Photo
 
 class AddPropertyAdapter(
     private val propertyPictureList: List<Photo>,
-    private val onSelect: (Photo?) -> Unit
+    private val onSelect: (Photo?, Int) -> Unit
 ): RecyclerView.Adapter<AddPropertyAdapter.ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -40,13 +40,12 @@ class AddPropertyAdapter(
     }
 
 
-
     class ViewHolder (private val binding: RowItemDetailViewPropertyPictureEditBinding) :
         RecyclerView.ViewHolder(binding.root){
 
-            fun bind(propertyPicture: Photo?, onSelect: (Photo?) -> Unit) {
+            fun bind(propertyPicture: Photo?, onSelect: (Photo?, Int) -> Unit) {
                 binding.root.setOnClickListener {
-                    onSelect(propertyPicture)
+                    onSelect(propertyPicture, bindingAdapterPosition)
                 }
             }
 

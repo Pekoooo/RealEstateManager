@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -18,7 +19,10 @@ import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.databinding.FragmentItemDetailBinding
 import com.example.masterdetailflowkotlintest.model.Photo
 import com.example.masterdetailflowkotlintest.model.Property
+import com.example.masterdetailflowkotlintest.ui.addProperty.AddPropertyFragmentArgs
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
+import com.example.masterdetailflowkotlintest.utils.Constants
+import com.example.masterdetailflowkotlintest.utils.Constants.ARG_ITEM_ID
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -26,12 +30,8 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class PropertyDetailFragment : Fragment() {
 
-    companion object {
-        const val ARG_ITEM_ID = "item_id"
-        const val TAG = "MyPropertyDetail"
-    }
-
     private val viewModel: PropertyDetailViewModel by viewModels()
+    private val args: PropertyDetailFragmentArgs by navArgs()
     private var _binding: FragmentItemDetailBinding? = null
     private val binding get() = _binding!!
 
@@ -46,13 +46,9 @@ class PropertyDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        if (arguments?.containsKey(ARG_ITEM_ID) == true) {
-            val id: Int? = arguments?.getInt(ARG_ITEM_ID)
-            lifecycle.coroutineScope.launch{
-                viewModel.getPropertyById(id!!).collect {
-                    updateContent(it)
-                }
+        lifecycle.coroutineScope.launch{
+            viewModel.getPropertyById(args.itemId).collect {
+                updateContent(it)
             }
         }
 
@@ -67,9 +63,10 @@ class PropertyDetailFragment : Fragment() {
 
                 R.id.edit -> {
                     val id = requireArguments().getInt(ARG_ITEM_ID)
-                    val args = Bundle()
-                    args.putInt(ARG_ITEM_ID, id)
-                    findNavController().navigate(R.id.addPropertyFragment, args)
+
+                    val action =
+                        PropertyDetailFragmentDirections.actionItemDetailFragmentToAddPropertyFragment(id)
+                    findNavController().navigate(action)
 
                     true
                 }

@@ -33,7 +33,6 @@ class AddPropertyViewModel @Inject constructor(
     }
 
     fun updateProperty(property: Property) = viewModelScope.launch(Dispatchers.IO) {
-        Log.d(MainActivity.TAG, "updateProperty: ${property.description} ")
         propertyRepository.updateProperty(property)
     }
 
