@@ -31,6 +31,7 @@ import com.example.masterdetailflowkotlintest.model.Property
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
 import com.example.masterdetailflowkotlintest.utils.Constants.ARG_NO_ITEM_ID
 import com.example.masterdetailflowkotlintest.utils.PathConverter
+import com.kardabel.realestatemanager.utils.UriPathHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import pub.devrel.easypermissions.AppSettingsDialog
@@ -120,23 +121,24 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
             cameraButton.setOnClickListener {
 
-                if(hasPermissions(requireContext(), *cameraPerms)){
+                if (hasPermissions(requireContext(), *cameraPerms)) {
 
                     capturePhoto()
 
-                } else{
+                } else {
 
                     requestCameraPermission()
 
                 }
 
-             }
+            }
 
             storageButton.setOnClickListener {
 
                 if (hasPermissions(requireContext(), *storagePerms)) {
 
-                    val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                    val intent =
+                        Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                     startActivityForResult(intent, RC_CHOOSE_PHOTO)
 
                 } else {
@@ -162,7 +164,7 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
     }
 
-    // When photo is created, we need to create an image file
+
     @SuppressLint("SimpleDateFormat")
     @Throws(IOException::class)
     private fun createImageFile(): File {
@@ -178,8 +180,6 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             currentPhotoPath = absolutePath
         }
     }
-
-
 
 
     @Deprecated("Deprecated in Java")
@@ -205,15 +205,16 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                 openDialog(currentPhoto)
 
             }
-        } else if(requestCode == RC_CHOOSE_PHOTO) {
+        } else if (requestCode == RC_CHOOSE_PHOTO) {
 
+            uriImageSelected = data!!.data
+            val uriPathHelper = UriPathHelper()
+            val path = uriImageSelected?.let { uriPathHelper.getPath(requireContext(), it) }
 
-
-            val path = PathConverter.convertPath(data?.data?.path.toString())
-            Log.d(TAG, "handleResponse: is called $path")
+            Log.d(TAG, "handleResponse: $path")
 
             val currentPhoto = Photo(
-                path,
+                path!!,
                 false
             )
             allPropertyPictures.add(currentPhoto)
@@ -222,7 +223,7 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
             openDialog(currentPhoto)
 
-            
+
         }
     }
 
@@ -252,29 +253,30 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         Glide
             .with(requireContext())
             .load(photo?.path)
-            .override(1200,1200)
+            .override(1200, 1200)
             .centerCrop()
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(dialogLayout.findViewById(R.id.image_view_custom_dialog_edit_picture))
 
         val saveButton = dialogLayout.findViewById<Button>(R.id.save_button)
         val deleteButton = dialogLayout.findViewById<Button>(R.id.delete_button)
-        val descriptionTextView = dialogLayout.findViewById<EditText>(R.id.description_picture_edit_text)
+        val descriptionTextView =
+            dialogLayout.findViewById<EditText>(R.id.description_picture_edit_text)
         val switch = dialogLayout.findViewById<SwitchCompat>(R.id.make_main_picture_switch)
 
         builder.setView(dialogLayout)
         builder.show()
 
-        if(currentProperty?.mainPicture == photo?.path){
+        if (currentProperty?.mainPicture == photo?.path) {
             switch.toggle()
         }
 
-        if(photo?.description != null) {
+        if (photo?.description != null) {
             (descriptionTextView as TextView).text = photo.description.toString()
         }
 
         saveButton.setOnClickListener {
-            if(switch.isChecked) {
+            if (switch.isChecked) {
                 changeMainPhoto(photo)
             }
 
@@ -300,7 +302,7 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     }
 
     private fun updateDescription(currentPhoto: Photo?) {
-        currentProperty?.pictureList!!.filter {it.path == currentPhoto?.path}.forEach{
+        currentProperty?.pictureList!!.filter { it.path == currentPhoto?.path }.forEach {
             it.description = currentPhoto?.description
         }
     }
