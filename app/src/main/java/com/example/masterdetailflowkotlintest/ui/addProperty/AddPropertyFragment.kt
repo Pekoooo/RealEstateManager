@@ -30,6 +30,7 @@ import com.example.masterdetailflowkotlintest.model.Photo
 import com.example.masterdetailflowkotlintest.model.Property
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
 import com.example.masterdetailflowkotlintest.utils.Constants.ARG_NO_ITEM_ID
+import com.example.masterdetailflowkotlintest.utils.PathConverter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import pub.devrel.easypermissions.AppSettingsDialog
@@ -191,8 +192,7 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         if (requestCode == REQUEST_IMAGE_CAPTURE) {
             if (resultCode == AppCompatActivity.RESULT_OK) {
 
-
-
+                Log.d(TAG, "handleResponse: $currentPhotoPath")
 
                 val currentPhoto = Photo(
                     currentPhotoPath,
@@ -205,6 +205,24 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                 openDialog(currentPhoto)
 
             }
+        } else if(requestCode == RC_CHOOSE_PHOTO) {
+
+
+
+            val path = PathConverter.convertPath(data?.data?.path.toString())
+            Log.d(TAG, "handleResponse: is called $path")
+
+            val currentPhoto = Photo(
+                path,
+                false
+            )
+            allPropertyPictures.add(currentPhoto)
+
+            setRecyclerView(binding.recyclerView)
+
+            openDialog(currentPhoto)
+
+            
         }
     }
 
