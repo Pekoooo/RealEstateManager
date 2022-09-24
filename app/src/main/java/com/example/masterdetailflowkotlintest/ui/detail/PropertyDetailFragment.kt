@@ -2,9 +2,7 @@ package com.example.masterdetailflowkotlintest.ui.detail
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import android.widget.Toast
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -19,9 +17,6 @@ import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.databinding.FragmentItemDetailBinding
 import com.example.masterdetailflowkotlintest.model.Photo
 import com.example.masterdetailflowkotlintest.model.Property
-import com.example.masterdetailflowkotlintest.ui.addProperty.AddPropertyFragmentArgs
-import com.example.masterdetailflowkotlintest.ui.main.MainActivity
-import com.example.masterdetailflowkotlintest.utils.Constants
 import com.example.masterdetailflowkotlintest.utils.Constants.ARG_ITEM_ID
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
@@ -142,14 +137,8 @@ class PropertyDetailFragment : Fragment() {
     private fun displayPoiAsChips(property: Property) {
 
         binding.propertyPoiChipgroup?.removeAllViews()
+        binding.propertyPoiChipgroup?.addView(viewModel.getPoiChipGroup(property, context))
 
-        for (poi in property.poiList){
-
-            val currentChip = Chip(requireContext())
-            currentChip.text = poi
-
-            binding.propertyPoiChipgroup?.addView(currentChip)
-        }
     }
 
     override fun onDestroyView() {
