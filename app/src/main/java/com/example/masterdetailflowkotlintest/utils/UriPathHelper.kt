@@ -1,4 +1,4 @@
-package com.kardabel.realestatemanager.utils
+package com.example.masterdetailflowkotlintest.utils
 
 
 import android.content.ContentUris

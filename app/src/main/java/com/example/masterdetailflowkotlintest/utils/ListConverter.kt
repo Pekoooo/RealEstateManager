@@ -20,4 +20,18 @@ class ListConverter {
         val type = object  : TypeToken<MutableList<Photo>>() {}.type
         return gson.fromJson(value, type)
     }
+
+    @TypeConverter
+    fun fromString(value: MutableList<String>): String {
+        val gson = Gson()
+        val type = object : TypeToken<MutableList<String>>() {}.type
+        return gson.toJson(value, type)
+    }
+
+    @TypeConverter
+    fun toString(value: String): MutableList<String> {
+        val gson = Gson()
+        val type = object  : TypeToken<MutableList<String>>() {}.type
+        return gson.fromJson(value, type)
+    }
 }

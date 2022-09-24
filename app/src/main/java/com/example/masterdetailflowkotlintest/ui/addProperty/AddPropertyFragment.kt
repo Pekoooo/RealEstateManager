@@ -30,8 +30,7 @@ import com.example.masterdetailflowkotlintest.model.Photo
 import com.example.masterdetailflowkotlintest.model.Property
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
 import com.example.masterdetailflowkotlintest.utils.Constants.ARG_NO_ITEM_ID
-import com.example.masterdetailflowkotlintest.utils.PathConverter
-import com.kardabel.realestatemanager.utils.UriPathHelper
+import com.example.masterdetailflowkotlintest.utils.UriPathHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import pub.devrel.easypermissions.AppSettingsDialog
@@ -342,7 +341,35 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
         setRecyclerView(binding.recyclerView)
 
-        //Todo : Add POIs
+        displayPoi(property)
+    }
+
+    private fun displayPoi(property: Property) {
+
+        if(property.poiList.contains(resources.getString(R.string.school))){
+            binding.checkbox?.checkboxNearbySchool?.isChecked = true
+        }
+
+        if(property.poiList.contains(resources.getString(R.string.playground))){
+            binding.checkbox?.checkboxNearbyPlayground?.isChecked = true
+        }
+
+        if(property.poiList.contains(resources.getString(R.string.shops))){
+            binding.checkbox?.checkboxNearbyShop?.isChecked = true
+        }
+
+        if(property.poiList.contains(resources.getString(R.string.train))){
+            binding.checkbox?.checkboxNearbyTrain?.isChecked = true
+        }
+
+        if(property.poiList.contains(resources.getString(R.string.daycare))){
+            binding.checkbox?.checkboxNearbyDaycare?.isChecked = true
+        }
+
+        if(property.poiList.contains(resources.getString(R.string.parking))){
+            binding.checkbox?.checkboxNearbyParking?.isChecked = true
+        }
+
     }
 
     private fun createToolbar() {
@@ -415,8 +442,44 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         binding.propertyDescriptionEditText.text.toString(),
         binding.agentNameEditText.text.toString(),
         currentProperty?.mainPicture.toString(),
-        allPropertyPictures
+        allPropertyPictures,
+        getPoi()
+
     )
+
+    private fun getPoi(): MutableList<String> {
+        
+        val poiList = mutableListOf<String>()
+        
+        if(binding.checkbox?.checkboxNearbySchool?.isChecked == true){
+            poiList.add(resources.getString(R.string.school))
+        }
+        
+        if(binding.checkbox?.checkboxNearbyPlayground?.isChecked == true){
+            poiList.add(resources.getString(R.string.playground))
+        }
+        
+        if(binding.checkbox?.checkboxNearbyShop?.isChecked == true){
+            poiList.add(resources.getString(R.string.shop))
+        }
+        
+        if(binding.checkbox?.checkboxNearbyTrain?.isChecked == true){
+            poiList.add(resources.getString(R.string.train))
+        }
+
+        if(binding.checkbox?.checkboxNearbyDaycare?.isChecked == true){
+            poiList.add(resources.getString(R.string.daycare))
+        }
+
+        if(binding.checkbox?.checkboxNearbyParking?.isChecked == true){
+            poiList.add(resources.getString(R.string.parking))
+        }
+
+        Log.d(TAG, "getPoi: $poiList")
+        
+        return poiList
+
+    }
 
     private fun populateHousingTypeList() {
         housingType.add("House")

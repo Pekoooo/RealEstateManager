@@ -130,7 +130,8 @@ object PlaceholderContent {
                     "path",
                     false
                 )
-            )
+            ),
+            arrayListOf("poi")
         )
     }
 

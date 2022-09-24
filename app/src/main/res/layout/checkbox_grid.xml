@@ -24,19 +24,19 @@
         android:text="@string/shops"/>
 
     <com.google.android.material.checkbox.MaterialCheckBox
-        android:id="@+id/checkbox_nearby_buses"
+        android:id="@+id/checkbox_nearby_train"
         android:layout_width="125dp"
         android:layout_height="wrap_content"
         android:text="@string/train" />
 
     <com.google.android.material.checkbox.MaterialCheckBox
-        android:id="@+id/checkbox_nearby_subway"
+        android:id="@+id/checkbox_nearby_daycare"
         android:layout_width="125dp"
         android:layout_height="wrap_content"
         android:text="@string/daycare"/>
 
     <com.google.android.material.checkbox.MaterialCheckBox
-        android:id="@+id/checkbox_nearby_park"
+        android:id="@+id/checkbox_nearby_parking"
         android:layout_width="125dp"
         android:layout_height="wrap_content"
         android:text="@string/parking"/>

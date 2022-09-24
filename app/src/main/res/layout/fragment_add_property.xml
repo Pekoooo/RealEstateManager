@@ -207,6 +207,7 @@
 
 
         <include
+            android:id="@+id/checkbox"
             layout="@layout/checkbox_grid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

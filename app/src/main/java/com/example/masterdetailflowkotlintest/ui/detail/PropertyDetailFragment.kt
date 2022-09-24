@@ -23,6 +23,7 @@ import com.example.masterdetailflowkotlintest.ui.addProperty.AddPropertyFragment
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
 import com.example.masterdetailflowkotlintest.utils.Constants
 import com.example.masterdetailflowkotlintest.utils.Constants.ARG_ITEM_ID
+import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -127,10 +128,27 @@ class PropertyDetailFragment : Fragment() {
             binding.propertyCountry.text = property.country
             binding.propertyDescription.text = property.description
 
+            displayPoiAsChips(property)
+
             setRecyclerView(
                 binding.recyclerViewDetailedView,
                 property.pictureList
             )
+
+
+        }
+    }
+
+    private fun displayPoiAsChips(property: Property) {
+
+        binding.propertyPoiChipgroup?.removeAllViews()
+
+        for (poi in property.poiList){
+
+            val currentChip = Chip(requireContext())
+            currentChip.text = poi
+
+            binding.propertyPoiChipgroup?.addView(currentChip)
         }
     }
 
