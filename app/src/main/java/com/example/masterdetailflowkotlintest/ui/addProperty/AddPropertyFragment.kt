@@ -275,6 +275,9 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         }
 
         saveButton.setOnClickListener {
+            if(currentProperty == null){
+                currentProperty = getPropertyInfo()
+            }
             if (switch.isChecked) {
                 changeMainPhoto(photo)
             }

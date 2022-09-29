@@ -129,8 +129,6 @@ class PropertyDetailFragment : Fragment() {
                 binding.recyclerViewDetailedView,
                 property.pictureList
             )
-
-
         }
     }
 
