@@ -222,7 +222,6 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
             openDialog(currentPhoto)
 
-
         }
     }
 
@@ -561,6 +560,4 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         super.onDestroyView()
         _binding = null
     }
-
-
 }

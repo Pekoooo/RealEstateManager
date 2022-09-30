@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             app:dividerColor="@color/black"
-            app:layout_constraintTop_toBottomOf="@id/title_text_view"/>
+            app:layout_constraintTop_toBottomOf="@id/title_text_view" />
 
         <TextView
             android:id="@+id/property_description_title"
@@ -209,9 +209,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/guideline"
-                app:layout_constraintTop_toBottomOf="@id/POI_title"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/POI_title" />
 
 
             <TextView
@@ -322,6 +322,18 @@
                 app:layout_constraintTop_toBottomOf="@id/property_country"
 
                 tools:visibility="visible" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="MARK AS SOLD"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/sold_at_date" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
