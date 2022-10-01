@@ -7,6 +7,7 @@ import com.example.masterdetailflowkotlintest.repositories.PropertyRepository
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,6 +22,10 @@ class PropertyDetailViewModel @Inject constructor(
 
 
     fun getPropertyById(id: Int): Flow<Property> = propertyRepository.getPropertyById(id)
+
+    fun updateProperty(property: Property) = viewModelScope.launch(Dispatchers.IO) {
+        propertyRepository.updateProperty(property)
+    }
 
     fun getPoiChipGroup(property: Property, context: Context?): ChipGroup {
         val chipGroup = ChipGroup(context)

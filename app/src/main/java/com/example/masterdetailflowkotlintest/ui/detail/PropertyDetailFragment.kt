@@ -3,6 +3,8 @@ package com.example.masterdetailflowkotlintest.ui.detail
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
+import android.widget.Button
+import android.widget.Toast
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -28,6 +30,7 @@ class PropertyDetailFragment : Fragment() {
 
     private val viewModel: PropertyDetailViewModel by viewModels()
     private val args: PropertyDetailFragmentArgs by navArgs()
+    private lateinit var currentProperty: Property
     private var _binding: FragmentItemDetailBinding? = null
     private val binding get() = _binding!!
 
@@ -42,42 +45,74 @@ class PropertyDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        lifecycle.coroutineScope.launch{
+        lifecycle.coroutineScope.launch {
+
             viewModel.getPropertyById(args.itemId).collect {
+                currentProperty = it
                 updateContent(it)
             }
         }
 
-        requireActivity().addMenuProvider(object: MenuProvider{
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menu.clear()
-                menuInflater.inflate(R.menu.menu_detail_activity, menu)
-            }
 
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean
-            = when (menuItem.itemId){
 
-                R.id.edit -> {
-                    val id = requireArguments().getInt(ARG_ITEM_ID)
+        binding.soldButton?.setOnClickListener {
 
-                    val action =
-                        PropertyDetailFragmentDirections.actionItemDetailFragmentToAddPropertyFragment(id)
-                    findNavController().navigate(action)
+            if(!currentProperty.isSold) initConfirmationDialog() else Toast.makeText(requireContext(), "Property already sold", Toast.LENGTH_SHORT).show()
 
-                    true
-                }
-                else -> true
-            }
+        }
 
-        },viewLifecycleOwner)
+        /*
+        * binding.soldButton.clickListener
+        *      open dialog -> " you are about to mark this property as sold, you won't be able to modify it afterward "
+        *          choice 1 : Mark as sold // choice 2 : cancel
+        *
+        * choice 1 listener
+        *       currentProperty.isSold = true
+        *       viewmodel.updateproperty(currentProperty.copy, isSold = true)
+        *
+        * choice 2 listener
+        *       dialog.dismiss
+        *
+        *
+        * */
+
+
+
+        initMenuItems()
 
     }
+
+
+    private fun initConfirmationDialog() {
+
+        val builder = AlertDialog.Builder(context)
+            .create()
+        val inflater = layoutInflater
+        val dialogLayout: View = inflater.inflate(R.layout.confirmation_property_sale_dialog, null)
+
+        val confirmButton = dialogLayout.findViewById<Button>(R.id.confirm_button)
+        val cancelButton = dialogLayout.findViewById<Button>(R.id.cancel_button)
+
+        builder.setView(dialogLayout)
+        builder.show()
+
+        confirmButton.setOnClickListener {
+
+            viewModel.updateProperty(currentProperty.copy(isSold = true))
+            builder.dismiss()
+
+        }
+
+        cancelButton.setOnClickListener { builder.dismiss() }
+
+    }
+
 
     private fun setRecyclerView(
         recyclerView: RecyclerView,
         propertyList: MutableList<Photo>
 
-        ) {
+    ) {
 
 
         val layoutManager = LinearLayoutManager(context)
@@ -93,7 +128,7 @@ class PropertyDetailFragment : Fragment() {
             Glide
                 .with(requireContext())
                 .load(it?.path)
-                .override(1200,1200)
+                .override(1200, 1200)
                 .centerCrop()
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(dialogLayout.findViewById(R.id.image_view_custom_dialog))
@@ -129,6 +164,8 @@ class PropertyDetailFragment : Fragment() {
                 binding.recyclerViewDetailedView,
                 property.pictureList
             )
+
+            if(property.isSold) binding.soldButton?.text = resources.getText(R.string.sold)
         }
     }
 
@@ -137,6 +174,32 @@ class PropertyDetailFragment : Fragment() {
         binding.propertyPoiChipgroup?.removeAllViews()
         binding.propertyPoiChipgroup?.addView(viewModel.getPoiChipGroup(property, context))
 
+    }
+
+    private fun initMenuItems() {
+        requireActivity().addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menu.clear()
+                menuInflater.inflate(R.menu.menu_detail_activity, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean = when (menuItem.itemId) {
+
+                R.id.edit -> {
+                    val id = requireArguments().getInt(ARG_ITEM_ID)
+
+                    val action =
+                        PropertyDetailFragmentDirections.actionItemDetailFragmentToAddPropertyFragment(
+                            id
+                        )
+                    findNavController().navigate(action)
+
+                    true
+                }
+                else -> true
+            }
+
+        }, viewLifecycleOwner)
     }
 
     override fun onDestroyView() {

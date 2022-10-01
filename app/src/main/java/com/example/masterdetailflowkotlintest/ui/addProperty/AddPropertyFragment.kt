@@ -147,6 +147,8 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             }
 
         }
+
+
     }
 
 
@@ -244,9 +246,6 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             .create()
         val inflater = layoutInflater
         val dialogLayout: View = inflater.inflate(R.layout.info_picture_dialog, null)
-
-        Log.d(MainActivity.TAG, "setRecyclerView: ${photo?.path}")
-
 
         Glide
             .with(requireContext())

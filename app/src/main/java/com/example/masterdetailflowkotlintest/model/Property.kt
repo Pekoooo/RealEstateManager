@@ -47,7 +47,9 @@ data class Property(
     @ColumnInfo(name = "property_picture_list")
     val pictureList: MutableList<Photo>,
     @ColumnInfo(name = "property_POI_list")
-    val poiList: MutableList<String>
+    val poiList: MutableList<String>,
+    @ColumnInfo(name = "property_status")
+    val isSold: Boolean = false
     ) : Serializable {
 
 

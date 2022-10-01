@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.example.masterdetailflowkotlintest.databinding.RowItemListBinding
 import com.example.masterdetailflowkotlintest.model.Property
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
+import org.w3c.dom.Text
 
 class PropertyListAdapter(
     private val propertyList: List<Property>,
@@ -30,6 +31,8 @@ class PropertyListAdapter(
         holder.propertyPrice.text = property.price
         holder.propertyType.text = property.type
         holder.bind(propertyList[position], onSelect)
+
+        if(property.isSold) holder.propertySaleStatus.text = "SOLD!" else holder.propertySaleStatus.text = "ON SALE!"
 
         Glide
             .with(holder.propertyImage)
@@ -54,6 +57,7 @@ class PropertyListAdapter(
         val propertyPrice: TextView = binding.propertyPrice
         val propertyType: TextView = binding.propertyType
         val propertyImage: ImageView = binding.propertyImageView
+        val propertySaleStatus: TextView = binding.propertySaleStatus
     }
 
 

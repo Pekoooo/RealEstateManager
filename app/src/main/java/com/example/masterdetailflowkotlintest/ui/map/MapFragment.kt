@@ -53,7 +53,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
 
         checkForPerms()
 
-
     }
 
     override fun onCreateView(
