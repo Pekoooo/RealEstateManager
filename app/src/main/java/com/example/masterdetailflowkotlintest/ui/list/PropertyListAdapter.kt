@@ -8,19 +8,19 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.masterdetailflowkotlintest.databinding.RowItemListBinding
+import com.example.masterdetailflowkotlintest.databinding.RowPropertyListBinding
 import com.example.masterdetailflowkotlintest.model.Property
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
 import org.w3c.dom.Text
 
 class PropertyListAdapter(
     private val propertyList: List<Property>,
-    private val itemDetailFragmentContainer: View?,
+    private val currencyState: Boolean,
     private val onSelect: (Property?) -> Unit
 ) : RecyclerView.Adapter<PropertyListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = RowItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = RowPropertyListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
 
     }
@@ -28,7 +28,10 @@ class PropertyListAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val property = propertyList[position]
         holder.propertyLocation.text = property.neighborhood
-        holder.propertyPrice.text = property.price
+
+        if(currencyState) holder.propertyPrice.text = property.price else holder.propertyPrice.text = property.euroPrice
+
+
         holder.propertyType.text = property.type
         holder.bind(propertyList[position], onSelect)
 
@@ -44,7 +47,7 @@ class PropertyListAdapter(
 
     override fun getItemCount() = propertyList.size
 
-    class ViewHolder(private val binding: RowItemListBinding) :
+    class ViewHolder(private val binding: RowPropertyListBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(property: Property?, onSelect: (Property?) -> Unit) {

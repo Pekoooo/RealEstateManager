@@ -18,7 +18,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:context=".ui.main.MainActivity"
-        tools:listitem="@layout/row_item_list" />
+        tools:listitem="@layout/row_property_list" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_property_phone_fab"

@@ -99,12 +99,6 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             (activity as MainActivity).supportActionBar?.title = "New Property"
         }
 
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Property>("property")
-            ?.observe(viewLifecycleOwner) {
-                displayData(it)
-                currentProperty = it
-            }
-
         binding.addPictureButton.setOnClickListener {
 
             val builder = AlertDialog.Builder(context)
@@ -264,21 +258,16 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         builder.setView(dialogLayout)
         builder.show()
 
-        if (currentProperty?.mainPicture == photo?.path) {
-            switch.toggle()
-        }
+        if (currentProperty?.mainPicture == photo?.path) switch.toggle()
 
-        if (photo?.description != null) {
-            (descriptionTextView as TextView).text = photo.description.toString()
-        }
+
+        if (photo?.description != null) (descriptionTextView as TextView).text = photo.description.toString()
+
 
         saveButton.setOnClickListener {
-            if(currentProperty == null){
-                currentProperty = getPropertyInfo()
-            }
-            if (switch.isChecked) {
-                changeMainPhoto(photo)
-            }
+            if(currentProperty == null) currentProperty = getPropertyInfo()
+
+            if (switch.isChecked) changeMainPhoto(photo)
 
             photo?.description = descriptionTextView.text.toString()
             updateDescription(photo)
@@ -294,7 +283,6 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
         }
 
-
     }
 
     private fun changeMainPhoto(currentPhoto: Photo?) {
@@ -309,9 +297,6 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
     private fun areArgsForUpdate(): Boolean =
         args.navigationArgument != ARG_NO_ITEM_ID
-
-    private fun areArgsForCreation(): Boolean =
-        args.navigationArgument == ARG_NO_ITEM_ID
 
     private fun retrieveData(id: Int) {
         lifecycle.coroutineScope.launch {
@@ -343,6 +328,7 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         setRecyclerView(binding.recyclerView)
 
         displayPoi(property)
+
     }
 
     private fun displayPoi(property: Property) {
@@ -424,7 +410,9 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                 binding.bathroomEditText.text.toString() != "" &&
                 binding.countryEditText.text.toString() != "" &&
                 binding.neighborhoodEditText.text.toString() != "" &&
-                binding.priceEditText.text.toString() != ""
+                binding.priceEditText.text.toString() != "" &&
+                currentProperty?.mainPicture != "" &&
+                currentProperty?.pictureList?.size != 0
 
     private fun getPropertyInfo() = Property(
         0,
@@ -444,8 +432,7 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         binding.agentNameEditText.text.toString(),
         currentProperty?.mainPicture.toString(),
         allPropertyPictures,
-        getPoi()
-
+        getPoi(),
     )
 
     private fun getPoi(): MutableList<String> {
@@ -476,8 +463,6 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             poiList.add(resources.getString(R.string.parking))
         }
 
-        Log.d(TAG, "getPoi: $poiList")
-        
         return poiList
 
     }

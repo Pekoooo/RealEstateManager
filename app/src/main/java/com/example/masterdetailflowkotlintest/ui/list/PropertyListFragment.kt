@@ -2,18 +2,15 @@ package com.example.masterdetailflowkotlintest.ui.list
 
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.databinding.FragmentItemListBinding
 import com.example.masterdetailflowkotlintest.model.Property
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
-import com.example.masterdetailflowkotlintest.utils.Constants
 import com.example.masterdetailflowkotlintest.utils.Constants.ARG_NO_ITEM_ID
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,6 +21,7 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
     private var _binding: FragmentItemListBinding? = null
     private var allProperties: List<Property> = listOf()
     private val binding get() = _binding!!
+    private var currencySwitch = true
 
 
 
@@ -44,7 +42,25 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
         super.onViewCreated(view, savedInstanceState)
 
         val recyclerView: RecyclerView = binding.itemList
-        val itemDetailFragmentContainer: View? = view.findViewById(R.id.item_detail_nav_container)
+
+        viewModel.isDollar.observe(viewLifecycleOwner){
+
+
+            currencySwitch = when(it){
+                true -> true
+                false -> false
+            }
+
+            setupRecyclerView(recyclerView, currencySwitch)
+
+
+
+
+
+
+        }
+
+
 
         binding.addPropertyTabletFab?.setOnClickListener {
             val action =
@@ -60,7 +76,7 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
 
         viewModel.allProperties.observe(viewLifecycleOwner){
             allProperties = it
-            setupRecyclerView(recyclerView, itemDetailFragmentContainer)
+            setupRecyclerView(recyclerView, currencySwitch)
         }
 
         requireActivity().addMenuProvider(object: MenuProvider {
@@ -78,7 +94,9 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
                 }
 
                 R.id.currency -> {
-                    Toast.makeText(context, "currency changed", Toast.LENGTH_SHORT).show()
+
+                    viewModel.switchCurrencyUi()
+
                     true
                 }
 
@@ -89,11 +107,11 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
 
     private fun setupRecyclerView(
         recyclerView: RecyclerView,
-        itemDetailFragmentContainer: View?
+        currencyState: Boolean
     ) {
         recyclerView.adapter = PropertyListAdapter(
             allProperties,
-            itemDetailFragmentContainer
+            currencyState
         ) {
 
             val action =

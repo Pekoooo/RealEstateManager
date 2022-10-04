@@ -97,6 +97,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/first_divider">
 
+
+
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline"
                 android:layout_width="wrap_content"
@@ -310,18 +312,8 @@
                 app:layout_constraintStart_toEndOf="@id/guideline"
                 app:layout_constraintTop_toBottomOf="@id/property_postal_code" />
 
-            <ImageView
-                android:id="@+id/map"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_margin="16dp"
-                android:src="@drawable/park_ave_dummy"
-                android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/guideline"
-                app:layout_constraintTop_toBottomOf="@id/property_country"
 
-                tools:visibility="visible" />
+
 
             <Button
                 android:id="@+id/sold_button"

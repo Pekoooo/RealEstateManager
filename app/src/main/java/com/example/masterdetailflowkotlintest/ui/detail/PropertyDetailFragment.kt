@@ -2,6 +2,7 @@ package com.example.masterdetailflowkotlintest.ui.detail
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.Toast
@@ -19,14 +20,19 @@ import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.databinding.FragmentItemDetailBinding
 import com.example.masterdetailflowkotlintest.model.Photo
 import com.example.masterdetailflowkotlintest.model.Property
+import com.example.masterdetailflowkotlintest.ui.main.MainActivity
 import com.example.masterdetailflowkotlintest.utils.Constants.ARG_ITEM_ID
-import com.google.android.material.chip.Chip
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.GoogleMapOptions
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import kotlin.math.log
 
 
 @AndroidEntryPoint
-class PropertyDetailFragment : Fragment() {
+class PropertyDetailFragment : Fragment(), OnMapReadyCallback {
 
     private val viewModel: PropertyDetailViewModel by viewModels()
     private val args: PropertyDetailFragmentArgs by navArgs()
@@ -52,6 +58,16 @@ class PropertyDetailFragment : Fragment() {
                 updateContent(it)
             }
         }
+
+        val options = GoogleMapOptions()
+            .liteMode(true)
+
+
+        val mapFragment = parentFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+
+        mapFragment?.getMapAsync(this)
+
+
 
 
 
@@ -80,6 +96,10 @@ class PropertyDetailFragment : Fragment() {
 
         initMenuItems()
 
+    }
+
+    override fun onMapReady(p0: GoogleMap) {
+        Log.d(MainActivity.TAG, "onMapReady: is called")
     }
 
 
@@ -145,7 +165,7 @@ class PropertyDetailFragment : Fragment() {
     private fun updateContent(property: Property) {
 
         property.let {
-            binding.titleTextView.text = property.toString()
+            binding.titleTextView.text = property.euroPrice
             binding.propertySurface.text = property.surface
             binding.propertyAddress.text = property.address
             binding.propertyCity.text = property.city
@@ -186,13 +206,17 @@ class PropertyDetailFragment : Fragment() {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean = when (menuItem.itemId) {
 
                 R.id.edit -> {
-                    val id = requireArguments().getInt(ARG_ITEM_ID)
+                    if(!currentProperty.isSold) {
 
-                    val action =
-                        PropertyDetailFragmentDirections.actionItemDetailFragmentToAddPropertyFragment(
-                            id
-                        )
-                    findNavController().navigate(action)
+                        val id = requireArguments().getInt(ARG_ITEM_ID)
+
+                        val action =
+                            PropertyDetailFragmentDirections.actionItemDetailFragmentToAddPropertyFragment(
+                                id
+                            )
+                        findNavController().navigate(action)
+
+                    } else Toast.makeText(requireContext(), "Property sold", Toast.LENGTH_SHORT).show()
 
                     true
                 }
@@ -206,4 +230,6 @@ class PropertyDetailFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+
 }

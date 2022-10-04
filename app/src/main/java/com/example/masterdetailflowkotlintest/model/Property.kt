@@ -6,6 +6,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
+import com.example.masterdetailflowkotlintest.utils.CurrencyConverter
 import java.io.Serializable
 
 
@@ -51,6 +52,11 @@ data class Property(
     @ColumnInfo(name = "property_status")
     val isSold: Boolean = false
     ) : Serializable {
+
+    val euroPrice: String
+        get() {
+            return CurrencyConverter.convertDollarToEuro(price.toInt())
+        }
 
 
     override fun toString(): String = "$type in $neighborhood for $price"

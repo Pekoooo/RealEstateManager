@@ -37,9 +37,4 @@ class PropertyDetailViewModel @Inject constructor(
         return chipGroup
     }
 
-    val allProperties: LiveData<List<Property>> = propertyRepository.allProperties.asLiveData()
-
-
-
-
 }
