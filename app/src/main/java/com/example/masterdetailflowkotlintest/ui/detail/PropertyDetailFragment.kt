@@ -21,7 +21,6 @@ import com.example.masterdetailflowkotlintest.databinding.FragmentItemDetailBind
 import com.example.masterdetailflowkotlintest.model.Photo
 import com.example.masterdetailflowkotlintest.model.Property
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
-import com.example.masterdetailflowkotlintest.utils.Constants.ARG_ITEM_ID
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMapOptions
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -51,12 +50,20 @@ class PropertyDetailFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        lifecycle.coroutineScope.launch {
+        when(args.itemId){
 
-            viewModel.getPropertyById(args.itemId).collect {
-                currentProperty = it
-                updateContent(it)
+                0 -> Log.d(MainActivity.TAG, "onViewCreated: id is 0, setting up special fragment ")
+
+                else -> {
+                    lifecycle.coroutineScope.launch {
+                    viewModel.getPropertyById(args.itemId).collect {
+                        currentProperty = it
+                        updateContent(it)
+                    }
+
+                }
             }
+
         }
 
         val options = GoogleMapOptions()
@@ -76,23 +83,6 @@ class PropertyDetailFragment : Fragment(), OnMapReadyCallback {
             if(!currentProperty.isSold) initConfirmationDialog() else Toast.makeText(requireContext(), "Property already sold", Toast.LENGTH_SHORT).show()
 
         }
-
-        /*
-        * binding.soldButton.clickListener
-        *      open dialog -> " you are about to mark this property as sold, you won't be able to modify it afterward "
-        *          choice 1 : Mark as sold // choice 2 : cancel
-        *
-        * choice 1 listener
-        *       currentProperty.isSold = true
-        *       viewmodel.updateproperty(currentProperty.copy, isSold = true)
-        *
-        * choice 2 listener
-        *       dialog.dismiss
-        *
-        *
-        * */
-
-
 
         initMenuItems()
 
@@ -208,12 +198,10 @@ class PropertyDetailFragment : Fragment(), OnMapReadyCallback {
                 R.id.edit -> {
                     if(!currentProperty.isSold) {
 
-                        val id = requireArguments().getInt(ARG_ITEM_ID)
-
                         val action =
-                            PropertyDetailFragmentDirections.actionItemDetailFragmentToAddPropertyFragment(
-                                id
-                            )
+                            PropertyDetailFragmentDirections.actionItemDetailFragmentToAddPropertyFragment(args.itemId)
+
+
                         findNavController().navigate(action)
 
                     } else Toast.makeText(requireContext(), "Property sold", Toast.LENGTH_SHORT).show()

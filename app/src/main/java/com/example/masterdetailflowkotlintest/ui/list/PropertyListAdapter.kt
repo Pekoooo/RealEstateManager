@@ -29,8 +29,23 @@ class PropertyListAdapter(
         val property = propertyList[position]
         holder.propertyLocation.text = property.neighborhood
 
-        if(currencyState) holder.propertyPrice.text = property.price else holder.propertyPrice.text = property.euroPrice
+        when(currencyState){
 
+            true -> {
+
+                holder.propertyPrice.text = property.price
+                holder.propertyPriceCurrency.text = "$"
+
+            }
+
+            false -> {
+
+                holder.propertyPrice.text = property.euroPrice
+                holder.propertyPriceCurrency.text = "€"
+
+            }
+
+        }
 
         holder.propertyType.text = property.type
         holder.bind(propertyList[position], onSelect)
@@ -61,6 +76,7 @@ class PropertyListAdapter(
         val propertyType: TextView = binding.propertyType
         val propertyImage: ImageView = binding.propertyImageView
         val propertySaleStatus: TextView = binding.propertySaleStatus
+        val propertyPriceCurrency: TextView = binding.propertyPriceCurrency
     }
 
 

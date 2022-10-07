@@ -24,7 +24,6 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
     private var currencySwitch = true
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,19 +42,15 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
 
         val recyclerView: RecyclerView = binding.itemList
 
-        viewModel.isDollar.observe(viewLifecycleOwner){
+        viewModel.isDollar.observe(viewLifecycleOwner) {
 
 
-            currencySwitch = when(it){
+            currencySwitch = when (it) {
                 true -> true
                 false -> false
             }
 
             setupRecyclerView(recyclerView, currencySwitch)
-
-
-
-
 
 
         }
@@ -64,29 +59,32 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
 
         binding.addPropertyTabletFab?.setOnClickListener {
             val action =
-                PropertyListFragmentDirections.actionItemListFragmentToAddPropertyFragment(ARG_NO_ITEM_ID)
+                PropertyListFragmentDirections.actionItemListFragmentToAddPropertyFragment(
+                    ARG_NO_ITEM_ID
+                )
             findNavController().navigate(action)
         }
 
         binding.addPropertyPhoneFab?.setOnClickListener {
             val action =
-                PropertyListFragmentDirections.actionItemListFragmentToAddPropertyFragment(ARG_NO_ITEM_ID)
+                PropertyListFragmentDirections.actionItemListFragmentToAddPropertyFragment(
+                    ARG_NO_ITEM_ID
+                )
             findNavController().navigate(action)
         }
 
-        viewModel.allProperties.observe(viewLifecycleOwner){
+        viewModel.allProperties.observe(viewLifecycleOwner) {
             allProperties = it
             setupRecyclerView(recyclerView, currencySwitch)
         }
 
-        requireActivity().addMenuProvider(object: MenuProvider {
+        requireActivity().addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menu.clear()
                 menuInflater.inflate(R.menu.menu_main_activity, menu)
             }
 
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean
-            = when (menuItem.itemId){
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean = when (menuItem.itemId) {
 
                 R.id.map -> {
                     findNavController().navigate(R.id.mapFragment)
@@ -102,7 +100,7 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
 
                 else -> false
             }
-        },viewLifecycleOwner)
+        }, viewLifecycleOwner)
     }
 
     private fun setupRecyclerView(

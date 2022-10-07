@@ -89,14 +89,13 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         setUpSpinner()
         createToolbar()
 
+        when(areArgsForUpdate()){
 
-        if (areArgsForUpdate()) {
-            (activity as MainActivity).supportActionBar?.title = "Update Property"
-
-            retrieveData(args.navigationArgument)
-
-        } else {
-            (activity as MainActivity).supportActionBar?.title = "New Property"
+            true -> {
+                (activity as MainActivity).supportActionBar?.title = "Update Property"
+                retrieveData(args.navigationArgument)
+            }
+            false -> (activity as MainActivity).supportActionBar?.title = "New Property"
         }
 
         binding.addPictureButton.setOnClickListener {
@@ -300,9 +299,14 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
     private fun retrieveData(id: Int) {
         lifecycle.coroutineScope.launch {
-            viewModel.getPropertyById(id).collect {
-                displayData(it)
-                currentProperty = it
+
+            when(id){
+                0 -> Log.d(TAG, "retrieveData: id is 0")
+
+                else -> viewModel.getPropertyById(id).collect {
+                    displayData(it)
+                    currentProperty = it
+                }
             }
         }
     }
