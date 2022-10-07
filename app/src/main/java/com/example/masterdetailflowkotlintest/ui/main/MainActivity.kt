@@ -1,6 +1,7 @@
 package com.example.masterdetailflowkotlintest.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -28,12 +29,13 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.mainActivityToolbar)
     }
 
+    /**
+     * Necessary for child fragment menu items to work when they are used to navigate somewhere else
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
         val navController = findNavController(R.id.fragment_nav_host)
         return item.onNavDestinationSelected(navController)
                 || super.onOptionsItemSelected(item)
-
     }
 
     override fun onSupportNavigateUp(): Boolean {

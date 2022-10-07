@@ -1,10 +1,17 @@
 package com.example.masterdetailflowkotlintest.ui.list
 
+import android.app.Application
+import android.content.Context
+import android.graphics.Point
 import android.os.Bundle
+import android.util.DisplayMetrics
+import android.util.Log
 import android.view.*
+import androidx.annotation.Dimension
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider.NewInstanceFactory.Companion.instance
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.masterdetailflowkotlintest.R
@@ -12,7 +19,9 @@ import com.example.masterdetailflowkotlintest.databinding.FragmentItemListBindin
 import com.example.masterdetailflowkotlintest.model.Property
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
 import com.example.masterdetailflowkotlintest.utils.Constants.ARG_NO_ITEM_ID
+import com.example.masterdetailflowkotlintest.utils.DefineScreenSize.Companion.isTablet
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
@@ -103,6 +112,8 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
         }, viewLifecycleOwner)
     }
 
+
+
     private fun setupRecyclerView(
         recyclerView: RecyclerView,
         currencyState: Boolean
@@ -112,10 +123,25 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
             currencyState
         ) {
 
-            val action =
-                PropertyListFragmentDirections.showItemDetail(it!!.id)
+            when(isTablet(requireContext())){
 
-            findNavController().navigate(action)
+                true -> Log.d(MainActivity.TAG, "setupRecyclerView: clicked on item in tablet")
+
+                else -> {
+
+                    val action =
+                        PropertyListFragmentDirections.showItemDetail(it!!.id)
+
+                    findNavController().navigate(action)
+
+                }
+            }
+
+
+
+
+
+
         }
     }
 
