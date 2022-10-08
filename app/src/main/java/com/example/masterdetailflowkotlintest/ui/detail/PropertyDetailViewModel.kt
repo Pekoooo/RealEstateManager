@@ -3,6 +3,7 @@ package com.example.masterdetailflowkotlintest.ui.detail
 import android.content.Context
 import androidx.lifecycle.*
 import com.example.masterdetailflowkotlintest.model.Property
+import com.example.masterdetailflowkotlintest.repositories.ConverterRepository
 import com.example.masterdetailflowkotlintest.repositories.PropertyRepository
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -16,10 +17,13 @@ import javax.inject.Inject
 @HiltViewModel
 class PropertyDetailViewModel @Inject constructor(
 
-    var propertyRepository: PropertyRepository
+    var propertyRepository: PropertyRepository,
+    var converterRepository: ConverterRepository
 
 ) : ViewModel() {
 
+
+    val isDollar: MutableLiveData<Boolean> = converterRepository.isDollar()
 
     fun getPropertyById(id: Int): Flow<Property> = propertyRepository.getPropertyById(id)
 

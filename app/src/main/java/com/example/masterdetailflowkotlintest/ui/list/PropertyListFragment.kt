@@ -53,7 +53,6 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
 
         viewModel.isDollar.observe(viewLifecycleOwner) {
 
-
             currencySwitch = when (it) {
                 true -> true
                 false -> false
@@ -61,25 +60,14 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
 
             setupRecyclerView(recyclerView, currencySwitch)
 
-
         }
 
-
-
         binding.addPropertyTabletFab?.setOnClickListener {
-            val action =
-                PropertyListFragmentDirections.actionItemListFragmentToAddPropertyFragment(
-                    ARG_NO_ITEM_ID
-                )
-            findNavController().navigate(action)
+            navigateToAddProperty()
         }
 
         binding.addPropertyPhoneFab?.setOnClickListener {
-            val action =
-                PropertyListFragmentDirections.actionItemListFragmentToAddPropertyFragment(
-                    ARG_NO_ITEM_ID
-                )
-            findNavController().navigate(action)
+            navigateToAddProperty()
         }
 
         viewModel.allProperties.observe(viewLifecycleOwner) {
@@ -87,6 +75,12 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
             setupRecyclerView(recyclerView, currencySwitch)
         }
 
+        initMenuItems()
+
+
+    }
+
+    private fun initMenuItems() {
         requireActivity().addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menu.clear()
@@ -112,6 +106,13 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
         }, viewLifecycleOwner)
     }
 
+    private fun navigateToAddProperty() {
+        val action =
+            PropertyListFragmentDirections.actionItemListFragmentToAddPropertyFragment(
+                ARG_NO_ITEM_ID
+            )
+        findNavController().navigate(action)
+    }
 
 
     private fun setupRecyclerView(
@@ -125,7 +126,11 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
 
             when(isTablet(requireContext())){
 
-                true -> Log.d(MainActivity.TAG, "setupRecyclerView: clicked on item in tablet")
+                /*Implement replace fragment here*/
+                true -> {
+                    Log.d(MainActivity.TAG, "setupRecyclerView: clicked on item in tablet")
+                    binding.addPropertyTabletFab
+                }
 
                 else -> {
 

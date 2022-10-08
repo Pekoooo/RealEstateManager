@@ -61,6 +61,11 @@ data class Property(
 
     override fun toString(): String = "$type in $neighborhood for $price"
 
+    val toStringEuroPrice: String
+        get() {
+            return "$type in $neighborhood for $euroPrice"
+        }
+
 }
 
 

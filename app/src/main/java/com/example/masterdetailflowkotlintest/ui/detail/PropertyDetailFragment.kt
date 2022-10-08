@@ -38,6 +38,7 @@ class PropertyDetailFragment : Fragment(), OnMapReadyCallback {
     private lateinit var currentProperty: Property
     private var _binding: FragmentItemDetailBinding? = null
     private val binding get() = _binding!!
+    private var currencySwitch = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,6 +51,8 @@ class PropertyDetailFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+
         when(args.itemId){
 
                 0 -> Log.d(MainActivity.TAG, "onViewCreated: id is 0, setting up special fragment ")
@@ -58,13 +61,15 @@ class PropertyDetailFragment : Fragment(), OnMapReadyCallback {
                     lifecycle.coroutineScope.launch {
                     viewModel.getPropertyById(args.itemId).collect {
                         currentProperty = it
-                        updateContent(it)
+                        observeCurrency()
                     }
 
                 }
             }
 
         }
+
+
 
         val options = GoogleMapOptions()
             .liteMode(true)
@@ -88,8 +93,22 @@ class PropertyDetailFragment : Fragment(), OnMapReadyCallback {
 
     }
 
+    private fun observeCurrency() {
+
+        viewModel.isDollar.observe(viewLifecycleOwner){
+
+            Log.d(MainActivity.TAG, "observeCurrency: $it")
+
+            when(it){
+                true -> updateContent(currentProperty, it)
+                false -> updateContent(currentProperty, it)
+            }
+
+        }
+    }
+
     override fun onMapReady(p0: GoogleMap) {
-        Log.d(MainActivity.TAG, "onMapReady: is called")
+
     }
 
 
@@ -152,10 +171,23 @@ class PropertyDetailFragment : Fragment(), OnMapReadyCallback {
 
     }
 
-    private fun updateContent(property: Property) {
+    private fun updateContent(property: Property, currencySwitch: Boolean) {
 
         property.let {
-            binding.titleTextView.text = property.euroPrice
+
+            Log.d(MainActivity.TAG, "updateContent: currencySwitch is $currencySwitch")
+
+            when(currencySwitch){
+                true -> {
+                    binding.titleTextView.text = property.toString()
+                    binding.currencySymbol?.text = "$"
+                }
+                false -> {
+                    binding.titleTextView.text = property.toStringEuroPrice
+                    binding.currencySymbol?.text = "€"
+                }
+            }
+
             binding.propertySurface.text = property.surface
             binding.propertyAddress.text = property.address
             binding.propertyCity.text = property.city
