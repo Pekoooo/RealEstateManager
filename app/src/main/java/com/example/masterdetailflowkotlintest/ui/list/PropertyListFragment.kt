@@ -1,17 +1,11 @@
 package com.example.masterdetailflowkotlintest.ui.list
 
-import android.app.Application
-import android.content.Context
-import android.graphics.Point
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.util.Log
 import android.view.*
-import androidx.annotation.Dimension
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider.NewInstanceFactory.Companion.instance
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.masterdetailflowkotlintest.R
@@ -19,9 +13,9 @@ import com.example.masterdetailflowkotlintest.databinding.FragmentItemListBindin
 import com.example.masterdetailflowkotlintest.model.Property
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
 import com.example.masterdetailflowkotlintest.utils.Constants.ARG_NO_ITEM_ID
+import com.example.masterdetailflowkotlintest.utils.CurrencyType
 import com.example.masterdetailflowkotlintest.utils.DefineScreenSize.Companion.isTablet
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
@@ -30,7 +24,7 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
     private var _binding: FragmentItemListBinding? = null
     private var allProperties: List<Property> = listOf()
     private val binding get() = _binding!!
-    private var currencySwitch = true
+    private lateinit var currencyType: CurrencyType
 
 
     override fun onCreateView(
@@ -51,14 +45,14 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
 
         val recyclerView: RecyclerView = binding.itemList
 
-        viewModel.isDollar.observe(viewLifecycleOwner) {
+        viewModel.currencyType.observe(viewLifecycleOwner) {
 
-            currencySwitch = when (it) {
-                true -> true
-                false -> false
+            currencyType = when (it) {
+                CurrencyType.DOLLAR, null -> CurrencyType.DOLLAR
+                CurrencyType.EURO -> CurrencyType.EURO
             }
 
-            setupRecyclerView(recyclerView, currencySwitch)
+            setupRecyclerView(recyclerView, currencyType)
 
         }
 
@@ -72,7 +66,7 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
 
         viewModel.allProperties.observe(viewLifecycleOwner) {
             allProperties = it
-            setupRecyclerView(recyclerView, currencySwitch)
+            setupRecyclerView(recyclerView, currencyType)
         }
 
         initMenuItems()
@@ -117,11 +111,11 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
 
     private fun setupRecyclerView(
         recyclerView: RecyclerView,
-        currencyState: Boolean
+        currencyType: CurrencyType
     ) {
         recyclerView.adapter = PropertyListAdapter(
             allProperties,
-            currencyState
+            currencyType
         ) {
 
             when(isTablet(requireContext())){

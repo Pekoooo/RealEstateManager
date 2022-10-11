@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import com.example.masterdetailflowkotlintest.model.Property
 import com.example.masterdetailflowkotlintest.repositories.ConverterRepository
 import com.example.masterdetailflowkotlintest.repositories.PropertyRepository
+import com.example.masterdetailflowkotlintest.utils.CurrencyType
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,13 +18,13 @@ import javax.inject.Inject
 @HiltViewModel
 class PropertyDetailViewModel @Inject constructor(
 
-    var propertyRepository: PropertyRepository,
+    private var propertyRepository: PropertyRepository,
     var converterRepository: ConverterRepository
 
 ) : ViewModel() {
 
 
-    val isDollar: MutableLiveData<Boolean> = converterRepository.isDollar()
+    private val currencyTypeLiveData: MutableLiveData<CurrencyType> = converterRepository.currencyType()
 
     fun getPropertyById(id: Int): Flow<Property> = propertyRepository.getPropertyById(id)
 
@@ -39,6 +40,10 @@ class PropertyDetailViewModel @Inject constructor(
             chipGroup.addView(currentChip)
         }
         return chipGroup
+    }
+
+     fun currencyType(): MutableLiveData<CurrencyType>{
+        return currencyTypeLiveData
     }
 
 }

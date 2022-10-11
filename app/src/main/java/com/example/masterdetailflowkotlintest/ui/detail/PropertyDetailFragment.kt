@@ -21,13 +21,13 @@ import com.example.masterdetailflowkotlintest.databinding.FragmentItemDetailBind
 import com.example.masterdetailflowkotlintest.model.Photo
 import com.example.masterdetailflowkotlintest.model.Property
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
+import com.example.masterdetailflowkotlintest.utils.CurrencyType
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMapOptions
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import kotlin.math.log
 
 
 @AndroidEntryPoint
@@ -38,7 +38,7 @@ class PropertyDetailFragment : Fragment(), OnMapReadyCallback {
     private lateinit var currentProperty: Property
     private var _binding: FragmentItemDetailBinding? = null
     private val binding get() = _binding!!
-    private var currencySwitch = true
+    private var currencyType: CurrencyType? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -95,13 +95,18 @@ class PropertyDetailFragment : Fragment(), OnMapReadyCallback {
 
     private fun observeCurrency() {
 
-        viewModel.isDollar.observe(viewLifecycleOwner){
-
-            Log.d(MainActivity.TAG, "observeCurrency: $it")
+        viewModel.currencyType().observe(viewLifecycleOwner){
 
             when(it){
-                true -> updateContent(currentProperty, it)
-                false -> updateContent(currentProperty, it)
+                CurrencyType.DOLLAR, null -> {
+                    currencyType = CurrencyType.DOLLAR
+                    updateContent(currentProperty)
+                }
+                CurrencyType.EURO -> {
+                    currencyType = CurrencyType.EURO
+                    updateContent(currentProperty)
+                }
+
             }
 
         }
@@ -171,21 +176,21 @@ class PropertyDetailFragment : Fragment(), OnMapReadyCallback {
 
     }
 
-    private fun updateContent(property: Property, currencySwitch: Boolean) {
+    private fun updateContent(property: Property) {
 
         property.let {
 
-            Log.d(MainActivity.TAG, "updateContent: currencySwitch is $currencySwitch")
 
-            when(currencySwitch){
-                true -> {
+            when(currencyType){
+                CurrencyType.DOLLAR, null -> {
                     binding.titleTextView.text = property.toString()
                     binding.currencySymbol?.text = "$"
                 }
-                false -> {
+                CurrencyType.EURO -> {
                     binding.titleTextView.text = property.toStringEuroPrice
                     binding.currencySymbol?.text = "€"
                 }
+
             }
 
             binding.propertySurface.text = property.surface

@@ -22,7 +22,6 @@ class PropertyRepository @Inject constructor(
     fun getPropertyById(id: Int): Flow<Property> = propertyDao.getPropertyById(id)
 
     suspend fun updateProperty(property: Property) {
-        Log.d(MainActivity.TAG, "updateProperty: ${property.description}")
         propertyDao.updateProperty(property)
     }
 

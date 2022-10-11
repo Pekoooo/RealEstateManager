@@ -1,8 +1,6 @@
 package com.example.masterdetailflowkotlintest.ui.list
 
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -10,12 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.masterdetailflowkotlintest.databinding.RowPropertyListBinding
 import com.example.masterdetailflowkotlintest.model.Property
-import com.example.masterdetailflowkotlintest.ui.main.MainActivity
-import org.w3c.dom.Text
+import com.example.masterdetailflowkotlintest.utils.CurrencyType
 
 class PropertyListAdapter(
     private val propertyList: List<Property>,
-    private val currencyState: Boolean,
+    private val currencyType: CurrencyType,
     private val onSelect: (Property?) -> Unit
 ) : RecyclerView.Adapter<PropertyListAdapter.ViewHolder>() {
 
@@ -29,16 +26,16 @@ class PropertyListAdapter(
         val property = propertyList[position]
         holder.propertyLocation.text = property.neighborhood
 
-        when(currencyState){
+        when(currencyType){
 
-            true -> {
+            CurrencyType.DOLLAR -> {
 
                 holder.propertyPrice.text = property.price
                 holder.propertyPriceCurrency.text = "$"
 
             }
 
-            false -> {
+            CurrencyType.EURO -> {
 
                 holder.propertyPrice.text = property.euroPrice
                 holder.propertyPriceCurrency.text = "€"
