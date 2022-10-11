@@ -28,6 +28,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.util.*
 
 
 @AndroidEntryPoint
@@ -53,12 +54,12 @@ class PropertyDetailFragment : Fragment(), OnMapReadyCallback {
 
 
 
-        when(args.itemId){
+        when (args.itemId) {
 
-                0 -> Log.d(MainActivity.TAG, "onViewCreated: id is 0, setting up special fragment ")
+            0 -> Log.d(MainActivity.TAG, "onViewCreated: id is 0, setting up special fragment ")
 
-                else -> {
-                    lifecycle.coroutineScope.launch {
+            else -> {
+                lifecycle.coroutineScope.launch {
                     viewModel.getPropertyById(args.itemId).collect {
                         currentProperty = it
                         observeCurrency()
@@ -68,7 +69,6 @@ class PropertyDetailFragment : Fragment(), OnMapReadyCallback {
             }
 
         }
-
 
 
         val options = GoogleMapOptions()
@@ -85,7 +85,11 @@ class PropertyDetailFragment : Fragment(), OnMapReadyCallback {
 
         binding.soldButton?.setOnClickListener {
 
-            if(!currentProperty.isSold) initConfirmationDialog() else Toast.makeText(requireContext(), "Property already sold", Toast.LENGTH_SHORT).show()
+            if (!currentProperty.isSold) initConfirmationDialog() else Toast.makeText(
+                requireContext(),
+                "Property already sold",
+                Toast.LENGTH_SHORT
+            ).show()
 
         }
 
@@ -95,9 +99,9 @@ class PropertyDetailFragment : Fragment(), OnMapReadyCallback {
 
     private fun observeCurrency() {
 
-        viewModel.currencyType().observe(viewLifecycleOwner){
+        viewModel.currencyType().observe(viewLifecycleOwner) {
 
-            when(it){
+            when (it) {
                 CurrencyType.DOLLAR, null -> {
                     currencyType = CurrencyType.DOLLAR
                     updateContent(currentProperty)
@@ -132,6 +136,7 @@ class PropertyDetailFragment : Fragment(), OnMapReadyCallback {
 
         confirmButton.setOnClickListener {
 
+            binding.soldAtDate.text = Calendar.getInstance().time.toString()
             viewModel.updateProperty(currentProperty.copy(isSold = true))
             builder.dismiss()
 
@@ -181,7 +186,7 @@ class PropertyDetailFragment : Fragment(), OnMapReadyCallback {
         property.let {
 
 
-            when(currencyType){
+            when (currencyType) {
                 CurrencyType.DOLLAR, null -> {
                     binding.titleTextView.text = property.toString()
                     binding.currencySymbol?.text = "$"
@@ -212,7 +217,7 @@ class PropertyDetailFragment : Fragment(), OnMapReadyCallback {
                 property.pictureList
             )
 
-            if(property.isSold) binding.soldButton?.text = resources.getText(R.string.sold)
+            if (property.isSold) binding.soldButton?.text = resources.getText(R.string.sold)
         }
     }
 
@@ -233,15 +238,18 @@ class PropertyDetailFragment : Fragment(), OnMapReadyCallback {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean = when (menuItem.itemId) {
 
                 R.id.edit -> {
-                    if(!currentProperty.isSold) {
+                    if (!currentProperty.isSold) {
 
                         val action =
-                            PropertyDetailFragmentDirections.actionItemDetailFragmentToAddPropertyFragment(args.itemId)
+                            PropertyDetailFragmentDirections.actionItemDetailFragmentToAddPropertyFragment(
+                                args.itemId
+                            )
 
 
                         findNavController().navigate(action)
 
-                    } else Toast.makeText(requireContext(), "Property sold", Toast.LENGTH_SHORT).show()
+                    } else Toast.makeText(requireContext(), "Property sold", Toast.LENGTH_SHORT)
+                        .show()
 
                     true
                 }

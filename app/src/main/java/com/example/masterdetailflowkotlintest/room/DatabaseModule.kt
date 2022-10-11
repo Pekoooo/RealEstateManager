@@ -7,11 +7,13 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.masterdetailflowkotlintest.room.dao.PropertyDao
+import com.example.masterdetailflowkotlintest.utils.PropertyCallback
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Provider
 import javax.inject.Singleton
 
 /**
@@ -42,11 +44,15 @@ class DatabaseModule {
 
     @Singleton
     @Provides
-    fun provideDatabase(@ApplicationContext app: Context) =
+    fun provideDatabase(@ApplicationContext app: Context,
+    provider: Provider<PropertyDao>) =
         Room.databaseBuilder(
             app,
             LocalDatabase::class.java,
             "LocalDatabase"
         )
+            .addCallback(
+                PropertyCallback(provider)
+            )
             .build()
 }
