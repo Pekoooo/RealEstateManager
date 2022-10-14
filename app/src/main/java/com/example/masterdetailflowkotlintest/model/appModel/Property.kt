@@ -1,11 +1,8 @@
-package com.example.masterdetailflowkotlintest.model
+package com.example.masterdetailflowkotlintest.model.appModel
 
-import android.os.Parcelable
-import android.text.Editable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverter
 import com.example.masterdetailflowkotlintest.utils.CurrencyConverter
 import java.io.Serializable
 
@@ -64,6 +61,11 @@ data class Property(
     val toStringEuroPrice: String
         get() {
             return "$type in $neighborhood for $euroPrice"
+        }
+
+    val apiCallAddress: String
+        get() {
+            return "$address %20 $postalCode %20 $city %20 $country"
         }
 
 }

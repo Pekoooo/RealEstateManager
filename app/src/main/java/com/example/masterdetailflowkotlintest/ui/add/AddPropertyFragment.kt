@@ -1,4 +1,4 @@
-package com.example.masterdetailflowkotlintest.ui.addProperty
+package com.example.masterdetailflowkotlintest.ui.add
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -26,8 +26,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.databinding.FragmentAddPropertyBinding
-import com.example.masterdetailflowkotlintest.model.Photo
-import com.example.masterdetailflowkotlintest.model.Property
+import com.example.masterdetailflowkotlintest.model.appModel.Photo
+import com.example.masterdetailflowkotlintest.model.appModel.Property
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
 import com.example.masterdetailflowkotlintest.utils.Constants.ARG_NO_ITEM_ID
 import com.example.masterdetailflowkotlintest.utils.UriPathHelper
@@ -89,7 +89,7 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         setUpSpinner()
         createToolbar()
 
-        when(areArgsForUpdate()){
+        when (areArgsForUpdate()) {
 
             true -> {
                 (activity as MainActivity).supportActionBar?.title = "Update Property"
@@ -260,11 +260,12 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         if (currentProperty?.mainPicture == photo?.path) switch.toggle()
 
 
-        if (photo?.description != null) (descriptionTextView as TextView).text = photo.description.toString()
+        if (photo?.description != null) (descriptionTextView as TextView).text =
+            photo.description.toString()
 
 
         saveButton.setOnClickListener {
-            if(currentProperty == null) currentProperty = getPropertyInfo()
+            if (currentProperty == null) currentProperty = getPropertyInfo()
 
             if (switch.isChecked) changeMainPhoto(photo)
 
@@ -300,7 +301,7 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     private fun retrieveData(id: Int) {
         lifecycle.coroutineScope.launch {
 
-            when(id){
+            when (id) {
                 0 -> Log.d(TAG, "retrieveData: id is 0")
 
                 else -> viewModel.getPropertyById(id).collect {
@@ -337,27 +338,27 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
     private fun displayPoi(property: Property) {
 
-        if(property.poiList.contains(resources.getString(R.string.school))){
+        if (property.poiList.contains(resources.getString(R.string.school))) {
             binding.checkbox?.checkboxNearbySchool?.isChecked = true
         }
 
-        if(property.poiList.contains(resources.getString(R.string.playground))){
+        if (property.poiList.contains(resources.getString(R.string.playground))) {
             binding.checkbox?.checkboxNearbyPlayground?.isChecked = true
         }
 
-        if(property.poiList.contains(resources.getString(R.string.shops))){
+        if (property.poiList.contains(resources.getString(R.string.shops))) {
             binding.checkbox?.checkboxNearbyShop?.isChecked = true
         }
 
-        if(property.poiList.contains(resources.getString(R.string.train))){
+        if (property.poiList.contains(resources.getString(R.string.train))) {
             binding.checkbox?.checkboxNearbyTrain?.isChecked = true
         }
 
-        if(property.poiList.contains(resources.getString(R.string.daycare))){
+        if (property.poiList.contains(resources.getString(R.string.daycare))) {
             binding.checkbox?.checkboxNearbyDaycare?.isChecked = true
         }
 
-        if(property.poiList.contains(resources.getString(R.string.parking))){
+        if (property.poiList.contains(resources.getString(R.string.parking))) {
             binding.checkbox?.checkboxNearbyParking?.isChecked = true
         }
 
@@ -372,6 +373,8 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean = when (menuItem.itemId) {
 
+
+                //Reduce nesting here by inverting statement
                 R.id.save -> {
                     if (allFieldsAreFilled()) {
 
@@ -440,30 +443,30 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     )
 
     private fun getPoi(): MutableList<String> {
-        
+
         val poiList = mutableListOf<String>()
-        
-        if(binding.checkbox?.checkboxNearbySchool?.isChecked == true){
+
+        if (binding.checkbox?.checkboxNearbySchool?.isChecked == true) {
             poiList.add(resources.getString(R.string.school))
         }
-        
-        if(binding.checkbox?.checkboxNearbyPlayground?.isChecked == true){
+
+        if (binding.checkbox?.checkboxNearbyPlayground?.isChecked == true) {
             poiList.add(resources.getString(R.string.playground))
         }
-        
-        if(binding.checkbox?.checkboxNearbyShop?.isChecked == true){
+
+        if (binding.checkbox?.checkboxNearbyShop?.isChecked == true) {
             poiList.add(resources.getString(R.string.shop))
         }
-        
-        if(binding.checkbox?.checkboxNearbyTrain?.isChecked == true){
+
+        if (binding.checkbox?.checkboxNearbyTrain?.isChecked == true) {
             poiList.add(resources.getString(R.string.train))
         }
 
-        if(binding.checkbox?.checkboxNearbyDaycare?.isChecked == true){
+        if (binding.checkbox?.checkboxNearbyDaycare?.isChecked == true) {
             poiList.add(resources.getString(R.string.daycare))
         }
 
-        if(binding.checkbox?.checkboxNearbyParking?.isChecked == true){
+        if (binding.checkbox?.checkboxNearbyParking?.isChecked == true) {
             poiList.add(resources.getString(R.string.parking))
         }
 

@@ -1,7 +1,7 @@
 package com.example.masterdetailflowkotlintest.room.dao
 
 import androidx.room.*
-import com.example.masterdetailflowkotlintest.model.Property
+import com.example.masterdetailflowkotlintest.model.appModel.Property
 import kotlinx.coroutines.flow.Flow
 
 @Dao

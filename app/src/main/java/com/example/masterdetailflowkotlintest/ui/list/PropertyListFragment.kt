@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.databinding.FragmentItemListBinding
-import com.example.masterdetailflowkotlintest.model.Property
+import com.example.masterdetailflowkotlintest.model.appModel.Property
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
 import com.example.masterdetailflowkotlintest.utils.Constants.ARG_NO_ITEM_ID
 import com.example.masterdetailflowkotlintest.utils.CurrencyType

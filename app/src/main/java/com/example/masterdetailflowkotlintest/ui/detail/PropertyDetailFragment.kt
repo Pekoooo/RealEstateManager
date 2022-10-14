@@ -1,6 +1,7 @@
 package com.example.masterdetailflowkotlintest.ui.detail
 
 import android.app.AlertDialog
+import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -18,21 +19,17 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.databinding.FragmentItemDetailBinding
-import com.example.masterdetailflowkotlintest.model.Photo
-import com.example.masterdetailflowkotlintest.model.Property
+import com.example.masterdetailflowkotlintest.model.appModel.Photo
+import com.example.masterdetailflowkotlintest.model.appModel.Property
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
 import com.example.masterdetailflowkotlintest.utils.CurrencyType
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.GoogleMapOptions
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.*
 
 
 @AndroidEntryPoint
-class PropertyDetailFragment : Fragment(), OnMapReadyCallback {
+class PropertyDetailFragment : Fragment() {
 
     private val viewModel: PropertyDetailViewModel by viewModels()
     private val args: PropertyDetailFragmentArgs by navArgs()
@@ -52,11 +49,15 @@ class PropertyDetailFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initMenuItems()
 
+        viewModel.res.observe(viewLifecycleOwner) {
+            Log.d(MainActivity.TAG, "onViewCreated: property lat :${it.data?.lat} property lng : ${it.data?.long}")
+        }
 
         when (args.itemId) {
 
-            0 -> Log.d(MainActivity.TAG, "onViewCreated: id is 0, setting up special fragment ")
+            0 -> Unit
 
             else -> {
                 lifecycle.coroutineScope.launch {
@@ -71,18 +72,6 @@ class PropertyDetailFragment : Fragment(), OnMapReadyCallback {
         }
 
 
-        val options = GoogleMapOptions()
-            .liteMode(true)
-
-
-        val mapFragment = parentFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
-
-        mapFragment?.getMapAsync(this)
-
-
-
-
-
         binding.soldButton?.setOnClickListener {
 
             if (!currentProperty.isSold) initConfirmationDialog() else Toast.makeText(
@@ -92,8 +81,6 @@ class PropertyDetailFragment : Fragment(), OnMapReadyCallback {
             ).show()
 
         }
-
-        initMenuItems()
 
     }
 
@@ -114,12 +101,8 @@ class PropertyDetailFragment : Fragment(), OnMapReadyCallback {
             }
 
         }
-    }
-
-    override fun onMapReady(p0: GoogleMap) {
 
     }
-
 
     private fun initConfirmationDialog() {
 
@@ -139,6 +122,7 @@ class PropertyDetailFragment : Fragment(), OnMapReadyCallback {
             binding.soldAtDate.text = Calendar.getInstance().time.toString()
             viewModel.updateProperty(currentProperty.copy(isSold = true))
             builder.dismiss()
+
 
         }
 
@@ -185,6 +169,7 @@ class PropertyDetailFragment : Fragment(), OnMapReadyCallback {
 
         property.let {
 
+            viewModel.getLocation(property.address)
 
             when (currencyType) {
                 CurrencyType.DOLLAR, null -> {
@@ -218,6 +203,8 @@ class PropertyDetailFragment : Fragment(), OnMapReadyCallback {
             )
 
             if (property.isSold) binding.soldButton?.text = resources.getText(R.string.sold)
+
+
         }
     }
 

@@ -1,14 +1,12 @@
-package com.example.masterdetailflowkotlintest.ui.addProperty
+package com.example.masterdetailflowkotlintest.ui.add
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.masterdetailflowkotlintest.model.Property
+import com.example.masterdetailflowkotlintest.model.appModel.Property
 import com.example.masterdetailflowkotlintest.repositories.PropertyRepository
-import com.example.masterdetailflowkotlintest.ui.main.MainActivity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

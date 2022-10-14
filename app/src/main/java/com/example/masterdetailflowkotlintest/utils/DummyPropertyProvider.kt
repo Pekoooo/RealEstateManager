@@ -1,14 +1,14 @@
 package com.example.masterdetailflowkotlintest.utils
 
-import com.example.masterdetailflowkotlintest.model.Photo
-import com.example.masterdetailflowkotlintest.model.Property
+import com.example.masterdetailflowkotlintest.model.appModel.Photo
+import com.example.masterdetailflowkotlintest.model.appModel.Property
 import java.util.*
 
 class DummyPropertyProvider {
 
     companion object {
 
-        fun getDummyProperty(): Property{
+        fun getDummyProperty(): Property {
 
             return Property(
                 1,
@@ -39,7 +39,7 @@ class DummyPropertyProvider {
 
             return mutableListOf(
                 "School",
-                "Bus"
+                "Daycare"
             )
 
         }

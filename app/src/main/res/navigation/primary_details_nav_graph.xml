@@ -33,7 +33,7 @@
     </fragment>
     <fragment
         android:id="@+id/addPropertyFragment"
-        android:name="com.example.masterdetailflowkotlintest.ui.addProperty.AddPropertyFragment"
+        android:name="com.example.masterdetailflowkotlintest.ui.add.AddPropertyFragment"
         android:label="fragment_add_property"
         tools:layout="@layout/fragment_add_property" >
         <action

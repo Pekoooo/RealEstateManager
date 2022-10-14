@@ -1,13 +1,16 @@
 package com.example.masterdetailflowkotlintest.ui.map
 
 import android.annotation.SuppressLint
+import android.location.Geocoder
 import android.location.Location
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.databinding.FragmentMapBinding
@@ -88,6 +91,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
         )
     }
 
+    @RequiresApi(33)
     @SuppressLint("MissingPermission")
     override fun onMapReady(p0: GoogleMap) {
         p0.isMyLocationEnabled = true
@@ -97,6 +101,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
         )
 
         p0.animateCamera(CameraUpdateFactory.newLatLngZoom(latLnt, 15F))
+
     }
 
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {

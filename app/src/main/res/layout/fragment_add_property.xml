@@ -5,7 +5,7 @@
     android:id="@+id/add_property_nested_scroll_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.addProperty.AddPropertyFragment">
+    tools:context=".ui.add.AddPropertyFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

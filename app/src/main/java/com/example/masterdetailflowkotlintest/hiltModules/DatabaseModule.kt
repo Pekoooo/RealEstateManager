@@ -1,11 +1,8 @@
-package com.example.masterdetailflowkotlintest.room
+package com.example.masterdetailflowkotlintest.hiltModules
 
-import android.content.ContentValues
 import android.content.Context
-import android.util.Log
 import androidx.room.Room
-import androidx.room.RoomDatabase
-import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.masterdetailflowkotlintest.room.LocalDatabase
 import com.example.masterdetailflowkotlintest.room.dao.PropertyDao
 import com.example.masterdetailflowkotlintest.utils.PropertyCallback
 import dagger.Module
@@ -27,7 +24,6 @@ import javax.inject.Singleton
  * contributes to dependency injection object graph.
  */
 @Module
-
 class DatabaseModule {
 
     /**

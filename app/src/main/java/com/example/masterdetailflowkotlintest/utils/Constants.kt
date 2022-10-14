@@ -8,4 +8,7 @@ object Constants {
     //Date format
     const val DATE_FORMAT = "dd/MM/yyyy"
 
+    //Retrofit
+    const val BASE_URL = "https://maps.googleapis.com/"
+
 }
