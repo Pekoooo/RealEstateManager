@@ -1,4 +1,4 @@
-package com.example.masterdetailflowkotlintest.model.appModel
+package com.example.masterdetailflowkotlintest.model.pojo
 
 data class Photo(
     val path: String,

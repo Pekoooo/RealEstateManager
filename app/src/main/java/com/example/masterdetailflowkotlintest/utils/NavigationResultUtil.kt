@@ -2,7 +2,7 @@ package com.example.masterdetailflowkotlintest.utils
 
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.masterdetailflowkotlintest.model.appModel.Property
+import com.example.masterdetailflowkotlintest.model.pojo.Property
 
 class NavigationResultUtil {
 

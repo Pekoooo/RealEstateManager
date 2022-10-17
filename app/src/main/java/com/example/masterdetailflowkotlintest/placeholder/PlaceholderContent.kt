@@ -1,7 +1,7 @@
 package com.example.masterdetailflowkotlintest.placeholder
 
-import com.example.masterdetailflowkotlintest.model.appModel.Photo
-import com.example.masterdetailflowkotlintest.model.appModel.Property
+import com.example.masterdetailflowkotlintest.model.pojo.Photo
+import com.example.masterdetailflowkotlintest.model.pojo.Property
 import java.util.ArrayList
 import java.util.HashMap
 

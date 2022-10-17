@@ -1,4 +1,4 @@
-package com.example.masterdetailflowkotlintest.hiltModules
+package com.example.masterdetailflowkotlintest.modules
 
 import android.content.Context
 import androidx.room.Room
@@ -24,7 +24,7 @@ import javax.inject.Singleton
  * contributes to dependency injection object graph.
  */
 @Module
-class DatabaseModule {
+class Database {
 
     /**
      * This annotation marks the method

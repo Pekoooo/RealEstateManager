@@ -1,7 +1,7 @@
 package com.example.masterdetailflowkotlintest.api
 
 import com.example.masterdetailflowkotlintest.BuildConfig
-import com.example.masterdetailflowkotlintest.model.responseModel.GeocodeResponse
+import com.example.masterdetailflowkotlintest.model.response.GeocodeResponse
 import retrofit2.Response
 import javax.inject.Inject
 

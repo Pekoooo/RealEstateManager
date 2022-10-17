@@ -1,4 +1,4 @@
-package com.example.masterdetailflowkotlintest.hiltModules
+package com.example.masterdetailflowkotlintest.modules
 
 import com.example.masterdetailflowkotlintest.BuildConfig
 import com.example.masterdetailflowkotlintest.api.GeocodingHelper
@@ -19,7 +19,7 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-class RetrofitModule {
+class Retrofit {
 
     @Provides
     fun provideBaseUrl() = Constants.BASE_URL

@@ -1,7 +1,7 @@
 package com.example.masterdetailflowkotlintest.utils
 
-import com.example.masterdetailflowkotlintest.model.appModel.Photo
-import com.example.masterdetailflowkotlintest.model.appModel.Property
+import com.example.masterdetailflowkotlintest.model.pojo.Photo
+import com.example.masterdetailflowkotlintest.model.pojo.Property
 import java.util.*
 
 class DummyPropertyProvider {

@@ -1,6 +1,6 @@
 package com.example.masterdetailflowkotlintest
 
-import com.example.masterdetailflowkotlintest.model.appModel.Photo
+import com.example.masterdetailflowkotlintest.model.pojo.Photo
 import org.junit.Test
 
 import org.junit.Assert.*

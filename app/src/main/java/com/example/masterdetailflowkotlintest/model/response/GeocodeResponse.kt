@@ -1,7 +1,6 @@
-package com.example.masterdetailflowkotlintest.model.responseModel
+package com.example.masterdetailflowkotlintest.model.response
 
-import com.example.masterdetailflowkotlintest.model.LocationView
-import java.net.URLEncoder
+import com.example.masterdetailflowkotlintest.model.view.LocationView
 
 data class GeocodeResponse(
     val results: List<Result>,

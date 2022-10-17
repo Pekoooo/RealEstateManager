@@ -26,8 +26,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.databinding.FragmentAddPropertyBinding
-import com.example.masterdetailflowkotlintest.model.appModel.Photo
-import com.example.masterdetailflowkotlintest.model.appModel.Property
+import com.example.masterdetailflowkotlintest.model.pojo.Photo
+import com.example.masterdetailflowkotlintest.model.pojo.Property
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
 import com.example.masterdetailflowkotlintest.utils.Constants.ARG_NO_ITEM_ID
 import com.example.masterdetailflowkotlintest.utils.UriPathHelper

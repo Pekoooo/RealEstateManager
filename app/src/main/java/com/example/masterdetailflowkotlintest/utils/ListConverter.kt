@@ -1,7 +1,7 @@
 package com.example.masterdetailflowkotlintest.utils
 
 import androidx.room.TypeConverter
-import com.example.masterdetailflowkotlintest.model.appModel.Photo
+import com.example.masterdetailflowkotlintest.model.pojo.Photo
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 

@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.masterdetailflowkotlintest.databinding.RowPropertyListBinding
-import com.example.masterdetailflowkotlintest.model.appModel.Property
+import com.example.masterdetailflowkotlintest.model.pojo.Property
 import com.example.masterdetailflowkotlintest.utils.CurrencyType
 
 class PropertyListAdapter(

@@ -1,7 +1,6 @@
 package com.example.masterdetailflowkotlintest.ui.detail
 
 import android.app.AlertDialog
-import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -19,8 +18,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.databinding.FragmentItemDetailBinding
-import com.example.masterdetailflowkotlintest.model.appModel.Photo
-import com.example.masterdetailflowkotlintest.model.appModel.Property
+import com.example.masterdetailflowkotlintest.model.pojo.Photo
+import com.example.masterdetailflowkotlintest.model.pojo.Property
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
 import com.example.masterdetailflowkotlintest.utils.CurrencyType
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,8 +50,24 @@ class PropertyDetailFragment : Fragment() {
 
         initMenuItems()
 
-        viewModel.res.observe(viewLifecycleOwner) {
-            Log.d(MainActivity.TAG, "onViewCreated: property lat :${it.data?.lat} property lng : ${it.data?.long}")
+        viewModel.locationViewLiveData.observe(viewLifecycleOwner) {
+            Log.d(
+                MainActivity.TAG,
+                "onViewCreated: property lat :${it.data?.lat} property lng : ${it.data?.long}"
+            )
+
+            val lat = it.data?.lat
+            val lng = it.data?.long
+
+
+
+            if (lat != null && lng != null) currentProperty =
+                currentProperty.copy(lat = lat, lng = lng)
+
+            initStaticMap()
+
+            //TODO() Type mismatch required Double? found Double wrap with let (how to fix that ?)
+            /*currentProperty = currentProperty.copy(lat = lat, lng = lng)*/
         }
 
         when (args.itemId) {
@@ -81,6 +96,18 @@ class PropertyDetailFragment : Fragment() {
             ).show()
 
         }
+
+    }
+
+    private fun initStaticMap() {
+
+        val staticMapUrl = viewModel.getStaticMapUrl(currentProperty)
+
+        Log.d(MainActivity.TAG, "initStaticMap: $staticMapUrl")
+        Glide
+            .with(binding.propertyStaticMap!!)
+            .load(staticMapUrl)
+            .into(binding.propertyStaticMap!!)
 
     }
 
@@ -169,7 +196,9 @@ class PropertyDetailFragment : Fragment() {
 
         property.let {
 
-            viewModel.getLocation(property.address)
+            val fullAddress = viewModel.createAddress(property)
+
+            viewModel.getLocation(fullAddress)
 
             when (currencyType) {
                 CurrencyType.DOLLAR, null -> {

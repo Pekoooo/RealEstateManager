@@ -1,7 +1,7 @@
 package com.example.masterdetailflowkotlintest.repositories
 
 import androidx.annotation.WorkerThread
-import com.example.masterdetailflowkotlintest.model.appModel.Property
+import com.example.masterdetailflowkotlintest.model.pojo.Property
 import com.example.masterdetailflowkotlintest.room.dao.PropertyDao
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

@@ -1,4 +1,4 @@
-package com.example.masterdetailflowkotlintest.model.appModel
+package com.example.masterdetailflowkotlintest.model.pojo
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -47,7 +47,11 @@ data class Property(
     @ColumnInfo(name = "property_POI_list")
     val poiList: MutableList<String>,
     @ColumnInfo(name = "property_status")
-    val isSold: Boolean = false
+    val isSold: Boolean = false,
+    @ColumnInfo(name = "property_lat")
+    val lat: Double = 0.0,
+    @ColumnInfo(name = "property_lng")
+    val lng: Double = 0.0
     ) : Serializable {
 
     val euroPrice: String

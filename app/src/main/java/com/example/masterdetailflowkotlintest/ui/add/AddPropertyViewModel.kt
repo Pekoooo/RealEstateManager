@@ -2,7 +2,7 @@ package com.example.masterdetailflowkotlintest.ui.add
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.masterdetailflowkotlintest.model.appModel.Property
+import com.example.masterdetailflowkotlintest.model.pojo.Property
 import com.example.masterdetailflowkotlintest.repositories.PropertyRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
