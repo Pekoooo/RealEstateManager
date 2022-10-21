@@ -1,6 +1,6 @@
 package com.example.masterdetailflowkotlintest.utils
 
-enum class CurrencyType {
-    DOLLAR,
-    EURO
+enum class DeviceSize {
+    PHONE,
+    TABLET
 }

@@ -5,12 +5,15 @@ import android.util.Log
 import android.view.*
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.databinding.FragmentItemListBinding
 import com.example.masterdetailflowkotlintest.model.pojo.Property
+import com.example.masterdetailflowkotlintest.ui.add.AddPropertyFragment
+import com.example.masterdetailflowkotlintest.ui.detail.PropertyDetailFragment
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
 import com.example.masterdetailflowkotlintest.utils.Constants.ARG_NO_ITEM_ID
 import com.example.masterdetailflowkotlintest.utils.CurrencyType
@@ -57,11 +60,24 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
         }
 
         binding.addPropertyTabletFab?.setOnClickListener {
-            navigateToAddProperty()
+
+            requireActivity().supportFragmentManager.commit {
+                    replace(
+                        R.id.item_detail_frame_layout,
+                        AddPropertyFragment.newInstance(ARG_NO_ITEM_ID)
+                    )
+
+
+            }
+
         }
 
         binding.addPropertyPhoneFab?.setOnClickListener {
-            navigateToAddProperty()
+            val action =
+                PropertyListFragmentDirections.actionItemListFragmentToAddPropertyFragment(
+                    ARG_NO_ITEM_ID
+                )
+            findNavController().navigate(action)
         }
 
         viewModel.allProperties.observe(viewLifecycleOwner) {
@@ -83,7 +99,7 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean = when (menuItem.itemId) {
 
-                R.id.map -> {
+                R.id.mapFragment -> {
                     findNavController().navigate(R.id.mapFragment)
                     true
                 }
@@ -100,15 +116,6 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
         }, viewLifecycleOwner)
     }
 
-    private fun navigateToAddProperty() {
-        val action =
-            PropertyListFragmentDirections.actionItemListFragmentToAddPropertyFragment(
-                ARG_NO_ITEM_ID
-            )
-        findNavController().navigate(action)
-    }
-
-
     private fun setupRecyclerView(
         recyclerView: RecyclerView,
         currencyType: CurrencyType
@@ -118,28 +125,34 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
             currencyType
         ) {
 
-            when(isTablet(requireContext())){
+            when (isTablet(requireContext())) {
 
-                /*Implement replace fragment here*/
                 true -> {
-                    Log.d(MainActivity.TAG, "setupRecyclerView: clicked on item in tablet")
-                    binding.addPropertyTabletFab
+                    Log.d(MainActivity.TAG, "setupRecyclerView: replaced called in property list fragment")
+
+                    requireActivity().supportFragmentManager.commit {
+                        if (it != null) {
+                            replace(
+                                R.id.item_detail_frame_layout,
+                                PropertyDetailFragment.newInstance(it.id)
+                            )
+                        }
+
+                    }
+
                 }
 
                 else -> {
 
                     val action =
-                        PropertyListFragmentDirections.showItemDetail(it!!.id)
+                        it?.let { it1 -> PropertyListFragmentDirections.showItemDetail(it1.id) }
 
-                    findNavController().navigate(action)
+                    if (action != null) {
+                        findNavController().navigate(action)
+                    }
 
                 }
             }
-
-
-
-
-
 
         }
     }

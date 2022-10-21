@@ -77,18 +77,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="@string/take_picture"
-            app:layout_constraintEnd_toStartOf="@id/import_picture_button"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/recycler_view" />
-
-        <Button
-            android:id="@+id/import_picture_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="@string/import_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/add_picture_button"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/recycler_view" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -238,7 +228,7 @@
             android:drawableStart="@drawable/custom_address_focused_icon"
             android:drawablePadding="16dp"
             android:hint="City"
-            android:inputType="numberDecimal"
+            android:inputType="textNoSuggestions"
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/guideline"

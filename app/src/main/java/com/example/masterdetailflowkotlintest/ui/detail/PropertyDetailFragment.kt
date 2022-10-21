@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
@@ -20,8 +21,10 @@ import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.databinding.FragmentItemDetailBinding
 import com.example.masterdetailflowkotlintest.model.pojo.Photo
 import com.example.masterdetailflowkotlintest.model.pojo.Property
+import com.example.masterdetailflowkotlintest.ui.add.AddPropertyFragment
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
 import com.example.masterdetailflowkotlintest.utils.CurrencyType
+import com.example.masterdetailflowkotlintest.utils.DefineScreenSize.Companion.isTablet
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.*
@@ -99,15 +102,25 @@ class PropertyDetailFragment : Fragment() {
 
     }
 
+    companion object {
+
+        fun newInstance(id: Int) = PropertyDetailFragment().apply {
+            arguments = Bundle().apply {
+                putInt("item_id", id)
+            }
+        }
+    }
+
+
     private fun initStaticMap() {
 
         val staticMapUrl = viewModel.getStaticMapUrl(currentProperty)
 
         Log.d(MainActivity.TAG, "initStaticMap: $staticMapUrl")
         Glide
-            .with(binding.propertyStaticMap!!)
+            .with(binding.propertyStaticMap)
             .load(staticMapUrl)
-            .into(binding.propertyStaticMap!!)
+            .into(binding.propertyStaticMap)
 
     }
 
@@ -254,15 +267,35 @@ class PropertyDetailFragment : Fragment() {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean = when (menuItem.itemId) {
 
                 R.id.edit -> {
+
                     if (!currentProperty.isSold) {
 
-                        val action =
-                            PropertyDetailFragmentDirections.actionItemDetailFragmentToAddPropertyFragment(
-                                args.itemId
-                            )
+                        when(isTablet(requireContext())){
 
+                            true -> {
+                                Log.d(MainActivity.TAG, "onMenuItemSelected: replaced called in property detail fragment ")
+                                requireActivity().supportFragmentManager.commit {
 
-                        findNavController().navigate(action)
+                                        replace(
+                                            R.id.item_detail_frame_layout,
+                                            AddPropertyFragment.newInstance(currentProperty.id)
+                                        )
+                                }
+
+                            }
+
+                            else -> {
+
+                                val action =
+                                    PropertyDetailFragmentDirections.actionItemDetailFragmentToAddPropertyFragment(
+                                        args.itemId
+                                    )
+
+                                findNavController().navigate(action)
+
+                            }
+                        }
+
 
                     } else Toast.makeText(requireContext(), "Property sold", Toast.LENGTH_SHORT)
                         .show()

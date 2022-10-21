@@ -26,7 +26,7 @@
         tools:layout="@layout/fragment_item_detail">
         <argument
             android:name="item_id"
-            app:argType="integer" />
+            app:argType="integer"/>
         <action
             android:id="@+id/action_item_detail_fragment_to_addPropertyFragment"
             app:destination="@id/addPropertyFragment" />
@@ -41,7 +41,8 @@
             app:destination="@id/item_list_fragment" />
         <argument
             android:name="navigation_argument"
-            app:argType="integer" />
+            app:argType="integer"
+            android:defaultValue="-1" />
     </fragment>
     <fragment
         android:id="@+id/mapFragment"

@@ -16,6 +16,7 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.FileProvider
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
@@ -28,8 +29,11 @@ import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.databinding.FragmentAddPropertyBinding
 import com.example.masterdetailflowkotlintest.model.pojo.Photo
 import com.example.masterdetailflowkotlintest.model.pojo.Property
+import com.example.masterdetailflowkotlintest.ui.detail.PropertyDetailFragment
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
 import com.example.masterdetailflowkotlintest.utils.Constants.ARG_NO_ITEM_ID
+import com.example.masterdetailflowkotlintest.utils.DefineScreenSize.Companion.isTablet
+import com.example.masterdetailflowkotlintest.utils.DeviceSize
 import com.example.masterdetailflowkotlintest.utils.UriPathHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -48,6 +52,7 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     private val viewModel: AddPropertyViewModel by viewModels()
     private val housingType: MutableList<String> = ArrayList()
     private lateinit var currentPhotoPath: String
+    private lateinit var deviceSize: DeviceSize
     private var _binding: FragmentAddPropertyBinding? = null
     private val binding: FragmentAddPropertyBinding get() = _binding!!
     private var allPropertyPictures: MutableList<Photo> = mutableListOf()
@@ -70,6 +75,12 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         private const val REQUEST_CODE_PERMISSIONS_STORAGE = 20
         private const val RC_CHOOSE_PHOTO = 30
         private const val REQUEST_IMAGE_CAPTURE = 1
+
+        fun newInstance(id: Int) = AddPropertyFragment().apply {
+            arguments = Bundle().apply {
+                putInt("item_id", id)
+            }
+        }
     }
 
     override fun onCreateView(
@@ -85,6 +96,11 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
         (activity as MainActivity).supportActionBar?.show()
 
+        deviceSize = when(isTablet(requireContext())){
+            true -> DeviceSize.TABLET
+            false -> DeviceSize.PHONE
+        }
+
         populateHousingTypeList()
         setUpSpinner()
         createToolbar()
@@ -93,7 +109,15 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
             true -> {
                 (activity as MainActivity).supportActionBar?.title = "Update Property"
-                retrieveData(args.navigationArgument)
+
+                val propertyId: Int? = if (isTablet(requireContext())){
+                    arguments?.getInt("item_id")
+                } else {
+                    args.navigationArgument
+                }
+
+                propertyId?.let { retrieveData(it) }
+
             }
             false -> (activity as MainActivity).supportActionBar?.title = "New Property"
         }
@@ -289,6 +313,7 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         currentProperty?.mainPicture = currentPhoto?.path.toString()
     }
 
+
     private fun updateDescription(currentPhoto: Photo?) {
         currentProperty?.pictureList!!.filter { it.path == currentPhoto?.path }.forEach {
             it.description = currentPhoto?.description
@@ -296,19 +321,18 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     }
 
     private fun areArgsForUpdate(): Boolean =
-        args.navigationArgument != ARG_NO_ITEM_ID
+        when(deviceSize){
+            DeviceSize.TABLET -> arguments?.getInt("item_id") != ARG_NO_ITEM_ID
+            DeviceSize.PHONE -> args.navigationArgument != ARG_NO_ITEM_ID
+        }
+        /*args.navigationArgument != ARG_NO_ITEM_ID || arguments?.getInt("item_id") != ARG_NO_ITEM_ID*/
 
     private fun retrieveData(id: Int) {
         lifecycle.coroutineScope.launch {
-
-            when (id) {
-                0 -> Log.d(TAG, "retrieveData: id is 0")
-
-                else -> viewModel.getPropertyById(id).collect {
+             viewModel.getPropertyById(id).collect {
                     displayData(it)
                     currentProperty = it
                 }
-            }
         }
     }
 
@@ -373,21 +397,48 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean = when (menuItem.itemId) {
 
-
-                //Reduce nesting here by inverting statement
                 R.id.save -> {
                     if (allFieldsAreFilled()) {
 
                         if (areArgsForUpdate()) {
 
-                            Toast.makeText(context, "Property Updated", Toast.LENGTH_LONG).show()
-                            viewModel.updateProperty(getPropertyInfo().copy(id = args.navigationArgument))
-                            findNavController().navigateUp()
+                            when(args.navigationArgument){
+
+                                -1 -> {
+                                    Toast.makeText(context, "Property Updated", Toast.LENGTH_LONG).show()
+                                    val id = arguments?.getInt("item_id")
+                                    id?.let { viewModel.updateProperty(getPropertyInfo().copy(id = id)) }
+
+                                    requireActivity().supportFragmentManager.commit {
+
+                                        replace(
+                                            R.id.item_detail_frame_layout,
+                                            PropertyDetailFragment.newInstance(currentProperty!!.id)
+                                        )
+                                    }
+                                }
+
+                                else -> {
+                                    Toast.makeText(context, "Property Updated", Toast.LENGTH_LONG).show()
+                                    viewModel.updateProperty(getPropertyInfo().copy(id = args.navigationArgument))
+                                    findNavController().navigateUp()
+                                }
+                            }
 
                         } else {
-                            Toast.makeText(context, "New property saved", Toast.LENGTH_LONG).show()
-                            viewModel.createProperty(getPropertyInfo())
-                            findNavController().navigateUp()
+                            when(deviceSize){
+                                DeviceSize.TABLET -> {
+                                    Toast.makeText(context, "New property saved", Toast.LENGTH_LONG).show()
+                                    viewModel.createProperty(getPropertyInfo())
+                                }
+
+                                DeviceSize.PHONE -> {
+                                    Toast.makeText(context, "New property saved", Toast.LENGTH_LONG).show()
+                                    viewModel.createProperty(getPropertyInfo())
+                                    findNavController().navigateUp()
+                                }
+                            }
+
                         }
 
                     } else {

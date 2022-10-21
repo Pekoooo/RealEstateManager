@@ -10,7 +10,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
 import com.example.masterdetailflowkotlintest.R
-import com.example.masterdetailflowkotlintest.databinding.FragmentCameraSurfaceProviderBinding
 import com.example.masterdetailflowkotlintest.databinding.MainActivityBinding
 import dagger.hilt.android.AndroidEntryPoint
 
