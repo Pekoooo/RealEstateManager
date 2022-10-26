@@ -40,6 +40,14 @@ class PropertyDetailFragment : Fragment() {
     private val binding get() = _binding!!
     private var currencyType: CurrencyType? = null
 
+    companion object {
+        fun newInstance(id: Int) = PropertyDetailFragment().apply {
+            arguments = Bundle().apply {
+                putInt("item_id", id)
+            }
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,23 +62,15 @@ class PropertyDetailFragment : Fragment() {
         initMenuItems()
 
         viewModel.locationViewLiveData.observe(viewLifecycleOwner) {
-            Log.d(
-                MainActivity.TAG,
-                "onViewCreated: property lat :${it.data?.lat} property lng : ${it.data?.long}"
-            )
 
             val lat = it.data?.lat
             val lng = it.data?.long
-
-
 
             if (lat != null && lng != null) currentProperty =
                 currentProperty.copy(lat = lat, lng = lng)
 
             initStaticMap()
 
-            //TODO() Type mismatch required Double? found Double wrap with let (how to fix that ?)
-            /*currentProperty = currentProperty.copy(lat = lat, lng = lng)*/
         }
 
         when (args.itemId) {
@@ -83,12 +83,10 @@ class PropertyDetailFragment : Fragment() {
                         currentProperty = it
                         observeCurrency()
                     }
-
                 }
             }
 
         }
-
 
         binding.soldButton?.setOnClickListener {
 
@@ -97,37 +95,19 @@ class PropertyDetailFragment : Fragment() {
                 "Property already sold",
                 Toast.LENGTH_SHORT
             ).show()
-
-        }
-
-    }
-
-    companion object {
-
-        fun newInstance(id: Int) = PropertyDetailFragment().apply {
-            arguments = Bundle().apply {
-                putInt("item_id", id)
-            }
         }
     }
-
 
     private fun initStaticMap() {
-
         val staticMapUrl = viewModel.getStaticMapUrl(currentProperty)
-
-        Log.d(MainActivity.TAG, "initStaticMap: $staticMapUrl")
         Glide
             .with(binding.propertyStaticMap)
             .load(staticMapUrl)
             .into(binding.propertyStaticMap)
-
     }
 
     private fun observeCurrency() {
-
         viewModel.currencyType().observe(viewLifecycleOwner) {
-
             when (it) {
                 CurrencyType.DOLLAR, null -> {
                     currencyType = CurrencyType.DOLLAR
@@ -137,11 +117,8 @@ class PropertyDetailFragment : Fragment() {
                     currencyType = CurrencyType.EURO
                     updateContent(currentProperty)
                 }
-
             }
-
         }
-
     }
 
     private fun initConfirmationDialog() {
@@ -270,16 +247,19 @@ class PropertyDetailFragment : Fragment() {
 
                     if (!currentProperty.isSold) {
 
-                        when(isTablet(requireContext())){
+                        when (isTablet(requireContext())) {
 
                             true -> {
-                                Log.d(MainActivity.TAG, "onMenuItemSelected: replaced called in property detail fragment ")
+                                Log.d(
+                                    MainActivity.TAG,
+                                    "onMenuItemSelected: replaced called in property detail fragment "
+                                )
                                 requireActivity().supportFragmentManager.commit {
 
-                                        replace(
-                                            R.id.item_detail_frame_layout,
-                                            AddPropertyFragment.newInstance(currentProperty.id)
-                                        )
+                                    replace(
+                                        R.id.item_detail_frame_layout,
+                                        AddPropertyFragment.newInstance(currentProperty.id)
+                                    )
                                 }
 
                             }
