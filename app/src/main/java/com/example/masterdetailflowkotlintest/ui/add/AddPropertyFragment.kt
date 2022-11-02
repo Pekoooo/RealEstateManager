@@ -415,62 +415,17 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     private fun saveCurrentProperty(): Boolean {
         if (allFieldsAreFilled()) {
 
-            if (areArgsForUpdate()) {
-
-                when(args.navigationArgument){
-
-                    -1 /*creation*/ -> {
-
-                        currentProperty?.let {
-                            viewModel.save(it)
-                        }
-
-                        Toast.makeText(context, "Property Updated", Toast.LENGTH_LONG).show()
-                        currentProperty?.let {
-                            viewModel.getLocation(it.address)
-                        }
-
-                        val id = arguments?.getInt("item_id")
-
-                        viewModel.locationViewLiveData.observe(viewLifecycleOwner){
-
-                            id?.let {
-                                viewModel.updateProperty(getPropertyInfo().copy(id = id))
-                            }
-
-
-                        }
-                        requireActivity().supportFragmentManager.commit {
-
-                            replace(
-                                R.id.item_detail_frame_layout,
-                                PropertyDetailFragment.newInstance(currentProperty!!.id)
-                            )
-                        }
-                    }
-
-                    else /*update*/-> {
-                        Toast.makeText(context, "Property Updated", Toast.LENGTH_LONG).show()
-                        viewModel.save(getPropertyInfo().copy(id = args.navigationArgument))
-                    }
+            when(args.navigationArgument){
+                -1 -> {
+                    viewModel.save(getPropertyInfo())
                 }
 
-            } else {
-                when(deviceSize){
-                    DeviceSize.TABLET -> {
-                        Toast.makeText(context, "New property saved", Toast.LENGTH_LONG).show()
-                        viewModel.save(getPropertyInfo())
-                    }
-
-                    DeviceSize.PHONE -> {
-                        Toast.makeText(context, "New property saved", Toast.LENGTH_LONG).show()
-                        viewModel.save(getPropertyInfo())
-                    }
+                else -> {
+                    viewModel.save(getPropertyInfo().copy(id = args.navigationArgument))
                 }
-
             }
 
-        } else {
+            } else {
             Toast.makeText(
                 context,
                 "Make sure all fields are filled",
