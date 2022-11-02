@@ -36,8 +36,6 @@ class AddPropertyViewModel @Inject constructor(
 
     fun getLocation(address: String) = viewModelScope.launch {
 
-        Log.d(MainActivity.TAG, "getLocation: is called in vm ")
-
         _locationViewLiveData.postValue(Resource.loading(null))
 
         geocoderRepository.getLocation(address).let {
@@ -56,6 +54,7 @@ class AddPropertyViewModel @Inject constructor(
 
             saveProperty.save(property)
             unitLiveData.postValue(Unit)
+
         }
     }
 

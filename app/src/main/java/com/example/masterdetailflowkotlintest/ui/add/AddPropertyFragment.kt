@@ -419,9 +419,11 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
                 when(args.navigationArgument){
 
-                    -1 -> {
+                    -1 /*creation*/ -> {
 
-                        currentProperty?.let { viewModel.save(it) }
+                        currentProperty?.let {
+                            viewModel.save(it)
+                        }
 
                         Toast.makeText(context, "Property Updated", Toast.LENGTH_LONG).show()
                         currentProperty?.let {
@@ -447,10 +449,9 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                         }
                     }
 
-                    else -> {
+                    else /*update*/-> {
                         Toast.makeText(context, "Property Updated", Toast.LENGTH_LONG).show()
-                        viewModel.updateProperty(getPropertyInfo().copy(id = args.navigationArgument))
-                        findNavController().navigateUp()
+                        viewModel.save(getPropertyInfo().copy(id = args.navigationArgument))
                     }
                 }
 
@@ -458,13 +459,12 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                 when(deviceSize){
                     DeviceSize.TABLET -> {
                         Toast.makeText(context, "New property saved", Toast.LENGTH_LONG).show()
-                        viewModel.createProperty(getPropertyInfo())
+                        viewModel.save(getPropertyInfo())
                     }
 
                     DeviceSize.PHONE -> {
                         Toast.makeText(context, "New property saved", Toast.LENGTH_LONG).show()
                         viewModel.save(getPropertyInfo())
-
                     }
                 }
 
