@@ -33,13 +33,13 @@ object PlaceholderContent {
         //addProperties()
     }
 
-    private fun addProperties() {
+    /*private fun addProperties() {
         var x = 0
         while (x < 15) {
             addProperty(generateProperty())
             x++
         }
-    }
+    }*/
 
     private fun addProperty(item: Property) {
         ITEMS.add(item)
@@ -107,7 +107,7 @@ object PlaceholderContent {
         PROPERTY_INTERIOR_PHOTOS.add("https://image.shutterstock.com/image-illustration/interior-bedroom-wall-mockup-3d-600w-1920245540.jpg")
     }
 
-     private fun generateProperty(): Property {
+     /*private fun generateProperty(): Property {
         return Property(
             (0..20).random(),
             (0..200).random().toString() + " sqm",
@@ -133,7 +133,7 @@ object PlaceholderContent {
             ),
             arrayListOf("poi")
         )
-    }
+    }*/
 
     private fun createPOI() {
         POI.add("School")

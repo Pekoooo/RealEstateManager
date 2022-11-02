@@ -28,35 +28,15 @@ import javax.inject.Inject
 class PropertyDetailViewModel @Inject constructor(
 
     private var propertyRepository: PropertyRepository,
-    converterRepository: ConverterRepository,
-    private var geocoderRepository: GeocoderRepository
+    converterRepository: ConverterRepository
 
 
 
 ) : ViewModel() {
 
-    private val _locationViewLiveData = MutableLiveData<Resource<LocationView>>()
-
-    val locationViewLiveData : LiveData<Resource<LocationView>>
-        get() = _locationViewLiveData
-
     private val currencyTypeLiveData: MutableLiveData<CurrencyType> = converterRepository.currencyType()
 
-     fun getLocation(address: String) = viewModelScope.launch {
 
-         Log.d(MainActivity.TAG, "getLocation: is called in vm ")
-
-        _locationViewLiveData.postValue(Resource.loading(null))
-
-        geocoderRepository.getLocation(address).let {
-
-            if (it.isSuccessful) _locationViewLiveData.postValue(Resource.success(it.body()?.toLocationView()))
-            else _locationViewLiveData.postValue(Resource.error(it.errorBody().toString(), null))
-
-
-        }
-
-    }
     fun getPropertyById(id: Int): Flow<Property> = propertyRepository.getPropertyById(id)
 
     fun updateProperty(property: Property) = viewModelScope.launch(Dispatchers.IO) {

@@ -61,17 +61,8 @@ class PropertyDetailFragment : Fragment() {
 
         initMenuItems()
 
-        viewModel.locationViewLiveData.observe(viewLifecycleOwner) {
 
-            val lat = it.data?.lat
-            val lng = it.data?.long
 
-            if (lat != null && lng != null) currentProperty =
-                currentProperty.copy(lat = lat, lng = lng)
-
-            initStaticMap()
-
-        }
 
         when (args.itemId) {
 
@@ -82,6 +73,7 @@ class PropertyDetailFragment : Fragment() {
                     viewModel.getPropertyById(args.itemId).collect {
                         currentProperty = it
                         observeCurrency()
+                        initStaticMap()
                     }
                 }
             }
@@ -186,9 +178,6 @@ class PropertyDetailFragment : Fragment() {
 
         property.let {
 
-            val fullAddress = viewModel.createAddress(property)
-
-            viewModel.getLocation(fullAddress)
 
             when (currencyType) {
                 CurrencyType.DOLLAR, null -> {

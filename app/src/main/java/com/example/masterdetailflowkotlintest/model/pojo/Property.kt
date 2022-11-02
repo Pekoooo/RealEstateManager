@@ -3,7 +3,8 @@ package com.example.masterdetailflowkotlintest.model.pojo
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.masterdetailflowkotlintest.utils.CurrencyConverter
+import com.example.masterdetailflowkotlintest.utils.CurrencyConverter.Companion.convertDollarToEuro
+import com.google.android.gms.maps.model.LatLng
 import java.io.Serializable
 
 
@@ -49,14 +50,22 @@ data class Property(
     @ColumnInfo(name = "property_status")
     val isSold: Boolean = false,
     @ColumnInfo(name = "property_lat")
-    val lat: Double = 0.0,
+    val lat: Double? = 0.0,
     @ColumnInfo(name = "property_lng")
-    val lng: Double = 0.0
+    val lng: Double? = 0.0
     ) : Serializable {
 
     val euroPrice: String
         get() {
-            return CurrencyConverter.convertDollarToEuro(price.toInt())
+            return convertDollarToEuro(price.toInt())
+        }
+
+    val latLng: LatLng
+        get() {
+            return LatLng(
+                lat ?: 0.0,
+                lng ?: 0.0
+            )
         }
 
 
@@ -67,11 +76,13 @@ data class Property(
             return "$type in $neighborhood for $euroPrice"
         }
 
-    val apiCallAddress: String
-        get() {
-            return "$address %20 $postalCode %20 $city %20 $country"
-        }
+    val isNew: Boolean
+        get() = id == 0
 
+    val fullAddress: String
+        get() {
+             return "${address},${postalCode},${country}"
+        }
 }
 
 

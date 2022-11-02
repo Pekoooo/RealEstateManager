@@ -3,7 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/custom_address_focused_icon.xml" value="0.2095" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/custom_bathroom_focused_icon.xml" value="0.355" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/custom_input.xml" value="0.206" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/ic_baseline_arrow_drop_down_24.xml" value="0.2095" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/drawable/ic_map.xml" value="0.2095" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/layout-sw600dp/fragment_add_property.xml" value="0.2" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/layout-sw600dp/fragment_item_detail.xml" value="0.22" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MasterDetailFlowKotlinTest/app/src/main/res/layout-sw600dp/fragment_item_list.xml" value="0.18880208333333334" />

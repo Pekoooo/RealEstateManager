@@ -29,7 +29,9 @@ class DummyPropertyProvider {
                 "https://i.imgur.com/PkQIrJx.jpg",
                 getPictureList(),
                 getPoiList(),
-                false
+                false,
+                48.75320919675139,
+                1.9167056388862749
 
             )
 
