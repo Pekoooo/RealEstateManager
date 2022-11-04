@@ -6,8 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.example.masterdetailflowkotlintest.model.pojo.Property
+import com.example.masterdetailflowkotlintest.repositories.ConverterRepository
 import com.example.masterdetailflowkotlintest.repositories.LocationRepository
 import com.example.masterdetailflowkotlintest.repositories.PropertyRepository
+import com.example.masterdetailflowkotlintest.utils.CurrencyType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -15,8 +17,8 @@ import javax.inject.Inject
 class MapViewModel @Inject constructor(
 
     var locationRepository: LocationRepository,
-    var propertyRepository: PropertyRepository
-
+    var propertyRepository: PropertyRepository,
+    var converterRepository: ConverterRepository
 ): ViewModel() {
 
     fun getUserLocation() {
@@ -28,5 +30,7 @@ class MapViewModel @Inject constructor(
     }
 
     val allProperties: LiveData<List<Property>> = propertyRepository.allProperties.asLiveData()
+
+    val currencyType: MutableLiveData<CurrencyType> = converterRepository.currencyType()
 
 }
