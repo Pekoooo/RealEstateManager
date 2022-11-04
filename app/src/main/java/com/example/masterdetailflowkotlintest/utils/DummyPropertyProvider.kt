@@ -11,7 +11,7 @@ class DummyPropertyProvider {
         fun getDummyProperty(): Property {
 
             return Property(
-                1,
+                0,
                 "150",
                 "House",
                 "37 allée de la venerie",

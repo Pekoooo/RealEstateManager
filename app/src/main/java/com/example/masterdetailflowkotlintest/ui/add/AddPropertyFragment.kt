@@ -71,7 +71,6 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     private lateinit var deviceSize: DeviceSize
 
 
-
     companion object {
         const val TAG = "MyAddPropertyFragment"
         private const val REQUEST_CODE_PERMISSIONS_CAMERA = 10
@@ -109,7 +108,7 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
         binding.addPictureButton.setOnClickListener { createPictureDialog() }
 
-        viewModel.unitLiveData.observe(viewLifecycleOwner){
+        viewModel.unitLiveData.observe(viewLifecycleOwner) {
             findNavController().navigateUp()
         }
 
@@ -187,7 +186,7 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     }
 
     private fun defineDeviceSize() {
-        deviceSize = when(isTablet(requireContext())){
+        deviceSize = when (isTablet(requireContext())) {
             true -> DeviceSize.TABLET
             false -> DeviceSize.PHONE
         }
@@ -199,7 +198,7 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             true -> {
                 (activity as MainActivity).supportActionBar?.title = "Update Property"
 
-                val propertyId: Int? = if (isTablet(requireContext())){
+                val propertyId: Int? = if (isTablet(requireContext())) {
                     arguments?.getInt("item_id")
                 } else {
                     args.navigationArgument
@@ -375,7 +374,7 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     }
 
     private fun areArgsForUpdate(): Boolean =
-        when(deviceSize){
+        when (deviceSize) {
             DeviceSize.TABLET -> arguments?.getInt("item_id") != ARG_NO_ITEM_ID
             DeviceSize.PHONE -> args.navigationArgument != ARG_NO_ITEM_ID
         }
@@ -415,22 +414,24 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     private fun saveCurrentProperty(): Boolean {
         if (allFieldsAreFilled()) {
 
-            when(args.navigationArgument){
-                -1 -> {
-                    viewModel.save(getPropertyInfo())
+            when(isTablet(requireContext())){
+                true -> {
+                    when(val id = requireArguments().getInt("item_id")){
+                        -1 -> viewModel.save(getPropertyInfo())
+                        else -> viewModel.save(getPropertyInfo().copy(id = id))
+                    }
                 }
 
-                else -> {
-                    viewModel.save(getPropertyInfo().copy(id = args.navigationArgument))
+                false -> {
+                    when(val id = args.navigationArgument){
+                        -1 -> viewModel.save(getPropertyInfo())
+                        else -> viewModel.save(getPropertyInfo().copy(id = id))
+                    }
                 }
             }
 
-            } else {
-            Toast.makeText(
-                context,
-                "Make sure all fields are filled",
-                Toast.LENGTH_SHORT
-            ).show()
+        } else {
+            Toast.makeText(context, "Make sure all fields are filled", Toast.LENGTH_SHORT).show()
         }
 
         return true
