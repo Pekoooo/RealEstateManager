@@ -18,6 +18,9 @@
         <action
             android:id="@+id/action_item_list_fragment_to_mapFragment"
             app:destination="@id/mapFragment" />
+        <action
+            android:id="@+id/action_item_list_fragment_to_filteredSearchFragment"
+            app:destination="@id/filteredSearchFragment" />
     </fragment>
     <fragment
         android:id="@+id/item_detail_fragment"
@@ -49,4 +52,22 @@
         android:name="com.example.masterdetailflowkotlintest.ui.map.MapFragment"
         android:label="Map Fragment"
         tools:layout="@layout/fragment_map" />
+    <fragment
+        android:id="@+id/filteredSearchFragment"
+        android:name="com.example.masterdetailflowkotlintest.ui.filteredSearch.FilteredSearchFragment"
+        android:label="fragment_filterd_search"
+        tools:layout="@layout/fragment_filterd_search" >
+        <action
+            android:id="@+id/action_filteredSearchFragment_to_searchResult"
+            app:destination="@id/searchResult" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchResult"
+        android:name="com.example.masterdetailflowkotlintest.ui.filteredSearchResult.SearchResult"
+        android:label="fragment_search_result"
+        tools:layout="@layout/fragment_search_result" >
+        <argument
+            android:name="resultList"
+            app:argType="com.example.masterdetailflowkotlintest.model.pojo.SearchResultObject" />
+    </fragment>
 </navigation>

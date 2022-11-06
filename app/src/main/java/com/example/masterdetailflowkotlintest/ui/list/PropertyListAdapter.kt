@@ -12,7 +12,7 @@ import com.example.masterdetailflowkotlintest.utils.CurrencyType
 
 class PropertyListAdapter(
     private val propertyList: List<Property>,
-    private val currencyType: CurrencyType,
+    private val currencyType: CurrencyType = CurrencyType.DOLLAR,
     private val onSelect: (Property?) -> Unit
 ) : RecyclerView.Adapter<PropertyListAdapter.ViewHolder>() {
 

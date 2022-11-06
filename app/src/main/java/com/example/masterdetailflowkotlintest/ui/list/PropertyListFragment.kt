@@ -111,6 +111,15 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
                     true
                 }
 
+                R.id.search ->  {
+
+                    val action =
+                        PropertyListFragmentDirections.actionItemListFragmentToFilteredSearchFragment()
+                    findNavController().navigate(action)
+
+                    true
+                }
+
                 else -> false
             }
         }, viewLifecycleOwner)

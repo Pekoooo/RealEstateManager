@@ -48,6 +48,7 @@
     <string name="browse_files">Browse files</string>
     <string name="open_camera">Open Camera</string>
     <string name="sold">SOLD!</string>
+    <string name="search_item">search</string>
 
 
 </resources>
