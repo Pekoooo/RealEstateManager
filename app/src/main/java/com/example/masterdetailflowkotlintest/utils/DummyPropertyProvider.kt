@@ -12,14 +12,14 @@ class DummyPropertyProvider {
 
             return Property(
                 1,
-                "150",
+                150,
                 "House",
                 "37 allée de la venerie",
                 "Coignières",
                 "Yvelines",
                 "78310",
                 "France",
-                "360000",
+                360000,
                 "2",
                 "4",
                 Calendar.getInstance().time.toString(),

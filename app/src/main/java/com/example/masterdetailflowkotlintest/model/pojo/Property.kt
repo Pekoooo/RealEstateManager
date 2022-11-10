@@ -13,7 +13,7 @@ data class Property(
     @ColumnInfo(name = "property_id")
     val id: Int = 0,
     @ColumnInfo(name = "property_surface")
-    val surface: String,
+    val surface: Int,
     @ColumnInfo(name = "property_type")
     val type: String,
     @ColumnInfo(name = "property_address")
@@ -27,7 +27,7 @@ data class Property(
     @ColumnInfo(name = "property_country")
     val country: String,
     @ColumnInfo(name = "property_price")
-    val price: String,
+    val price: Int,
     @ColumnInfo(name = "property_bathrooms")
     val bathrooms: String,
     @ColumnInfo(name = "property_bedrooms")
@@ -59,6 +59,10 @@ data class Property(
             return CurrencyConverter.convertDollarToEuro(price.toInt())
         }
 
+    val stringDollarPrice: String
+        get(){
+            return price.toString().plus(" $")
+        }
 
     override fun toString(): String = "$type in $neighborhood for $price"
 

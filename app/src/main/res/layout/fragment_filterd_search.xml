@@ -61,15 +61,14 @@
                 app:boxStrokeColor="@color/base_purple"
                 tools:text="10000">
 
-                <AutoCompleteTextView
+                <EditText
                     android:id="@+id/autoCompleteTextViewCityS"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:inputType="none"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    tools:ignore="LabelFor" />
+                    android:textStyle="bold" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

@@ -30,23 +30,19 @@ class PropertyRepository @Inject constructor(
         isNearTypeProperty: List<String>,
         isNearCity: List<String>,
         isNearNeighbourhood: List<String>,
-        isNearMinSurface: Int,
-        isNearMaxSurface: Int,
-        isNearNumberOfPhotos: Int,
         isNearMinPrice: Int,
         isNearMaxPrice: Int,
-        isNearSaleStatus: Boolean,
+        isNearMinSurface: Int,
+        isNearMaxSurface: Int
     ): Flow<List<Property>> {
         return propertyDao.getPropertyResearch(
             isNearTypeProperty,
             isNearCity,
             isNearNeighbourhood,
-            isNearMinSurface,
-            isNearMaxSurface,
-            isNearNumberOfPhotos,
             isNearMinPrice,
             isNearMaxPrice,
-            isNearSaleStatus
+            isNearMinSurface,
+            isNearMaxSurface
         )
     }
 

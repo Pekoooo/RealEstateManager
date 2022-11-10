@@ -30,7 +30,7 @@ class PropertyListAdapter(
 
             CurrencyType.DOLLAR -> {
 
-                holder.propertyPrice.text = property.price
+                holder.propertyPrice.text = property.price.toString()
                 holder.propertyPriceCurrency.text = "$"
 
             }

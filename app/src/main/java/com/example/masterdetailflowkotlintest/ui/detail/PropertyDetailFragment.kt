@@ -202,7 +202,7 @@ class PropertyDetailFragment : Fragment() {
 
             }
 
-            binding.propertySurface.text = property.surface
+            binding.propertySurface.text = property.surface.toString()
             binding.propertyAddress.text = property.address
             binding.propertyCity.text = property.city
             binding.propertyPostalCode.text = property.postalCode
@@ -238,54 +238,79 @@ class PropertyDetailFragment : Fragment() {
         requireActivity().addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menu.clear()
-                menuInflater.inflate(R.menu.menu_detail_activity, menu)
+                when(isTablet(requireContext())){
+                    true -> menuInflater.inflate(R.menu.menu_all_icons_tablet, menu)
+                    false -> menuInflater.inflate(R.menu.menu_detail_activity, menu)
+                }
+
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean = when (menuItem.itemId) {
 
                 R.id.edit -> {
-
-                    if (!currentProperty.isSold) {
-
-                        when (isTablet(requireContext())) {
-
-                            true -> {
-                                Log.d(
-                                    MainActivity.TAG,
-                                    "onMenuItemSelected: replaced called in property detail fragment "
-                                )
-                                requireActivity().supportFragmentManager.commit {
-
-                                    replace(
-                                        R.id.item_detail_frame_layout,
-                                        AddPropertyFragment.newInstance(currentProperty.id)
-                                    )
-                                }
-
-                            }
-
-                            else -> {
-
-                                val action =
-                                    PropertyDetailFragmentDirections.actionItemDetailFragmentToAddPropertyFragment(
-                                        args.itemId
-                                    )
-
-                                findNavController().navigate(action)
-
-                            }
-                        }
-
-
-                    } else Toast.makeText(requireContext(), "Property sold", Toast.LENGTH_SHORT)
-                        .show()
-
+                    editButton()
                     true
                 }
+
+                R.id.search -> {
+                    val action =
+                        PropertyDetailFragmentDirections.actionItemDetailFragmentToFilteredSearchFragment()
+                    findNavController().navigate(action)
+                    true
+                }
+
+                R.id.currency -> {
+                    viewModel.switchCurrencyUi()
+                    true
+                }
+
+                R.id.mapFragment -> {
+                    findNavController().navigate(R.id.mapFragment)
+                    true
+                }
+
                 else -> true
             }
 
         }, viewLifecycleOwner)
+    }
+
+    private fun editButton(){
+        if (!currentProperty.isSold) {
+
+            when (isTablet(requireContext())) {
+
+                true -> {
+                    Log.d(
+                        MainActivity.TAG,
+                        "onMenuItemSelected: replaced called in property detail fragment "
+                    )
+                    requireActivity().supportFragmentManager.commit {
+
+                        replace(
+                            R.id.item_detail_frame_layout,
+                            AddPropertyFragment.newInstance(currentProperty.id)
+                        )
+                    }
+
+                }
+
+                else -> {
+
+                    val action =
+                        PropertyDetailFragmentDirections.actionItemDetailFragmentToAddPropertyFragment(
+                            args.itemId
+                        )
+
+                    findNavController().navigate(action)
+
+                }
+            }
+
+
+        } else Toast.makeText(requireContext(), "Property sold", Toast.LENGTH_SHORT)
+            .show()
+
     }
 
     override fun onDestroyView() {

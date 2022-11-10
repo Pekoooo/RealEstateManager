@@ -13,34 +13,35 @@ class FilteredSearchViewModel @Inject constructor(
     val propertyRepository: PropertyRepository
 ) : ViewModel() {
 
-    val allProperties: LiveData<List<Property>> = propertyRepository.allProperties.asLiveData()
+    private val _allProperties: MutableLiveData<List<Property>> = MutableLiveData()
+    val allProperties: LiveData<List<Property>> get() = _allProperties
 
     private val _filteredList: MutableLiveData<List<Property>> = MutableLiveData()
     val filteredList: LiveData<List<Property>> get() = _filteredList
+
+    fun getPropertyList() {
+        viewModelScope.launch {
+            _allProperties.value = propertyRepository.allProperties.first()
+        }
+    }
 
     fun searchUserCriteria(
         type: String?,
         city: String?,
         neighbourhood: String?,
-        soldLast3Month: Boolean,
-        addedLess7Days: Boolean,
         startingPrice: Int?,
         priceLimit: Int?,
         sizeFrom: Int?,
-        sizeUpTo: Int?,
-        numberOfPhoto: Boolean
+        sizeUpTo: Int?
     ){
         searchQuery(
             buildTypeList(type),
             buildCityList(city),
             buildNeighbourhoodList(neighbourhood),
-            buildMinSurface(sizeFrom),
-            buildMaxSurface(sizeUpTo),
-            buildNumberOfPhoto(numberOfPhoto),
             buildMinPrice(startingPrice),
             buildMaxPrice(priceLimit),
-            soldLast3Month,
-            addedLess7Days
+            buildMinSurface(sizeFrom),
+            buildMaxSurface(sizeUpTo)
         )
 
     }
@@ -143,13 +144,11 @@ class FilteredSearchViewModel @Inject constructor(
         isNearTypeProperty: List<String>,
         isNearCity: List<String>,
         isNearNeighbourhood: List<String>,
-        isNearMinSurface: Int,
-        isNearMaxSurface: Int,
-        isNearNumberOfPhotos: Int,
         isNearMinPrice: Int,
         isNearMaxPrice: Int,
-        isNearSaleStatus: Boolean,
-        isAddedLastSevenDays: Boolean
+        isNearMinSurface: Int,
+        isNearMaxSurface: Int,
+
     ) {
         val temp: MutableList<Property> = mutableListOf()
 
@@ -159,19 +158,14 @@ class FilteredSearchViewModel @Inject constructor(
                     isNearTypeProperty,
                     isNearCity,
                     isNearNeighbourhood,
-                    isNearMinSurface,
-                    isNearMaxSurface,
-                    isNearNumberOfPhotos,
                     isNearMinPrice,
                     isNearMaxPrice,
-                    isNearSaleStatus,
+                    isNearMinSurface,
+                    isNearMaxSurface
+
                 ).first()
             )
-
             _filteredList.value = temp
         }
     }
-
-
-
 }

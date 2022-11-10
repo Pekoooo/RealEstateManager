@@ -75,7 +75,7 @@ class SearchResult : Fragment() {
                 else -> {
 
                     val action =
-                        it?.let { it1 -> PropertyListFragmentDirections.showItemDetail(it1.id) }
+                        it?.let { it1 -> SearchResultDirections.actionSearchResultToItemDetailFragment(it1.id) }
 
                     if (action != null) {
                         findNavController().navigate(action)

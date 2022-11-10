@@ -33,6 +33,9 @@
         <action
             android:id="@+id/action_item_detail_fragment_to_addPropertyFragment"
             app:destination="@id/addPropertyFragment" />
+        <action
+            android:id="@+id/action_item_detail_fragment_to_filteredSearchFragment"
+            app:destination="@id/filteredSearchFragment" />
     </fragment>
     <fragment
         android:id="@+id/addPropertyFragment"
@@ -69,5 +72,8 @@
         <argument
             android:name="resultList"
             app:argType="com.example.masterdetailflowkotlintest.model.pojo.SearchResultObject" />
+        <action
+            android:id="@+id/action_searchResult_to_item_detail_fragment"
+            app:destination="@id/item_detail_fragment" />
     </fragment>
 </navigation>

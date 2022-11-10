@@ -28,8 +28,9 @@ import javax.inject.Inject
 class PropertyDetailViewModel @Inject constructor(
 
     private var propertyRepository: PropertyRepository,
-    converterRepository: ConverterRepository,
-    private var geocoderRepository: GeocoderRepository
+    private var converterRepository: ConverterRepository,
+    private var geocoderRepository: GeocoderRepository,
+
 
 
 
@@ -90,5 +91,9 @@ class PropertyDetailViewModel @Inject constructor(
 
         return "${property.address},${property.postalCode},${property.country}"
 
+    }
+
+    fun switchCurrencyUi(){
+        converterRepository.switchCurrency()
     }
 }

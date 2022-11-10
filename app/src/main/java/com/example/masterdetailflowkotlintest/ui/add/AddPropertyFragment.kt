@@ -342,7 +342,7 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         (binding.spinnerEditText as TextView).text = property.type // does not work
         (binding.agentNameEditText as TextView).text = property.agent
         (binding.propertyDescriptionEditText as TextView).text = property.description
-        (binding.surfaceEditText as TextView).text = property.surface
+        (binding.surfaceEditText as TextView).text = property.surface.toString()
         (binding.addressEditText as TextView).text = property.address
         (binding.roomsEditText as TextView).text = property.rooms
         (binding.cityEditText as TextView).text = property.city
@@ -351,7 +351,7 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         (binding.bathroomEditText as TextView).text = property.bathrooms
         (binding.countryEditText as TextView).text = property.country
         (binding.neighborhoodEditText as TextView).text = property.neighborhood
-        (binding.priceEditText as TextView).text = property.price
+        (binding.priceEditText as TextView).text = property.price.toString()
         allPropertyPictures = property.pictureList
 
         setRecyclerView(binding.recyclerView)
@@ -474,14 +474,14 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
     private fun getPropertyInfo() = Property(
         0,
-        binding.surfaceEditText.text.toString(),
+        binding.surfaceEditText.text.toString().toInt(),
         binding.spinner.selectedItem.toString(),
         binding.addressEditText.text.toString(),
         binding.cityEditText.text.toString(),
         binding.neighborhoodEditText.text.toString(),
         binding.postalCodeEditText.text.toString(),
         binding.countryEditText.text.toString(),
-        binding.priceEditText.text.toString(),
+        binding.priceEditText.text.toString().toInt(),
         binding.bathroomEditText.text.toString(),
         binding.bedroomEditText.text.toString(),
         Calendar.getInstance().time.toString(),

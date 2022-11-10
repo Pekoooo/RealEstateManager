@@ -83,6 +83,9 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
         viewModel.allProperties.observe(viewLifecycleOwner) {
             allProperties = it
             setupRecyclerView(recyclerView, currencyType)
+
+            
+
         }
 
         initMenuItems()
