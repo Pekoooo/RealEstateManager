@@ -49,25 +49,27 @@ import java.util.*
 @AndroidEntryPoint
 class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
+    private val binding: FragmentAddPropertyBinding get() = _binding!!
+    private val args: AddPropertyFragmentArgs by navArgs()
     private val viewModel: AddPropertyViewModel by viewModels()
     private val housingType: MutableList<String> = ArrayList()
-    private lateinit var currentPhotoPath: String
-    private lateinit var deviceSize: DeviceSize
-    private var _binding: FragmentAddPropertyBinding? = null
-    private val binding: FragmentAddPropertyBinding get() = _binding!!
-    private var allPropertyPictures: MutableList<Photo> = mutableListOf()
-    private var currentProperty: Property? = null
-    private var uriImageSelected: Uri? = null
-    private val args: AddPropertyFragmentArgs by navArgs()
     private val cameraPerms = arrayOf(
         Manifest.permission.CAMERA,
         Manifest.permission.WRITE_EXTERNAL_STORAGE
     )
-
     private val storagePerms = arrayOf(
         Manifest.permission.WRITE_EXTERNAL_STORAGE,
         Manifest.permission.READ_EXTERNAL_STORAGE
     )
+
+    private var _binding: FragmentAddPropertyBinding? = null
+    private var allPropertyPictures: MutableList<Photo> = mutableListOf()
+    private var currentProperty: Property? = null
+    private var uriImageSelected: Uri? = null
+
+    private lateinit var currentPhotoPath: String
+    private lateinit var deviceSize: DeviceSize
+
 
     companion object {
         const val TAG = "MyAddPropertyFragment"
@@ -94,23 +96,109 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as MainActivity).supportActionBar?.show()
+        defineDeviceSize()
 
-        deviceSize = when(isTablet(requireContext())){
+        populateHousingTypeList()
+
+        setUpSpinner()
+
+        createToolbar()
+
+        defineArgumentType()
+
+        binding.addPictureButton.setOnClickListener { createPictureDialog() }
+
+        viewModel.unitLiveData.observe(viewLifecycleOwner) {
+            findNavController().navigateUp()
+        }
+
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        handleResponse(requestCode, resultCode, data)
+    }
+
+    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
+        //TODO : Not working
+        if (requestCode == REQUEST_CODE_PERMISSIONS_CAMERA) {
+
+            //findNavController().navigate(R.id.cameraSurfaceProviderFragment)
+
+        } else {
+            TODO("Open storage")
+
+        }
+    }
+
+    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            AppSettingsDialog.Builder(this).build().show()
+        } else {
+            if (perms[0] == Manifest.permission.CAMERA) {
+                requestCameraPermission()
+            } else {
+                requestStoragePermission()
+            }
+        }
+    }
+
+    private fun createPictureDialog() {
+        val builder = AlertDialog.Builder(context)
+            .create()
+
+        val customView = layoutInflater.inflate(R.layout.add_picture_dialog, null)
+        val cameraButton = customView.findViewById<Button>(R.id.button_take_picture)
+        val storageButton = customView.findViewById<Button>(R.id.button_open_internal_storage)
+
+        builder.setView(customView)
+
+        builder.show()
+
+        cameraButton.setOnClickListener {
+
+            if (hasPermissions(requireContext(), *cameraPerms)) {
+
+                capturePhoto()
+
+            } else {
+
+                requestCameraPermission()
+
+            }
+
+        }
+
+        storageButton.setOnClickListener {
+
+            if (hasPermissions(requireContext(), *storagePerms)) {
+
+                val intent =
+                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                startActivityForResult(intent, RC_CHOOSE_PHOTO)
+
+            } else {
+                requestStoragePermission()
+            }
+            builder.dismiss()
+        }
+    }
+
+    private fun defineDeviceSize() {
+        deviceSize = when (isTablet(requireContext())) {
             true -> DeviceSize.TABLET
             false -> DeviceSize.PHONE
         }
+    }
 
-        populateHousingTypeList()
-        setUpSpinner()
-        createToolbar()
-
+    private fun defineArgumentType() {
         when (areArgsForUpdate()) {
 
             true -> {
                 (activity as MainActivity).supportActionBar?.title = "Update Property"
 
-                val propertyId: Int? = if (isTablet(requireContext())){
+                val propertyId: Int? = if (isTablet(requireContext())) {
                     arguments?.getInt("item_id")
                 } else {
                     args.navigationArgument
@@ -121,53 +209,7 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             }
             false -> (activity as MainActivity).supportActionBar?.title = "New Property"
         }
-
-        binding.addPictureButton.setOnClickListener {
-
-            val builder = AlertDialog.Builder(context)
-                .create()
-
-            val customView = layoutInflater.inflate(R.layout.add_picture_dialog, null)
-            val cameraButton = customView.findViewById<Button>(R.id.button_take_picture)
-            val storageButton = customView.findViewById<Button>(R.id.button_open_internal_storage)
-
-            builder.setView(customView)
-
-            builder.show()
-
-            cameraButton.setOnClickListener {
-
-                if (hasPermissions(requireContext(), *cameraPerms)) {
-
-                    capturePhoto()
-
-                } else {
-
-                    requestCameraPermission()
-
-                }
-
-            }
-
-            storageButton.setOnClickListener {
-
-                if (hasPermissions(requireContext(), *storagePerms)) {
-
-                    val intent =
-                        Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                    startActivityForResult(intent, RC_CHOOSE_PHOTO)
-
-                } else {
-                    requestStoragePermission()
-                }
-                builder.dismiss()
-            }
-
-        }
-
-
     }
-
 
     private fun capturePhoto() {
         val cameraInt = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -181,7 +223,6 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         startActivityForResult(cameraInt, REQUEST_IMAGE_CAPTURE)
 
     }
-
 
     @SuppressLint("SimpleDateFormat")
     @Throws(IOException::class)
@@ -197,13 +238,6 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             // Save a file: path for use with CAMERA
             currentPhotoPath = absolutePath
         }
-    }
-
-
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        handleResponse(requestCode, resultCode, data)
     }
 
     private fun handleResponse(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -255,6 +289,26 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             openDialog(photo)
 
         }
+    }
+
+    private fun createToolbar() {
+        (activity as MainActivity).supportActionBar?.show()
+        requireActivity().addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menu.clear()
+                menuInflater.inflate(R.menu.menu_add_activity, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean = when (menuItem.itemId) {
+
+                R.id.save -> {
+
+                    saveCurrentProperty()
+                }
+
+                else -> false
+            }
+        }, viewLifecycleOwner)
     }
 
     private fun openDialog(photo: Photo?) {
@@ -313,7 +367,6 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         currentProperty?.mainPicture = currentPhoto?.path.toString()
     }
 
-
     private fun updateDescription(currentPhoto: Photo?) {
         currentProperty?.pictureList!!.filter { it.path == currentPhoto?.path }.forEach {
             it.description = currentPhoto?.description
@@ -321,21 +374,19 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     }
 
     private fun areArgsForUpdate(): Boolean =
-        when(deviceSize){
+        when (deviceSize) {
             DeviceSize.TABLET -> arguments?.getInt("item_id") != ARG_NO_ITEM_ID
             DeviceSize.PHONE -> args.navigationArgument != ARG_NO_ITEM_ID
         }
-        /*args.navigationArgument != ARG_NO_ITEM_ID || arguments?.getInt("item_id") != ARG_NO_ITEM_ID*/
 
     private fun retrieveData(id: Int) {
         lifecycle.coroutineScope.launch {
-             viewModel.getPropertyById(id).collect {
-                    displayData(it)
-                    currentProperty = it
-                }
+            viewModel.getPropertyById(id).collect {
+                displayData(it)
+                currentProperty = it
+            }
         }
     }
-
 
     private fun displayData(property: Property) {
 
@@ -360,100 +411,30 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
     }
 
-    private fun displayPoi(property: Property) {
+    private fun saveCurrentProperty(): Boolean {
+        if (allFieldsAreFilled()) {
 
-        if (property.poiList.contains(resources.getString(R.string.school))) {
-            binding.checkbox?.checkboxNearbySchool?.isChecked = true
-        }
-
-        if (property.poiList.contains(resources.getString(R.string.playground))) {
-            binding.checkbox?.checkboxNearbyPlayground?.isChecked = true
-        }
-
-        if (property.poiList.contains(resources.getString(R.string.shops))) {
-            binding.checkbox?.checkboxNearbyShop?.isChecked = true
-        }
-
-        if (property.poiList.contains(resources.getString(R.string.train))) {
-            binding.checkbox?.checkboxNearbyTrain?.isChecked = true
-        }
-
-        if (property.poiList.contains(resources.getString(R.string.daycare))) {
-            binding.checkbox?.checkboxNearbyDaycare?.isChecked = true
-        }
-
-        if (property.poiList.contains(resources.getString(R.string.parking))) {
-            binding.checkbox?.checkboxNearbyParking?.isChecked = true
-        }
-
-    }
-
-    private fun createToolbar() {
-        requireActivity().addMenuProvider(object : MenuProvider {
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menu.clear()
-                menuInflater.inflate(R.menu.menu_add_activity, menu)
-            }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean = when (menuItem.itemId) {
-
-                R.id.save -> {
-                    if (allFieldsAreFilled()) {
-
-                        if (areArgsForUpdate()) {
-
-                            when(args.navigationArgument){
-
-                                -1 -> {
-                                    Toast.makeText(context, "Property Updated", Toast.LENGTH_LONG).show()
-                                    val id = arguments?.getInt("item_id")
-                                    id?.let { viewModel.updateProperty(getPropertyInfo().copy(id = id)) }
-
-                                    requireActivity().supportFragmentManager.commit {
-
-                                        replace(
-                                            R.id.item_detail_frame_layout,
-                                            PropertyDetailFragment.newInstance(currentProperty!!.id)
-                                        )
-                                    }
-                                }
-
-                                else -> {
-                                    Toast.makeText(context, "Property Updated", Toast.LENGTH_LONG).show()
-                                    viewModel.updateProperty(getPropertyInfo().copy(id = args.navigationArgument))
-                                    findNavController().navigateUp()
-                                }
-                            }
-
-                        } else {
-                            when(deviceSize){
-                                DeviceSize.TABLET -> {
-                                    Toast.makeText(context, "New property saved", Toast.LENGTH_LONG).show()
-                                    viewModel.createProperty(getPropertyInfo())
-                                }
-
-                                DeviceSize.PHONE -> {
-                                    Toast.makeText(context, "New property saved", Toast.LENGTH_LONG).show()
-                                    viewModel.createProperty(getPropertyInfo())
-                                    findNavController().navigateUp()
-                                }
-                            }
-
-                        }
-
-                    } else {
-                        Toast.makeText(
-                            context,
-                            "Make sure all fields are filled",
-                            Toast.LENGTH_SHORT
-                        ).show()
+            when(isTablet(requireContext())){
+                true -> {
+                    when(val id = requireArguments().getInt("item_id")){
+                        -1 -> viewModel.save(getPropertyInfo())
+                        else -> viewModel.save(getPropertyInfo().copy(id = id))
                     }
-
-                    true
                 }
-                else -> false
+
+                false -> {
+                    when(val id = args.navigationArgument){
+                        -1 -> viewModel.save(getPropertyInfo())
+                        else -> viewModel.save(getPropertyInfo().copy(id = id))
+                    }
+                }
             }
-        }, viewLifecycleOwner)
+
+        } else {
+            Toast.makeText(context, "Make sure all fields are filled", Toast.LENGTH_SHORT).show()
+        }
+
+        return true
     }
 
     private fun allFieldsAreFilled(): Boolean =
@@ -525,6 +506,34 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
     }
 
+    private fun displayPoi(property: Property) {
+
+        if (property.poiList.contains(resources.getString(R.string.school))) {
+            binding.checkbox?.checkboxNearbySchool?.isChecked = true
+        }
+
+        if (property.poiList.contains(resources.getString(R.string.playground))) {
+            binding.checkbox?.checkboxNearbyPlayground?.isChecked = true
+        }
+
+        if (property.poiList.contains(resources.getString(R.string.shops))) {
+            binding.checkbox?.checkboxNearbyShop?.isChecked = true
+        }
+
+        if (property.poiList.contains(resources.getString(R.string.train))) {
+            binding.checkbox?.checkboxNearbyTrain?.isChecked = true
+        }
+
+        if (property.poiList.contains(resources.getString(R.string.daycare))) {
+            binding.checkbox?.checkboxNearbyDaycare?.isChecked = true
+        }
+
+        if (property.poiList.contains(resources.getString(R.string.parking))) {
+            binding.checkbox?.checkboxNearbyParking?.isChecked = true
+        }
+
+    }
+
     private fun populateHousingTypeList() {
         housingType.add("House")
         housingType.add("Penthouse")
@@ -556,18 +565,6 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         }
     }
 
-    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
-        //TODO : Not working
-        if (requestCode == REQUEST_CODE_PERMISSIONS_CAMERA) {
-
-            //findNavController().navigate(R.id.cameraSurfaceProviderFragment)
-
-        } else {
-            TODO("Open storage")
-
-        }
-    }
-
     private fun requestCameraPermission() {
         EasyPermissions.requestPermissions(
             this,
@@ -584,18 +581,6 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             REQUEST_CODE_PERMISSIONS_STORAGE,
             *storagePerms
         )
-    }
-
-    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
-        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-            AppSettingsDialog.Builder(this).build().show()
-        } else {
-            if (perms[0] == Manifest.permission.CAMERA) {
-                requestCameraPermission()
-            } else {
-                requestStoragePermission()
-            }
-        }
     }
 
     override fun onDestroyView() {
