@@ -9,6 +9,7 @@ class GeocodingHelperImpl @Inject constructor(
     private val geocodingService: GeocodingService
 ):GeocodingHelper{
 
-    override suspend fun getLocation(address: String): Response<GeocodeResponse> = geocodingService.getLocation(address, BuildConfig.MAPS_API_KEY)
+    override suspend fun getLocation(address: String): Response<GeocodeResponse> =
+        geocodingService.getLocation(address, BuildConfig.MAPS_API_KEY)
 
 }

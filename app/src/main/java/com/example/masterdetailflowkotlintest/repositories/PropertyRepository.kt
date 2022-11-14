@@ -1,6 +1,8 @@
 package com.example.masterdetailflowkotlintest.repositories
 
 import androidx.annotation.WorkerThread
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
 import com.example.masterdetailflowkotlintest.model.pojo.Property
 import com.example.masterdetailflowkotlintest.room.dao.PropertyDao
 import kotlinx.coroutines.Dispatchers
@@ -47,5 +49,8 @@ class PropertyRepository @Inject constructor(
             isNearMaxSurface
         )
     }
+
+
+
 
 }

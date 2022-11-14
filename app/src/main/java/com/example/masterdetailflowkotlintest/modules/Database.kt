@@ -51,4 +51,16 @@ class Database {
                 PropertyCallback(provider)
             )
             .build()
+
+    /*@Singleton
+    @Provides
+    fun provideDatabase(@ApplicationContext appContext: Context): LocalDatabase{
+
+        return Room.databaseBuilder(
+            appContext,
+            LocalDatabase::class.java,
+            "localdb"
+        ).build()
+
+    }*/
 }

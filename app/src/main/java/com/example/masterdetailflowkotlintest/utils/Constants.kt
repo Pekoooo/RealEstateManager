@@ -5,6 +5,10 @@ object Constants {
     //Navigation Arguments
     const val ARG_NO_ITEM_ID = -1
 
+    // Currency conversion
+    const val DOLLARS_TO_EURO = 0.967
+    const val EURO_TO_DOLLARS = 1.03
+
     //Date format
     const val DATE_FORMAT = "dd/MM/yyyy"
 

@@ -9,16 +9,13 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.math.log
 
-
+@Singleton
 class LocationRepository @Inject constructor(
     @ApplicationContext context: Context
 ){
-
-    companion object{
-        private const val TAG = "MyLocationRepository"
-    }
 
     private var locationLiveData = MutableLiveData<Location>()
 

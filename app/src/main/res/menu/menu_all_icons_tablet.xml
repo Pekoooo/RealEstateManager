@@ -21,7 +21,7 @@
         app:showAsAction="ifRoom"/>
 
     <item
-        android:title="@string/map_item"
+        android:title="@string/Edit"
         android:icon="@drawable/ic_edit"
         android:id="@+id/edit"
         app:showAsAction="ifRoom"/>

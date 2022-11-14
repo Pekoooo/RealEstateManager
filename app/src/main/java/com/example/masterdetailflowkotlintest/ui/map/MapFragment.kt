@@ -49,6 +49,16 @@ class MapFragment : Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
+        viewModel.allProperties.observe(this) {
+            allProperties = it
+
+            observeLocation()
+        }
+        checkForPerms()
+    }
+
+    private fun observeLocation() {
         viewModel.getLocationLiveData().observe(this) {
             location = it
 
@@ -56,18 +66,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
                 .findFragmentById(R.id.google_map) as SupportMapFragment
             mapFragment.getMapAsync(this)
         }
-
-        viewModel.allProperties.observe(this) {
-
-            allProperties = it
-
-
-
-
-        }
-
-        checkForPerms()
-
     }
 
     private fun setPropertiesMarker(allProperties: List<Property>) {
@@ -75,7 +73,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
         allProperties.forEach {
 
             val price = when(viewModel.currencyType.value){
-                CurrencyType.DOLLAR, null -> it.price.plus("$")
+                CurrencyType.DOLLAR, null -> it.price.toString().plus("$")
                 CurrencyType.EURO -> it.euroPrice.plus("€")
             }
 
@@ -170,6 +168,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
             requestLocationPermissions()
         }
     }
+
 
 
 }

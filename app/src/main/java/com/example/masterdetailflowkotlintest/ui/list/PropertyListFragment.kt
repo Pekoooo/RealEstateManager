@@ -62,11 +62,10 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
         binding.addPropertyTabletFab?.setOnClickListener {
 
             requireActivity().supportFragmentManager.commit {
-                    replace(
-                        R.id.item_detail_frame_layout,
-                        AddPropertyFragment.newInstance(ARG_NO_ITEM_ID)
-                    )
-
+                replace(
+                    R.id.item_detail_frame_layout,
+                    AddPropertyFragment.newInstance(ARG_NO_ITEM_ID)
+                )
 
             }
 
@@ -83,8 +82,6 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
         viewModel.allProperties.observe(viewLifecycleOwner) {
             allProperties = it
             setupRecyclerView(recyclerView, currencyType)
-
-            
 
         }
 
@@ -114,7 +111,7 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
                     true
                 }
 
-                R.id.search ->  {
+                R.id.search -> {
 
                     val action =
                         PropertyListFragmentDirections.actionItemListFragmentToFilteredSearchFragment()
@@ -140,7 +137,10 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
             when (isTablet(requireContext())) {
 
                 true -> {
-                    Log.d(MainActivity.TAG, "setupRecyclerView: replaced called in property list fragment")
+                    Log.d(
+                        MainActivity.TAG,
+                        "setupRecyclerView: replaced called in property list fragment"
+                    )
 
                     requireActivity().supportFragmentManager.commit {
                         if (it != null) {

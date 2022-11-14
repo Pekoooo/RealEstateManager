@@ -8,6 +8,16 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="base_purple">#5b39c6</color>
+    <color name="background">#f5f5f5</color>
+
+    <color name="primaryColor">#1a237e</color>
+    <color name="primaryLightColor">#534bae</color>
+    <color name="primaryDarkColor">#000051</color>
+    <color name="secondaryColor">#00838e</color>
+    <color name="secondaryLightColor">#4fb3be</color>
+    <color name="secondaryDarkColor">#005661</color>
+    <color name="primaryTextColor">#ffffff</color>
+    <color name="secondaryTextColor">#ffffff</color>
 
 
 </resources>

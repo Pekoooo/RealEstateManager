@@ -33,7 +33,7 @@
     <string name="poi">POI</string>
     <string name="point_of_interests">Point Of Interests</string>
     <string name="neighborhood">Neighborhood</string>
-    <string name="price">Price</string>
+    <string name="price_only">Price</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_picture">Add Picture</string>
@@ -49,6 +49,22 @@
     <string name="open_camera">Open Camera</string>
     <string name="sold">SOLD!</string>
     <string name="search_item">search</string>
+    <string name="Edit">edit_item</string>
+    <string name="Mortgage_calculator">mortgage calculator</string>
+
+    <!-- Mortgage calculator fragment -->
+    <string name="currency_sign">Currency sign</string>
+    <string name="price">Property price</string>
+    <string name="years">Mortgage length</string>
+    <string name="rate">Mortgage rate</string>
+    <string name="down_payment">Down payment</string>
+    <string name="minus_vector_image_legend">Minus vector image legend</string>
+    <string name="add_vector_image_legend">Add vector image legend</string>
+    <string name="slider_to_modify_the_mortgage_rate_from_2_to_6">Slider to modify the mortgage rate from 2 to 6</string>
+    <string name="slider_to_modify_the_length_of_the_mortgage_from_5_to_30_years">Slider to modify the length of the mortgage from 5 to 30 years</string>
+    <string name="monthly_payment">Monthly payment</string>
+    <string name="total_investment_cost">The total investment cost is $%1d / €%2d</string>
+    <string name="mortgage_length_in_years">"%1d years"</string>
 
 
 </resources>

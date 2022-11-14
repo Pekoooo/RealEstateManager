@@ -1,4 +1,4 @@
-package com.example.masterdetailflowkotlintest.hiltTestUtils
+package com.example.masterdetailflowkotlintest
 
 import android.content.Context
 import androidx.room.Room
@@ -21,5 +21,4 @@ object TestAppModule {
             context, LocalDatabase::class.java
         ).allowMainThreadQueries()
             .build()
-
 }

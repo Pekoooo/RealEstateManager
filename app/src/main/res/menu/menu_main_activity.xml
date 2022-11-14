@@ -3,22 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:title="@string/map_item"
-        android:icon="@drawable/ic_map"
         android:id="@+id/mapFragment"
-        app:showAsAction="ifRoom"/>
+        android:icon="@drawable/ic_map"
+        android:title="@string/map_item"
+        app:showAsAction="ifRoom" />
 
     <item
-        android:title="@string/currency_item"
-        android:icon="@drawable/ic_currency"
         android:id="@+id/currency"
-        app:showAsAction="ifRoom"/>
+        android:icon="@drawable/ic_currency"
+        android:title="@string/currency_item"
+        app:showAsAction="ifRoom" />
 
     <item
-        android:title="@string/search_item"
-        android:icon="@drawable/ic_search"
         android:id="@+id/search"
-        app:showAsAction="ifRoom"/>
+        android:icon="@drawable/ic_search"
+        android:title="@string/search_item"
+        app:showAsAction="ifRoom" />
 
 
 </menu>

@@ -13,6 +13,9 @@ interface PropertyDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(property: Property)
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertAll(properties: List<Property>)
+
     @Query("SELECT * FROM property_table WHERE property_id = :id")
     fun getPropertyById(id: Int): Flow<Property>
 

@@ -26,9 +26,13 @@ class PropertyCallback (
 
     private suspend fun populateDatabase() {
 
-        val property = getDummyProperty()
+        /*val property = getDummyProperty()
 
-        provider.get().insert(property)
+        provider.get().insert(property)*/
+
+        val properties = DummyPropertyProvider.samplePropertyList
+
+        provider.get().insertAll(properties)
     }
 
 

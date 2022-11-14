@@ -22,6 +22,7 @@ import com.example.masterdetailflowkotlintest.databinding.FragmentItemDetailBind
 import com.example.masterdetailflowkotlintest.model.pojo.Photo
 import com.example.masterdetailflowkotlintest.model.pojo.Property
 import com.example.masterdetailflowkotlintest.ui.add.AddPropertyFragment
+import com.example.masterdetailflowkotlintest.ui.list.PropertyListFragmentDirections
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
 import com.example.masterdetailflowkotlintest.utils.CurrencyType
 import com.example.masterdetailflowkotlintest.utils.DefineScreenSize.Companion.isTablet
@@ -255,6 +256,13 @@ class PropertyDetailFragment : Fragment() {
 
                 R.id.mapFragment -> {
                     findNavController().navigate(R.id.mapFragment)
+                    true
+                }
+
+                R.id.mortgage_calculator -> {
+                    val action =
+                        PropertyDetailFragmentDirections.actionItemDetailFragmentToMortgageCalculatorFragment(currentProperty.price)
+                    findNavController().navigate(action)
                     true
                 }
 
