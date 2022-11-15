@@ -53,6 +53,7 @@ class PropertyDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        (activity as MainActivity).supportActionBar?.title = "Property"
         _binding = FragmentItemDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
