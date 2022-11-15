@@ -455,14 +455,14 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
     private fun getPropertyInfo() = Property(
         0,
-        binding.surfaceEditText.text.toString().toInt(),
+        if(binding.surfaceEditText.text.toString() == "") 0 else (binding.surfaceEditText.text.toString().toInt()),
         binding.spinner.selectedItem.toString(),
         binding.addressEditText.text.toString(),
         binding.cityEditText.text.toString(),
         binding.neighborhoodEditText.text.toString(),
         binding.postalCodeEditText.text.toString(),
         binding.countryEditText.text.toString(),
-        binding.priceEditText.text.toString().toInt(),
+        if(binding.priceEditText.text.toString() == "") 0 else (binding.priceEditText.text.toString().toInt()),
         binding.bathroomEditText.text.toString(),
         binding.bedroomEditText.text.toString(),
         Calendar.getInstance().time.toString(),

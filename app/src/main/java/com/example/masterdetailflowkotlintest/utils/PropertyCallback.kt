@@ -3,7 +3,6 @@ package com.example.masterdetailflowkotlintest.utils
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.masterdetailflowkotlintest.room.dao.PropertyDao
-import com.example.masterdetailflowkotlintest.utils.DummyPropertyProvider.Companion.getDummyProperty
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

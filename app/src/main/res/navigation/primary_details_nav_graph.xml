@@ -57,7 +57,11 @@
         android:id="@+id/mapFragment"
         android:name="com.example.masterdetailflowkotlintest.ui.map.MapFragment"
         android:label="Map Fragment"
-        tools:layout="@layout/fragment_map" />
+        tools:layout="@layout/fragment_map" >
+        <action
+            android:id="@+id/action_mapFragment_to_item_detail_fragment"
+            app:destination="@id/item_detail_fragment" />
+    </fragment>
     <fragment
         android:id="@+id/filteredSearchFragment"
         android:name="com.example.masterdetailflowkotlintest.ui.filteredSearch.FilteredSearchFragment"

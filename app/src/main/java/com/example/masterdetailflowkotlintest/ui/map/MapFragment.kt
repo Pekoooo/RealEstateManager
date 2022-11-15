@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.databinding.FragmentMapBinding
 import com.example.masterdetailflowkotlintest.model.pojo.Property
@@ -55,8 +56,20 @@ class MapFragment : Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
 
             observeLocation()
         }
+
         checkForPerms()
     }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        (activity as MainActivity).supportActionBar?.title = "Map"
+
+        binding = FragmentMapBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
 
     private fun observeLocation() {
         viewModel.getLocationLiveData().observe(this) {
@@ -70,29 +83,28 @@ class MapFragment : Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
 
     private fun setPropertiesMarker(allProperties: List<Property>) {
         Log.d(TAG, "setPropertiesMarker: $allProperties")
+
         allProperties.forEach {
 
-            val price = when(viewModel.currencyType.value){
-                CurrencyType.DOLLAR, null -> it.price.toString().plus("$")
-                CurrencyType.EURO -> it.euroPrice.plus("€")
-            }
-
-            when(it.isSold){
+            when (it.isSold) {
 
                 true -> {
-                    gMap.addMarker(MarkerOptions()
-                    .position(it.latLng)
-                    .title("Sold".plus(" for $price"))
-                    .icon(BitmapFromVector.BitmapFromVector(requireContext(), R.drawable.ic_house_sold))
-                )
-                    Log.d(TAG, "setPropertiesMarker: $it")
+                    gMap.addMarker(
+                        MarkerOptions()
+                            .position(it.latLng)
+                            .icon(
+                                BitmapFromVector.BitmapFromVector(
+                                    requireContext(),
+                                    R.drawable.ic_house_sold
+                                )
+                            )
+                    )
                 }
 
                 false -> {
                     gMap.addMarker(
                         MarkerOptions()
                             .position(LatLng(it.lat!!, it.lng!!))
-                            .title(price)
                             .icon(
                                 BitmapFromVector.BitmapFromVector(
                                     requireContext(),
@@ -100,23 +112,14 @@ class MapFragment : Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
                                 )
                             )
                     )
-                    Log.d(TAG, "setPropertiesMarker: $it")
                 }
             }
 
         }
 
+
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        (activity as MainActivity).supportActionBar?.title = "Map"
-
-        binding = FragmentMapBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     private fun checkForPerms() {
         if (hasLocationPermissions()) {
@@ -155,10 +158,20 @@ class MapFragment : Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
 
         setPropertiesMarker(allProperties)
 
+        gMap.setOnMarkerClickListener {
+            val clickedProperty = viewModel.getPropertyWithLatLng(it.position)
+
+            val action =
+                MapFragmentDirections.actionMapFragmentToItemDetailFragment(clickedProperty!!.id)
+            findNavController().navigate(action)
+
+            true
+        }
+
     }
 
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
-        viewModel.getUserLocation()
+        findNavController().navigate(R.id.mapFragment)
     }
 
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
@@ -168,7 +181,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, EasyPermissions.PermissionCa
             requestLocationPermissions()
         }
     }
-
 
 
 }

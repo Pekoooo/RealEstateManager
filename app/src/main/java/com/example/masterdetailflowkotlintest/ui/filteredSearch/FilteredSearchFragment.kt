@@ -36,7 +36,7 @@ class FilteredSearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as MainActivity).supportActionBar?.title = "Filtered Search Results"
+        (activity as MainActivity).supportActionBar?.title = "Filtered Search"
         getListProperties()
         setupOnClick()
         filteredList()

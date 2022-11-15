@@ -29,7 +29,9 @@ class DummyPropertyProvider {
                 "https://i.imgur.com/PkQIrJx.jpg",
                 getPictureList(),
                 getPoiList(),
-                false
+                false,
+                48.75320809022753,
+                1.9166888529994939
 
             )
 
@@ -55,7 +57,9 @@ class DummyPropertyProvider {
                 "https://i.imgur.com/PkQIrJx.jpg",
                 getPictureList(),
                 getPoiList(),
-                false
+                false,
+                48.75320809022753,
+                1.9166888529994939
 
             ),
 
@@ -78,7 +82,9 @@ class DummyPropertyProvider {
                 "https://i.pinimg.com/originals/b2/7f/c8/b27fc8901f18fe6b39856aec9d44e13d.jpg",
                 getPictureList(),
                 getPoiList(),
-                false
+                false,
+                48.75376613766151,
+                1.9210808706006441
 
             ),
 
@@ -101,7 +107,9 @@ class DummyPropertyProvider {
                 "https://media.architecturaldigest.com/photos/57f3d9e9f96256c62629bfd0/4:3/w_2299,h_1724,c_limit/_a-frame-07_mikikokikuyama.jpg",
                 getPictureList(),
                 getPoiList(),
-                false
+                false,
+                51.454583169540065,
+                -116.98303352633894
 
             ),
 
@@ -124,7 +132,9 @@ class DummyPropertyProvider {
                 "https://livekitsilano.com/wp-content/uploads/sites/4/2020/03/3668-west-3rd-kitsilano-triplex.jpg",
                 getPictureList(),
                 getPoiList(),
-                false
+                false,
+                49.2595976390376,
+                -123.18266949209384
 
             ),
 
@@ -147,7 +157,9 @@ class DummyPropertyProvider {
                 "https://i.imgur.com/zzkMrr5.png",
                 getPictureList(),
                 getPoiList(),
-                false
+                false,
+                42.840265570599385,
+                140.67371348161095
 
             ),
 
@@ -170,7 +182,9 @@ class DummyPropertyProvider {
                 "https://i.imgur.com/PkQIrJx.jpg",
                 getPictureList(),
                 getPoiList(),
-                false
+                false,
+                32.71509333687513,
+                -117.16944867061822
 
             )
 

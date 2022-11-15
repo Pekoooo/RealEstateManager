@@ -27,7 +27,6 @@ class SearchResult : Fragment() {
     private val args: SearchResultArgs by navArgs()
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,6 +39,8 @@ class SearchResult : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val recyclerView: RecyclerView = binding.itemList
+
+        (activity as MainActivity).supportActionBar?.title = "Filtered Search Results"
 
 
         setupRecyclerView(recyclerView)
@@ -58,7 +59,10 @@ class SearchResult : Fragment() {
             when (DefineScreenSize.isTablet(requireContext())) {
 
                 true -> {
-                    Log.d(MainActivity.TAG, "setupRecyclerView: replaced called in property list fragment")
+                    Log.d(
+                        MainActivity.TAG,
+                        "setupRecyclerView: replaced called in property list fragment"
+                    )
 
                     requireActivity().supportFragmentManager.commit {
                         if (it != null) {
@@ -75,7 +79,11 @@ class SearchResult : Fragment() {
                 else -> {
 
                     val action =
-                        it?.let { it1 -> SearchResultDirections.actionSearchResultToItemDetailFragment(it1.id) }
+                        it?.let { it1 ->
+                            SearchResultDirections.actionSearchResultToItemDetailFragment(
+                                it1.id
+                            )
+                        }
 
                     if (action != null) {
                         findNavController().navigate(action)
@@ -86,7 +94,6 @@ class SearchResult : Fragment() {
 
         }
     }
-
 
 
 }

@@ -10,6 +10,7 @@ import com.example.masterdetailflowkotlintest.repositories.ConverterRepository
 import com.example.masterdetailflowkotlintest.repositories.LocationRepository
 import com.example.masterdetailflowkotlintest.repositories.PropertyRepository
 import com.example.masterdetailflowkotlintest.utils.CurrencyType
+import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -27,6 +28,16 @@ class MapViewModel @Inject constructor(
 
     fun getLocationLiveData(): MutableLiveData<Location>{
         return locationRepository.getLocationLiveData()
+    }
+
+    fun getPropertyWithLatLng(position: LatLng): Property? {
+        var propertyToReturn: Property? = null
+        for(property in allProperties.value!!){
+            if(position == property.latLng){
+                propertyToReturn = property
+            }
+        }
+        return propertyToReturn
     }
 
     val allProperties: LiveData<List<Property>> = propertyRepository.allProperties.asLiveData()
