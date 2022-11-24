@@ -36,12 +36,9 @@ class MortgageCalculatorFragment : Fragment() {
     private var mortgageRate by Delegates.notNull<Double>()
     private var mortgageLength by Delegates.notNull<Int>()
     private var monthlyPrice by Delegates.notNull<Int>()
-    private var monthlyPriceEur by Delegates.notNull<Int>()
-    private var euroToDollarRate by Delegates.notNull<Double>()
     private var dollarToEuroRate = 0.00
     private var priceList: MutableList<Int> = mutableListOf()
     private var downPayment = 0
-    private var downPaymentEuro = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -70,7 +67,7 @@ class MortgageCalculatorFragment : Fragment() {
      */
     private fun initialSetup() {
         getArgsFromNav()
-        getPriceOfAllListedProperty(listOf(DummyPropertyProvider.getDummyProperty()))
+        getPriceOfAllListedProperty(DummyPropertyProvider.samplePropertyList)
         setPropertyPrice()
         setMortgageRate()
         setMortgageLength()
@@ -89,7 +86,6 @@ class MortgageCalculatorFragment : Fragment() {
     /**
      * Get the list of properties and sort it
      */
-    //TODO get the list of property
 
     private fun getPriceOfAllListedProperty(properties: List<Property>) {
         for (property in properties) {

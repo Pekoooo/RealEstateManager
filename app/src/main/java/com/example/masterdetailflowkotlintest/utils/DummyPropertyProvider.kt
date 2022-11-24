@@ -22,7 +22,7 @@ class DummyPropertyProvider {
                 360000,
                 "2",
                 "4",
-                Calendar.getInstance().time.toString(),
+                Utils.todayDate,
                 "8",
                 "Your typical childhood house",
                 "Tristan",
@@ -37,7 +37,7 @@ class DummyPropertyProvider {
 
         }
 
-        val samplePropertyList = listOf(
+        val samplePropertyList = mutableListOf(
             Property(
                 1,
                 150,
@@ -50,7 +50,7 @@ class DummyPropertyProvider {
                 360000,
                 "2",
                 "4",
-                Calendar.getInstance().time.toString(),
+                Utils.todayDate,
                 "8",
                 "Your typical childhood house",
                 "Tristan",
@@ -75,7 +75,7 @@ class DummyPropertyProvider {
                 460000,
                 "2",
                 "4",
-                Calendar.getInstance().time.toString(),
+                Utils.todayDate,
                 "8",
                 "Your typical bestie childhood house",
                 "Tristan",
@@ -100,7 +100,7 @@ class DummyPropertyProvider {
                 1360000,
                 "2",
                 "4",
-                Calendar.getInstance().time.toString(),
+                Utils.todayDate,
                 "8",
                 "Your typical remote A frame",
                 "Tristan",
@@ -125,7 +125,7 @@ class DummyPropertyProvider {
                 2360000,
                 "2",
                 "4",
-                Calendar.getInstance().time.toString(),
+                Utils.todayDate,
                 "8",
                 "Your typical childhood house",
                 "Tristan",
@@ -150,7 +150,7 @@ class DummyPropertyProvider {
                 360000,
                 "2",
                 "4",
-                Calendar.getInstance().time.toString(),
+                Utils.todayDate,
                 "8",
                 "Your typical childhood house",
                 "Tristan",
@@ -175,7 +175,7 @@ class DummyPropertyProvider {
                 360000,
                 "2",
                 "4",
-                Calendar.getInstance().time.toString(),
+                Utils.todayDate,
                 "8",
                 "Your typical childhood house",
                 "Tristan",

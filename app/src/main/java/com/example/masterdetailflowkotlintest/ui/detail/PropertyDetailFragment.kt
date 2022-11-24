@@ -1,11 +1,13 @@
 package com.example.masterdetailflowkotlintest.ui.detail
 
 import android.app.AlertDialog
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
@@ -19,15 +21,18 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.databinding.FragmentItemDetailBinding
+import com.example.masterdetailflowkotlintest.enums.CurrencyType
 import com.example.masterdetailflowkotlintest.model.pojo.Photo
 import com.example.masterdetailflowkotlintest.model.pojo.Property
 import com.example.masterdetailflowkotlintest.ui.add.AddPropertyFragment
 import com.example.masterdetailflowkotlintest.ui.list.PropertyListFragmentDirections
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
-import com.example.masterdetailflowkotlintest.utils.CurrencyType
+import com.example.masterdetailflowkotlintest.utils.Constants
 import com.example.masterdetailflowkotlintest.utils.DefineScreenSize.Companion.isTablet
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -58,6 +63,7 @@ class PropertyDetailFragment : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -97,6 +103,7 @@ class PropertyDetailFragment : Fragment() {
         Glide
             .with(binding.propertyStaticMap)
             .load(staticMapUrl)
+            .error(R.drawable.pc_no_internet)
             .into(binding.propertyStaticMap)
     }
 
@@ -115,6 +122,7 @@ class PropertyDetailFragment : Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun initConfirmationDialog() {
 
         val builder = AlertDialog.Builder(context)
@@ -130,7 +138,11 @@ class PropertyDetailFragment : Fragment() {
 
         confirmButton.setOnClickListener {
 
-            binding.soldAtDate.text = Calendar.getInstance().time.toString()
+            val dateOfDay = LocalDate.now()
+            val formatter = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT, Locale.getDefault())
+            val formattedDate = dateOfDay.format(formatter)
+
+            binding.soldAtDate.text = formattedDate
             viewModel.updateProperty(currentProperty.copy(isSold = true))
             builder.dismiss()
 
@@ -184,11 +196,11 @@ class PropertyDetailFragment : Fragment() {
             when (currencyType) {
                 CurrencyType.DOLLAR, null -> {
                     binding.titleTextView.text = property.toString()
-                    binding.currencySymbol?.text = "$"
+                    binding.currencySymbol.text = "$"
                 }
                 CurrencyType.EURO -> {
                     binding.titleTextView.text = property.toStringEuroPrice
-                    binding.currencySymbol?.text = "€"
+                    binding.currencySymbol.text = "€"
                 }
 
             }

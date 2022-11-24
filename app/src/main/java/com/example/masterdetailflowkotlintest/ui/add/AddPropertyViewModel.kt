@@ -25,28 +25,6 @@ class AddPropertyViewModel @Inject constructor(
 
 ) : ViewModel() {
 
-    companion object {
-        const val TAG = "MyPropertyViewModel"
-    }
-
-    private val _locationViewLiveData = MutableLiveData<Resource<LocationView>>()
-
-    val locationViewLiveData : LiveData<Resource<LocationView>>
-        get() = _locationViewLiveData
-
-    fun getLocation(address: String) = viewModelScope.launch {
-
-        _locationViewLiveData.postValue(Resource.loading(null))
-
-        geocoderRepository.getLocation(address).let {
-
-            if (it.isSuccessful) _locationViewLiveData.postValue(Resource.success(it.body()?.toLocationView()))
-            else _locationViewLiveData.postValue(Resource.error(it.errorBody().toString(), null))
-
-        }
-
-    }
-
     val unitLiveData: MutableLiveData<Unit> = MutableLiveData()
 
     fun save(property: Property){
@@ -56,17 +34,6 @@ class AddPropertyViewModel @Inject constructor(
             unitLiveData.postValue(Unit)
 
         }
-    }
-
-    var property: MutableLiveData<Property> = MutableLiveData()
-
-    fun createProperty(property: Property) = viewModelScope.launch {
-        Log.d(TAG, "createProperty: ${property.description}")
-        propertyRepository.createProperty(property)
-    }
-
-    fun updateProperty(property: Property) = viewModelScope.launch {
-        propertyRepository.updateProperty(property)
     }
 
     fun getPropertyById(id: Int): Flow<Property> = propertyRepository.getPropertyById(id)

@@ -33,8 +33,10 @@ import com.example.masterdetailflowkotlintest.ui.detail.PropertyDetailFragment
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
 import com.example.masterdetailflowkotlintest.utils.Constants.ARG_NO_ITEM_ID
 import com.example.masterdetailflowkotlintest.utils.DefineScreenSize.Companion.isTablet
-import com.example.masterdetailflowkotlintest.utils.DeviceSize
+import com.example.masterdetailflowkotlintest.enums.DeviceSize
+import com.example.masterdetailflowkotlintest.utils.Constants
 import com.example.masterdetailflowkotlintest.utils.UriPathHelper
+import com.example.masterdetailflowkotlintest.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import pub.devrel.easypermissions.AppSettingsDialog
@@ -228,7 +230,7 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     @Throws(IOException::class)
     private fun createImageFile(): File {
         // Create an image file name
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val timeStamp: String = SimpleDateFormat(Constants.DATE_FORMAT).format(Date())
         val storageDir: File? = activity?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile(
             "JPEG_${timeStamp}_", /* prefix */
@@ -465,7 +467,7 @@ class AddPropertyFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         if(binding.priceEditText.text.toString() == "") 0 else (binding.priceEditText.text.toString().toInt()),
         binding.bathroomEditText.text.toString(),
         binding.bedroomEditText.text.toString(),
-        Calendar.getInstance().time.toString(),
+        Utils.todayDate,
         binding.roomsEditText.text.toString(),
         binding.propertyDescriptionEditText.text.toString(),
         binding.agentNameEditText.text.toString(),

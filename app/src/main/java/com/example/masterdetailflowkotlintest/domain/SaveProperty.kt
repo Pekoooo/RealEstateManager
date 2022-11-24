@@ -15,8 +15,8 @@ class SaveProperty @Inject constructor(
 
         val locationResponse = geocoderRepository.getLocation(property.fullAddress)
 
-        val lat = locationResponse.body()?.results?.get(0)?.geometry?.location?.lat
-        val lng = locationResponse.body()?.results?.get(0)?.geometry?.location?.lng
+        val lat = locationResponse.body()?.results?.getOrNull(0)?.geometry?.location?.lat
+        val lng = locationResponse.body()?.results?.getOrNull(0)?.geometry?.location?.lng
 
         val propertyToSave = property.copy(lat = lat, lng = lng)
 

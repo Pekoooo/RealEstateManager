@@ -9,7 +9,7 @@ import com.example.masterdetailflowkotlintest.model.pojo.Property
 import com.example.masterdetailflowkotlintest.repositories.ConverterRepository
 import com.example.masterdetailflowkotlintest.repositories.LocationRepository
 import com.example.masterdetailflowkotlintest.repositories.PropertyRepository
-import com.example.masterdetailflowkotlintest.utils.CurrencyType
+import com.example.masterdetailflowkotlintest.enums.CurrencyType
 import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

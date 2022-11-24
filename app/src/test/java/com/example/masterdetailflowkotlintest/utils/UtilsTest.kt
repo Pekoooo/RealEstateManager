@@ -1,4 +1,4 @@
-package com.example.masterdetailflowkotlintest.domain
+package com.example.masterdetailflowkotlintest.utils
 
 import com.example.masterdetailflowkotlintest.utils.Constants
 import com.example.masterdetailflowkotlintest.utils.Utils

@@ -1,4 +1,4 @@
-package com.example.masterdetailflowkotlintest.utils
+package com.example.masterdetailflowkotlintest.enums
 
 enum class Status {
     SUCCESS,

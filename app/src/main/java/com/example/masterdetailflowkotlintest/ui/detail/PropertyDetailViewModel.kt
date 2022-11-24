@@ -1,20 +1,16 @@
 package com.example.masterdetailflowkotlintest.ui.detail
 
 
-import com.example.masterdetailflowkotlintest.utils.Resource
 import android.content.Context
-import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.masterdetailflowkotlintest.BuildConfig
-import com.example.masterdetailflowkotlintest.model.view.LocationView
+import com.example.masterdetailflowkotlintest.enums.CurrencyType
 import com.example.masterdetailflowkotlintest.model.pojo.Property
-import com.example.masterdetailflowkotlintest.model.response.toLocationView
 import com.example.masterdetailflowkotlintest.repositories.ConverterRepository
-import com.example.masterdetailflowkotlintest.repositories.GeocoderRepository
 import com.example.masterdetailflowkotlintest.repositories.PropertyRepository
-import com.example.masterdetailflowkotlintest.ui.main.MainActivity
 import com.example.masterdetailflowkotlintest.utils.Constants
-import com.example.masterdetailflowkotlintest.utils.CurrencyType
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,35 +25,15 @@ class PropertyDetailViewModel @Inject constructor(
 
     private var propertyRepository: PropertyRepository,
     private var converterRepository: ConverterRepository,
-    private var geocoderRepository: GeocoderRepository,
 
 
 
 
 ) : ViewModel() {
 
-    private val _locationViewLiveData = MutableLiveData<Resource<LocationView>>()
-
-    val locationViewLiveData : LiveData<Resource<LocationView>>
-        get() = _locationViewLiveData
 
     private val currencyTypeLiveData: MutableLiveData<CurrencyType> = converterRepository.currencyType()
 
-     fun getLocation(address: String) = viewModelScope.launch {
-
-         Log.d(MainActivity.TAG, "getLocation: is called in vm ")
-
-        _locationViewLiveData.postValue(Resource.loading(null))
-
-        geocoderRepository.getLocation(address).let {
-
-            if (it.isSuccessful) _locationViewLiveData.postValue(Resource.success(it.body()?.toLocationView()))
-            else _locationViewLiveData.postValue(Resource.error(it.errorBody().toString(), null))
-
-
-        }
-
-    }
     fun getPropertyById(id: Int): Flow<Property> = propertyRepository.getPropertyById(id)
 
     fun updateProperty(property: Property) = viewModelScope.launch(Dispatchers.IO) {

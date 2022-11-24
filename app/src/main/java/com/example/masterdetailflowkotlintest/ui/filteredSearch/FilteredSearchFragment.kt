@@ -15,6 +15,7 @@ import com.example.masterdetailflowkotlintest.databinding.FragmentFilterdSearchB
 import com.example.masterdetailflowkotlintest.model.pojo.Property
 import com.example.masterdetailflowkotlintest.model.pojo.SearchResultObject
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
+import com.example.masterdetailflowkotlintest.utils.DefineScreenSize.Companion.isTablet
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

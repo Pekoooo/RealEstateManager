@@ -7,14 +7,14 @@ import androidx.lifecycle.asLiveData
 import com.example.masterdetailflowkotlintest.model.pojo.Property
 import com.example.masterdetailflowkotlintest.repositories.ConverterRepository
 import com.example.masterdetailflowkotlintest.repositories.PropertyRepository
-import com.example.masterdetailflowkotlintest.utils.CurrencyType
+import com.example.masterdetailflowkotlintest.enums.CurrencyType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class PropertyListViewModel @Inject constructor(
 
-    propertyRepository: PropertyRepository,
+    private val propertyRepository: PropertyRepository,
     private val converterRepository: ConverterRepository
 
 ): ViewModel() {
@@ -25,6 +25,10 @@ class PropertyListViewModel @Inject constructor(
 
     fun switchCurrencyUi(){
         converterRepository.switchCurrency()
+    }
+
+    fun retrieveAllProperties(): LiveData<List<Property>> {
+        return propertyRepository.allProperties.asLiveData()
     }
 
 

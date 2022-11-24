@@ -1,5 +1,7 @@
 package com.example.masterdetailflowkotlintest.utils
 
+import com.example.masterdetailflowkotlintest.enums.Status
+
 data class Resource<out T>(
     val status: Status,
     val data: T?,

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.masterdetailflowkotlintest.databinding.RowPropertyListBinding
 import com.example.masterdetailflowkotlintest.model.pojo.Property
-import com.example.masterdetailflowkotlintest.utils.CurrencyType
+import com.example.masterdetailflowkotlintest.enums.CurrencyType
 
 class PropertyListAdapter(
     private val propertyList: List<Property>,

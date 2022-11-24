@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import com.example.masterdetailflowkotlintest.model.pojo.Property
 import com.example.masterdetailflowkotlintest.repositories.PropertyRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -14,7 +15,7 @@ class FilteredSearchViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _allProperties: MutableLiveData<List<Property>> = MutableLiveData()
-    val allProperties: LiveData<List<Property>> get() = _allProperties
+    val allProperties: MutableLiveData<List<Property>> get() = _allProperties
 
     private val _filteredList: MutableLiveData<List<Property>> = MutableLiveData()
     val filteredList: LiveData<List<Property>> get() = _filteredList
@@ -25,6 +26,10 @@ class FilteredSearchViewModel @Inject constructor(
         }
     }
 
+    fun returnAllProperties(): Flow<List<Property>> {
+        return propertyRepository.allProperties
+    }
+
     fun searchUserCriteria(
         type: String?,
         city: String?,
@@ -33,7 +38,7 @@ class FilteredSearchViewModel @Inject constructor(
         priceLimit: Int?,
         sizeFrom: Int?,
         sizeUpTo: Int?
-    ){
+    ) {
         searchQuery(
             buildTypeList(type),
             buildCityList(city),
@@ -91,54 +96,13 @@ class FilteredSearchViewModel @Inject constructor(
         return list
     }
 
-    private fun buildMinSurface(sizeFrom: Int?) = sizeFrom ?: 0
+    fun buildMinSurface(sizeFrom: Int?) = sizeFrom ?: 0
 
-    private fun buildMaxSurface(sizeUpTo: Int?) = sizeUpTo ?: 1000000
+    fun buildMaxSurface(sizeUpTo: Int?) = sizeUpTo ?: 1000000
 
-    private fun buildMinPrice(startingPrice: Int?) = startingPrice ?: 0
+    fun buildMinPrice(startingPrice: Int?) = startingPrice ?: 0
 
-    private fun buildMaxPrice(maxPrice: Int?) = maxPrice ?: 100000000
-
-    private fun buildSchoolList(school: Boolean): List<Boolean> {
-        val list: MutableList<Boolean> = mutableListOf()
-
-        if (school) {
-            list.add(school)
-        } else {
-            list.add(true)
-            list.add(false)
-        }
-
-        return list
-    }
-
-    private fun buildShopsList(school: Boolean): List<Boolean> {
-        val list: MutableList<Boolean> = mutableListOf()
-
-        if (school) {
-            list.add(school)
-        } else {
-            list.add(true)
-            list.add(false)
-        }
-
-        return list
-    }
-
-    private fun buildParkList(school: Boolean): List<Boolean> {
-        val list: MutableList<Boolean> = mutableListOf()
-
-        if (school) {
-            list.add(school)
-        } else {
-            list.add(true)
-            list.add(false)
-        }
-
-        return list
-    }
-
-    private fun buildNumberOfPhoto(numberOfPhoto: Boolean) = if (numberOfPhoto) 3 else 0
+    fun buildMaxPrice(maxPrice: Int?) = maxPrice ?: 100000000
 
     private fun searchQuery(
         isNearTypeProperty: List<String>,
@@ -149,7 +113,7 @@ class FilteredSearchViewModel @Inject constructor(
         isNearMinSurface: Int,
         isNearMaxSurface: Int,
 
-    ) {
+        ) {
         val temp: MutableList<Property> = mutableListOf()
 
         viewModelScope.launch {

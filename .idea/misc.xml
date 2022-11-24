@@ -34,6 +34,7 @@
         <entry key="..\:/Users/clec7/AndroidStudioProjects/RealEstateManager/app/src/main/res/drawable-v24/ic_baseline_euro_24.xml" value="0.1615" />
         <entry key="..\:/Users/clec7/AndroidStudioProjects/RealEstateManager/app/src/main/res/drawable-v24/ic_baseline_remove_circle_outline_24.xml" value="0.1615" />
         <entry key="..\:/Users/clec7/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout-land/fragment_mortgage_calculator.xml" value="0.1781305114638448" />
+        <entry key="..\:/Users/clec7/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout-sw600dp/fragment_item_detail.xml" value="0.6" />
         <entry key="..\:/Users/clec7/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout-sw600dp/fragment_item_list.xml" value="0.176171875" />
         <entry key="..\:/Users/clec7/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout-sw600dp/fragment_mortgage_calculator.xml" value="0.15859375" />
         <entry key="..\:/Users/clec7/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout-sw600dp/list_item.xml" value="0.15859375" />
@@ -41,7 +42,7 @@
         <entry key="..\:/Users/clec7/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/checkbox_grid.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/clec7/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/fragment_add_property.xml" value="0.254981884057971" />
         <entry key="..\:/Users/clec7/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/fragment_filterd_search.xml" value="0.43763837638376385" />
-        <entry key="..\:/Users/clec7/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/fragment_item_detail.xml" value="0.4304490690032859" />
+        <entry key="..\:/Users/clec7/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/fragment_item_detail.xml" value="0.6741854636591479" />
         <entry key="..\:/Users/clec7/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/fragment_item_list.xml" value="0.321875" />
         <entry key="..\:/Users/clec7/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/fragment_map.xml" value="0.21145833333333333" />
         <entry key="..\:/Users/clec7/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/fragment_mortgage_calculator.xml" value="0.21145833333333333" />

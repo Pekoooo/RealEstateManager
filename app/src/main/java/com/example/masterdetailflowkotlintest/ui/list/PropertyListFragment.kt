@@ -1,6 +1,7 @@
 package com.example.masterdetailflowkotlintest.ui.list
 
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.*
 import androidx.core.view.MenuProvider
@@ -11,12 +12,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.masterdetailflowkotlintest.R
 import com.example.masterdetailflowkotlintest.databinding.FragmentItemListBinding
+import com.example.masterdetailflowkotlintest.enums.CurrencyType
 import com.example.masterdetailflowkotlintest.model.pojo.Property
 import com.example.masterdetailflowkotlintest.ui.add.AddPropertyFragment
 import com.example.masterdetailflowkotlintest.ui.detail.PropertyDetailFragment
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
 import com.example.masterdetailflowkotlintest.utils.Constants.ARG_NO_ITEM_ID
-import com.example.masterdetailflowkotlintest.utils.CurrencyType
 import com.example.masterdetailflowkotlintest.utils.DefineScreenSize.Companion.isTablet
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -47,6 +48,14 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
         super.onViewCreated(view, savedInstanceState)
 
         val recyclerView: RecyclerView = binding.itemList
+
+        if (isTablet(requireContext())) {
+            val pos = 0
+            Handler().postDelayed(
+                { recyclerView.findViewHolderForAdapterPosition(pos)!!.itemView.performClick() },
+                900
+            )
+        }
 
         viewModel.currencyType.observe(viewLifecycleOwner) {
 
@@ -167,6 +176,8 @@ class PropertyListFragment : Fragment(R.layout.fragment_item_list) {
             }
 
         }
+
+
     }
 
 

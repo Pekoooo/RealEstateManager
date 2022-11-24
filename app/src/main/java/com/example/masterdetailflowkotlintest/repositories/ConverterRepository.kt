@@ -1,7 +1,7 @@
 package com.example.masterdetailflowkotlintest.repositories
 
 import androidx.lifecycle.MutableLiveData
-import com.example.masterdetailflowkotlintest.utils.CurrencyType
+import com.example.masterdetailflowkotlintest.enums.CurrencyType
 import javax.inject.Inject
 import javax.inject.Singleton
 

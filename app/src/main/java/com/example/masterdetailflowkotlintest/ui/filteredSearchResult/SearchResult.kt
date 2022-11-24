@@ -17,6 +17,7 @@ import com.example.masterdetailflowkotlintest.ui.list.PropertyListAdapter
 import com.example.masterdetailflowkotlintest.ui.list.PropertyListFragmentDirections
 import com.example.masterdetailflowkotlintest.ui.main.MainActivity
 import com.example.masterdetailflowkotlintest.utils.DefineScreenSize
+import com.example.masterdetailflowkotlintest.utils.DefineScreenSize.Companion.isTablet
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -56,7 +57,7 @@ class SearchResult : Fragment() {
             filteredProperties
         ) {
 
-            when (DefineScreenSize.isTablet(requireContext())) {
+            when (isTablet(requireContext())) {
 
                 true -> {
                     Log.d(

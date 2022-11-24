@@ -1,4 +1,4 @@
-package com.example.masterdetailflowkotlintest
+package com.example.masterdetailflowkotlintest.utils
 
 import org.junit.Test
 import java.net.URLEncoder

@@ -36,6 +36,8 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    
+
     packagingOptions {
         exclude 'META-INF/atomicfu.kotlin_module'
     }
@@ -65,6 +67,10 @@ dependencies {
 
     //Testing
     testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
     androidTestImplementation 'com.google.dagger:hilt-android-testing:2.42'
@@ -79,8 +85,20 @@ dependencies {
 
     testImplementation 'com.google.dagger:hilt-android-testing:2.42'
     kaptTest 'com.google.dagger:hilt-compiler:2.42'
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.2")
+
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
 
 
+    //Mockito
+    testImplementation 'org.mockito:mockito-core:4.3.1'
+    testImplementation 'org.mockito:mockito-inline:2.13.0'
+
+    //Mockk
+    testImplementation "io.mockk:mockk:1.13.2"
 
 
 

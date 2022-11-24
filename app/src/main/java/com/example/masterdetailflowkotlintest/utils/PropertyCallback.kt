@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Provider
 
 
-class PropertyCallback (
+class PropertyCallback(
     private val provider: Provider<PropertyDao>
 ) : RoomDatabase.Callback() {
 
@@ -24,10 +24,6 @@ class PropertyCallback (
     }
 
     private suspend fun populateDatabase() {
-
-        /*val property = getDummyProperty()
-
-        provider.get().insert(property)*/
 
         val properties = DummyPropertyProvider.samplePropertyList
 

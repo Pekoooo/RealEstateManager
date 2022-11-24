@@ -49,24 +49,12 @@ object Utils {
         }
 
     fun stringDateToLong(date: String): Long {
-        val date = SimpleDateFormat("dd/MM/yyyy").parse(date)
-        return date.time
+        val newDate = SimpleDateFormat("dd/MM/yyyy").parse(date)
+        return newDate.time
     }
 
     fun longToDate(date: Long): String {
         return formatter.format(date)
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun dateMinusSevenDays(): Long{
-        val date: LocalDate = LocalDate.now().minusDays(7)
-        return date.toEpochDay()
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun dateMinusThreeMonth(): Long{
-        val date: LocalDate = LocalDate.now().minusMonths(3)
-        return date.toEpochDay()
     }
 
     /**
@@ -85,7 +73,7 @@ object Utils {
         }
     }
 
-    fun isInternetAvailableBuildVersionBelowM(): Boolean {
+    private fun isInternetAvailableBuildVersionBelowM(): Boolean {
         val ping = "/system/bin/ping -c 1 8.8.8.8"
         val runtime = Runtime.getRuntime()
         try {

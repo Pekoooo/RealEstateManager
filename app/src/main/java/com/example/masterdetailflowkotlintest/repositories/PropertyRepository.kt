@@ -1,6 +1,7 @@
 package com.example.masterdetailflowkotlintest.repositories
 
 import androidx.annotation.WorkerThread
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import com.example.masterdetailflowkotlintest.model.pojo.Property
@@ -15,14 +16,9 @@ import javax.inject.Singleton
 @Singleton
 class PropertyRepository @Inject constructor(
     private val propertyDao: PropertyDao
-    ){
+) {
 
     val allProperties: Flow<List<Property>> = propertyDao.getAllProperties()
-
-    @WorkerThread
-    suspend fun createProperty(property: Property){
-        propertyDao.insert(property)
-    }
 
     fun getPropertyById(id: Int): Flow<Property> = propertyDao.getPropertyById(id)
 
@@ -30,7 +26,7 @@ class PropertyRepository @Inject constructor(
         propertyDao.updateProperty(property)
     }
 
-     fun getPropertyResearch(
+    fun getPropertyResearch(
         isNearTypeProperty: List<String>,
         isNearCity: List<String>,
         isNearNeighbourhood: List<String>,
@@ -49,8 +45,6 @@ class PropertyRepository @Inject constructor(
             isNearMaxSurface
         )
     }
-
-
 
 
 }
