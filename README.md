@@ -22,21 +22,29 @@ Real Estate Manager is an Android application that allows you to manage properti
 
 
 ## Screenshots :
-![List all properties](https://i.imgur.com/pGEpOJx.jpg)
+- List all properties
+<img src="https://i.imgur.com/pGEpOJx.jpg" alt="J" width="300"/>
 
-![Access property details](https://i.imgur.com/W2VKfPE.jpg)
+- Access property details
+<img src="https://i.imgur.com/W2VKfPE.jpg" alt="J" width="300"/>
 
-![Create a new property](https://i.imgur.com/CbTbSOU.jpg)
+- Create a new property
+<img src="https://i.imgur.com/CbTbSOU.jpg" alt="J" width="300"/>
 
-![View properties on a map](https://i.imgur.com/LYO9oTS.jpg)
+- View properties on a map
+<img src="https://i.imgur.com/LYO9oTS.jpg" alt="J" width="300"/>
 
-![Take pictures of the property and import them](https://i.imgur.com/p2Rp6PG.jpg)
+- Take pictures of the property and import them
+<img src="https://i.imgur.com/p2Rp6PG.jpg" alt="J" width="300"/>
 
-![Calculate a mortgage regarding the property's price](https://i.imgur.com/WSAKfsC.jpg)
+- Calculate a mortgage regarding the property's price
+<img src="https://i.imgur.com/WSAKfsC.jpg" alt="J" width="300"/>
 
-![Change currency from dollar to euro](https://i.imgur.com/PsRb1dc.jpg)
+- Change currency from dollar to euro
+<img src="https://i.imgur.com/PsRb1dc.jpg" alt="J" width="300"/>
 
-![Filter properties](https://i.imgur.com/m3s7Gex.jpg)
+- Filter properties
+<img src="https://i.imgur.com/m3s7Gex.jpg" alt="J" width="300"/>
 
 ## How to make this app better ?
 - Implementation of more UseCases
